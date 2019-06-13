@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         textView1 = findViewById(R.id.textView1);
 
         String json = null;
+        JSONArray array = null;
         JSONObject obj = null;
         try {
             InputStream is = context.getAssets().open("kjvTest.json");
@@ -50,17 +52,19 @@ public class MainActivity extends AppCompatActivity {
 
             // saves the json string as a JSONObject
             try {
-                obj = new JSONObject(json);
+                array = new JSONArray(json);
+                obj = array.getJSONObject(0);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             textView1.setText(json);
 
-//            try {
-//                textView1.setText(obj.getString("chapter"));
-//            } catch (JSONException e) {
-//                Log.e("JSON Parser", "Error parsing item " + e.toString());
+            try {
+                textView1.setText(obj.getString("book_name"));
+            } catch (JSONException e) {
+                Log.e("JSON Parser", "Error parsing item " + e.toString());
+            }
 
         } catch (IOException ex) {
             ex.printStackTrace();
