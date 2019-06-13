@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         JSONArray array = null;
         JSONObject obj = null;
         try {
-            InputStream is = context.getAssets().open("kjvTest.json");
+            InputStream is = context.getAssets().open("kjv.json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);

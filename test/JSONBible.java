@@ -1,11 +1,16 @@
 package test;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 public class JSONBible{
-  private String json = null;
-  public JSONBible(String json){
-    this.json = json;
+  private JSONArray jsonarray = null;
+
+  public JSONBible(JSONArray jsonarray){
+    this.jsonarray = jsonarray;
   }
-  public String get_json(){
-    return this.json;
+
+  public String toString(){
+    return this.jsonarray.toString();
   }
 }
