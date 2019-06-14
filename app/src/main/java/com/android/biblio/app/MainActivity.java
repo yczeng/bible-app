@@ -15,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -34,53 +35,52 @@ public class MainActivity extends AppCompatActivity {
         textView = findViewById(R.id.text);
         textView1 = findViewById(R.id.textView1);
 
-        String json = null;
-        JSONArray array = null;
-        JSONObject obj = null;
-        try {
-            InputStream is = context.getAssets().open("kjv.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
+        JSONArray verseList;
+        JSONBible kjv;
 
-            // grabs json object from the buffer
-            try {
-                json = new String(buffer, "UTF-8");
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-
-            // saves the json string as a JSONObject
-            try {
-                array = new JSONArray(json);
-                obj = array.getJSONObject(0);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            textView1.setText(json);
-
-            try {
-                textView1.setText(obj.getString("book_name"));
-            } catch (JSONException e) {
-                Log.e("JSON Parser", "Error parsing item " + e.toString());
-            }
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
+        verseList = readJSONArray("kjv.json");
+        kjv = new JSONBible(verseList);
+        final String resultVerse = kjv.get("Gen", 3, 10);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                textView.setText("boobies");
+                textView.setText(resultVerse);
             }
         });
 
+    }
 
+    // Reads a json array from a file
+    public JSONArray readJSONArray(String filename) {
+        byte[] buffer = null;
+        Context context = this;
 
+        // grabs the file locally
+        try{
+            InputStream is = context.getAssets().open(filename);
+            int size = is.available();
+            buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        String json = null;
+        JSONArray array = null;
+        try {
+            // grabs json object from the buffer
+            json = new String(buffer, "UTF-8");
+
+            // saves the json string as a JSONObject
+            array = new JSONArray(json);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return array;
     }
 }
