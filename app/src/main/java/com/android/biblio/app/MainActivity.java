@@ -46,24 +46,37 @@ public class MainActivity extends AppCompatActivity {
         textView1 = findViewById(R.id.textView1);
 
         JSONArray verseList;
-        JSONBible kjv;
+        final JSONBible kjv;
 
         verseList = readJSONArray("kjv.json");
         kjv = new JSONBible(verseList);
-        final String resultVerse = kjv.get("Gen", 3, 10);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String resultVerse = kjv.get(GlobalVariable.getInstance().getBook(), 1, 1);
                 textView.setText(resultVerse);
             }
         });
-
     }
 
     public void bookPopUp(View view){
-        myDialog.setContentView(R.layout.custompopup);
+        myDialog.setContentView(R.layout.book_pop_up);
         myDialog.show();
+    }
+
+    public void changeBook(View v){
+        String newBook = v.getTag().toString();
+        Context context = getApplicationContext();
+        CharSequence text = newBook;
+        int duration = Toast.LENGTH_LONG;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+        GlobalVariable.getInstance().setBook(newBook);
+
+        Button bookButton = findViewById(R.id.bookButton);
+        bookButton.setText(newBook);
     }
 
     public void moveActivity(View view) {
