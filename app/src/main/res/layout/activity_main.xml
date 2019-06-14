@@ -59,6 +59,15 @@
         app:layout_constraintHorizontal_bias="0.534"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.539" />
+        app:layout_constraintVertical_bias="0.954" />
+
+    <Button
+        android:id="@+id/bookButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="bookPopUp"
+        android:text="Genesis"
+        tools:layout_editor_absoluteX="168dp"
+        tools:layout_editor_absoluteY="478dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
