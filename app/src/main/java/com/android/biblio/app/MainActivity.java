@@ -33,17 +33,16 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView;
     private TextView textView1;
     Context context = this;
-    Dialog myDialog;
+    Dialog bookDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        myDialog = new Dialog(this);
+        bookDialog = new Dialog(this);
 
         button = findViewById(R.id.button);
         textView = findViewById(R.id.text);
-        textView1 = findViewById(R.id.textView1);
 
         JSONArray verseList;
         final JSONBible kjv;
@@ -61,22 +60,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void bookPopUp(View view){
-        myDialog.setContentView(R.layout.book_pop_up);
-        myDialog.show();
+        bookDialog.setContentView(R.layout.book_pop_up);
+        bookDialog.show();
     }
 
     public void changeBook(View v){
         String newBook = v.getTag().toString();
-        Context context = getApplicationContext();
-        CharSequence text = newBook;
-        int duration = Toast.LENGTH_LONG;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+//        Context context = getApplicationContext();
+//        CharSequence text = newBook;
+//        int duration = Toast.LENGTH_LONG;
+//        Toast toast = Toast.makeText(context, text, duration);
+//        toast.show();
 
         GlobalVariable.getInstance().setBook(newBook);
 
         Button bookButton = findViewById(R.id.bookButton);
         bookButton.setText(newBook);
+        bookDialog.dismiss();
     }
 
     public void moveActivity(View view) {
