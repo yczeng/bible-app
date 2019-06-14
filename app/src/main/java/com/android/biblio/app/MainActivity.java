@@ -2,8 +2,11 @@ package com.android.biblio.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,11 +33,13 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView;
     private TextView textView1;
     Context context = this;
+    Dialog myDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        myDialog = new Dialog(this);
 
         button = findViewById(R.id.button);
         textView = findViewById(R.id.text);
@@ -57,24 +62,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void bookPopUp(View view){
-        PopupMenu popup = new PopupMenu(MainActivity.this, view);
-        //Inflating the Popup using xml file
-        popup.getMenuInflater()
-                .inflate(R.menu.book_popup, popup.getMenu());
-
-        //registering popup with OnMenuItemClickListener
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-                Toast.makeText(
-                        MainActivity.this,
-                        "You Clicked : " + item.getTitle(),
-                        Toast.LENGTH_SHORT
-                ).show();
-                return true;
-            }
-        });
-
-        popup.show(); //showing popup menu
+        myDialog.setContentView(R.layout.custompopup);
+        myDialog.show();
     }
 
     public void moveActivity(View view) {
