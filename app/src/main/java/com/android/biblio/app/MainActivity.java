@@ -3,25 +3,22 @@ package com.android.biblio.app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.android.biblio.app.R;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 
 public class MainActivity extends AppCompatActivity {
     private Button button;
+    private Button buttonLaunchNewActivity;
     private TextView textView;
     private TextView textView1;
     Context context = this;
@@ -32,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         button = findViewById(R.id.button);
+        buttonLaunchNewActivity = findViewById(R.id.buttonLaunchNewActivity);
         textView = findViewById(R.id.text);
         textView1 = findViewById(R.id.textView1);
 
@@ -49,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void moveActivity(View view) {
+        Intent intent = new Intent(this, ReaderActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     // Reads a json array from a file
