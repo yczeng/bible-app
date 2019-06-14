@@ -23,7 +23,8 @@ public class TestMain{
 		// System.out.println(kjv);
 
 		// String book, int chapter, int verse
-		System.out.println(kjv.get("Gen", 3, 10));
+		// System.out.println(kjv.get("Gen", 3, 10));
+		System.out.println(kjv.search("e"));
 	}
 
 

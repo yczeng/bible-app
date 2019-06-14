@@ -17,7 +17,6 @@ public class JSONBible{
   // returns a jsonarray containing results that pertain. 
   public String get(String book, int chapter, int verse){
   	JSONArray jsonResults = new JSONArray();
-  	String result = null;
 
   	for (int i = 0; i < this.jsonarray.length(); i++){
   		JSONObject obj = this.jsonarray.getJSONObject(i);
@@ -35,6 +34,20 @@ public class JSONBible{
   					}
   				}
   			}
+  		}
+
+  	}
+  	return jsonResults.toString();
+  }
+
+  public String search(String text){
+  	JSONArray jsonResults = new JSONArray();
+  	
+  	for (int i = 0; i < this.jsonarray.length(); i++){
+  		JSONObject obj = this.jsonarray.getJSONObject(i);
+
+  		if (obj.getString("text").contains(text)){
+  			jsonResults.put(obj);
   		}
   	}
   	return jsonResults.toString();
