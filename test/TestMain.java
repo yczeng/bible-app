@@ -2,12 +2,13 @@ package test;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONException;
 
 public class TestMain{
 
@@ -19,30 +20,42 @@ public class TestMain{
 	public static void main(String[] args) {
 		verseList = readJSONArray(kjvfile);
 		kjv = new JSONBible(verseList);
-		System.out.println(kjv);
+		// System.out.println(kjv);
+
+		// String book, int chapter, int verse
+		System.out.println(kjv.get("Gen", 3, 10));
 	}
 
 
 	// Reads a json array from a file
 	public static JSONArray readJSONArray(String filename) {
-		JSONParser jsonParser = new JSONParser();
-	    JSONArray jsonarray = null;
+		byte[] buffer = null;
 
-	    try (FileReader reader = new FileReader(kjvfile)) {
-	        Object obj = jsonParser.parse(reader);
-	        jsonarray = (JSONArray) obj;
-
-	    } catch (FileNotFoundException e) {
-	        e.printStackTrace();
-	        System.exit(1);
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	        System.exit(1);
-	    } catch (ParseException e) {
-	        e.printStackTrace();
-	        System.exit(1);
+		// grabs the file locally
+		try{
+			InputStream is = new FileInputStream(filename);
+	        int size = is.available();
+	        buffer = new byte[size];
+	        is.read(buffer);
+	        is.close();
+	    } catch (IOException ex) {
+	    	ex.printStackTrace();
 	    }
 
-	    return jsonarray;
+        String json = null;
+        JSONArray array = null;
+        try {
+        	// grabs json object from the buffer
+            json = new String(buffer, "UTF-8");
+
+            // saves the json string as a JSONObject
+            array = new JSONArray(json);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+	    return array;
 	}
 }
