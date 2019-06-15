@@ -1,23 +1,15 @@
 package com.android.biblio.app;
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import androidx.annotation.NonNull;
-import androidx.viewpager.widget.PagerAdapter;
-
-import java.util.List;
-
-public class ReaderPagerAdapter extends PagerAdapter {
+public class ReaderPagerAdapter extends FragmentStatePagerAdapter {
 
     private String[] stringList;
-    private LayoutInflater layoutInflater;
 
-    public ReaderPagerAdapter(Context context, String[] stringList){
-        this.layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public ReaderPagerAdapter(FragmentManager fm, String[] stringList){
+        super(fm);
         this.stringList = stringList;
     }
 
@@ -27,21 +19,7 @@ public class ReaderPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view == ((View)object);
-    }
-
-    @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        View view = this.layoutInflater.inflate(R.layout.pager_list_items, container, false);
-        TextView text = view.findViewById(R.id.pager_text);
-        text.setText(this.stringList[position]);
-        container.addView(view);
-        return view;
-    }
-
-    @Override
-    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((View) object);
+    public Fragment getItem(int position) {
+        return new ChapterFragment(stringList[position]);
     }
 }
