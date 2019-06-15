@@ -34,15 +34,26 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView1;
     Context context = this;
     Dialog bookDialog;
+    Dialog chapterDialog;
+
+    Button bookButton;
+    Button chapterButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bookDialog = new Dialog(this);
+        chapterDialog = new Dialog(this);
 
         button = findViewById(R.id.button);
         textView = findViewById(R.id.text);
+
+        bookButton = findViewById(R.id.bookButton);
+        bookButton.setText(GlobalVariable.getInstance().getBook());
+
+        chapterButton = findViewById(R.id.chapterButton);
+        chapterButton.setText(Integer.toString(GlobalVariable.getInstance().getChapter()));
 
         JSONArray verseList;
         final JSONBible kjv;
@@ -53,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String resultVerse = kjv.get(GlobalVariable.getInstance().getBook(), 1, 1);
+                String resultVerse = kjv.get(GlobalVariable.getInstance().getBook(), GlobalVariable.getInstance().getChapter(), 1);
                 textView.setText(resultVerse);
             }
         });
@@ -62,6 +73,19 @@ public class MainActivity extends AppCompatActivity {
     public void bookPopUp(View view){
         bookDialog.setContentView(R.layout.book_pop_up);
         bookDialog.show();
+    }
+
+    public void changeChapter(View v){
+        int newChapter = Integer.parseInt(v.getTag().toString());
+        GlobalVariable.getInstance().setChapter(newChapter);
+
+        chapterButton.setText(v.getTag().toString());
+        chapterDialog.dismiss();
+    }
+
+    public void chapterPopUp(View view){
+        chapterDialog.setContentView(R.layout.chapter_pop_up);
+        chapterDialog.show();
     }
 
     public void changeBook(View v){
@@ -73,8 +97,6 @@ public class MainActivity extends AppCompatActivity {
 //        toast.show();
 
         GlobalVariable.getInstance().setBook(newBook);
-
-        Button bookButton = findViewById(R.id.bookButton);
         bookButton.setText(newBook);
         bookDialog.dismiss();
     }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/chapter_1"
+        android:layout_width="58dp"
+        android:layout_height="61dp"
+        android:onClick="changeChapter"
+        android:tag="1"
+        android:text="1" />
+
+    <Button
+        android:id="@+id/chapter_2"
+        android:layout_width="58dp"
+        android:layout_height="61dp"
+        android:onClick="changeChapter"
+        android:tag="2"
+        android:text="2" />
+
+    <Button
+        android:id="@+id/chapter_3"
+        android:layout_width="58dp"
+        android:layout_height="61dp"
+        android:onClick="changeChapter"
+        android:tag="3"
+        android:text="3" />
+
+</LinearLayout>
