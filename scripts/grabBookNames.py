@@ -6,7 +6,7 @@ kjv_data = json.loads(kjv_string)
 
 book_names = []
 for i in kjv_data:
-	if i["book_id"] not in book_names:
-		book_names.append(i["book_id"])
+	if i["chapter"] not in book_names:
+		book_names.append(i["chapter"])
 
 print(book_names)

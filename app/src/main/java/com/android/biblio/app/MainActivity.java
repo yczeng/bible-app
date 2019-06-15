@@ -1,75 +1,90 @@
 package com.android.biblio.app;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListAdapter;
-import android.widget.ListPopupWindow;
-import android.widget.PopupMenu;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    private Button button;
     private TextView textView;
-    private TextView textView1;
-    Context context = this;
-    Dialog myDialog;
+
+    Dialog bookDialog;
+    Button bookButton;
+    Dialog chapterDialog;
+    Button chapterButton;
+
+    JSONArray verseList;
+    JSONBible kjv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        myDialog = new Dialog(this);
 
-        button = findViewById(R.id.button);
+        // creates the popup windows for book and chapter
+        bookDialog = new Dialog(this);
+        chapterDialog = new Dialog(this);
+
         textView = findViewById(R.id.text);
-        textView1 = findViewById(R.id.textView1);
 
-        JSONArray verseList;
-        JSONBible kjv;
+        bookButton = findViewById(R.id.bookButton);
+        bookButton.setText(GlobalVariable.getInstance().getBook());
+
+        chapterButton = findViewById(R.id.chapterButton);
+        chapterButton.setText(String.valueOf(GlobalVariable.getInstance().getChapter()));
+    }
+
+    // Generates a pop up of all books
+    public void bookPopUp(View view){
+        bookDialog.setContentView(R.layout.book_pop_up);
+        bookDialog.show();
+    }
+
+    // Updates global variable when click on new book
+    public void changeBook(View v){
+        String newBook = v.getTag().toString();
+        GlobalVariable.getInstance().setBook(newBook);
+
+        bookButton.setText(newBook);
+        bookDialog.dismiss();
+    }
+
+    // Generates a pop up of all the chapters for given book
+    public void chapterPopUp(View view){
+        chapterDialog.setContentView(R.layout.chapter_pop_up);
+        chapterDialog.show();
+    }
+
+    // Updates global variable when click on new chapter
+    public void changeChapter(View v){
+        int newChapter = Integer.parseInt(v.getTag().toString());
+        GlobalVariable.getInstance().setChapter(newChapter);
+
+        chapterButton.setText(v.getTag().toString());
+        chapterDialog.dismiss();
+    }
+
+    // Moves on to the next page with json result of verse
+    public void moveActivity(View view) {
+        Intent intent = new Intent(this, ReaderActivity.class);
 
         verseList = readJSONArray("kjv.json");
         kjv = new JSONBible(verseList);
-        final String resultVerse = kjv.get("Gen", 3, 10);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                textView.setText(resultVerse);
-            }
-        });
-
-    }
-
-    public void bookPopUp(View view){
-        myDialog.setContentView(R.layout.custompopup);
-        myDialog.show();
-    }
-
-    public void moveActivity(View view) {
-        Intent intent = new Intent(this, ReaderActivity.class);
-        startActivity(intent);
-        finish();
+        String resultVerse = kjv.get(GlobalVariable.getInstance().getBook(), GlobalVariable.getInstance().getChapter(), 1);
+        textView.setText(resultVerse);
+        intent.putExtra("json", resultVerse);
+//        startActivity(intent);
+//        finish();
     }
 
     // Reads a json array from a file
