@@ -37,6 +37,10 @@ public class JSONBible{
     return jsonResults.toString();
   }
 
+  public int getChapterNumber(JSONObject chapterNum, String book){
+    return chapterNum.getInt(book);
+  }
+
   public String toString(){
     return this.jsonobj.toString();
   }

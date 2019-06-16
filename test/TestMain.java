@@ -18,19 +18,25 @@ public class TestMain{
 	// within the book strings, the chapters are the key
 	public static final String kjvfile2 = "/home/yczeng/Documents/bibleapp2/app/src/main/assets/reformattedKjv2.json";
 
+	public static final String chapterNumFile = "/home/yczeng/Documents/bibleapp2/app/src/main/assets/chapterNum.json";
+
 	public static JSONArray verseJson;
 	public static JSONObject bibleMap;
+	public static JSONObject chapterNum;
 	public static JSONBible kjv;
 
 	public static void main(String[] args) {
 		verseJson = readJSONArray(kjvfile);
 		bibleMap = readJSONObject(kjvfile2);
+
+		chapterNum = readJSONObject(chapterNumFile);
 		
 		kjv = new JSONBible(bibleMap, verseJson);
 
 		// String book, int chapter, int verse
 		// System.out.println(kjv.get("Gen", 3, 10));
-		System.out.println(kjv.search("serpent"));
+		// System.out.println(kjv.search("serpent"));
+		System.out.println(kjv.getChapterNumber(chapterNum, "Gen"));
 	}
 
 
