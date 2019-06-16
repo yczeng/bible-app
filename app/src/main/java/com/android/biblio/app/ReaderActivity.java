@@ -1,57 +1,34 @@
 package com.android.biblio.app;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
 import android.os.Bundle;
-import android.view.MenuItem;
+import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.tabs.TabLayout;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-
-public class ReaderActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
-    private ViewPager viewPager;
-    private PagerAdapter pagerAdapter;
-
+public class ReaderActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reader);
 
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
+        final DisabledViewPager tabPager = findViewById(R.id.tab_pager);
+        final TabPagerAdapter tabAdapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        tabPager.setAdapter(tabAdapter);
+        tabPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        String lorem = "[32] Sed ut perspiciatis, unde omnis iste natus error sit voluptatem" +
-                "accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo" +
-                "inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo." +
-                "Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit," +
-                "sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt," +
-                "neque porro quisquam est, qui dolorem ipsum, quia dolor sit amet consectetur";
-        String[] arr = {lorem + lorem + lorem + lorem + lorem,
-                lorem + lorem + lorem + lorem + lorem + lorem,
-                lorem + lorem + lorem,
-                lorem + lorem + lorem + lorem};
-        ReaderPagerAdapter adapter = new ReaderPagerAdapter(this, arr);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                tabPager.setCurrentItem(tab.getPosition());
+            }
 
-        viewPager = findViewById(R.id.viewpager);
-        viewPager.setAdapter(adapter);
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) { }
 
-
-        BottomNavigationView bottomNavigationView = findViewById(R.id.navbar);
-        bottomNavigationView.setOnNavigationItemSelectedListener(this);
-    }
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.navbar_item_pager:
-                break;
-            case R.id.navbar_item_search:
-                break;
-            default:
-                return false;
-        }
-        return true;
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) { }
+        });
     }
 }

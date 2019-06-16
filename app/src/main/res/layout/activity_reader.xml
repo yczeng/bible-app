@@ -4,21 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_weight=".85"
     android:orientation="vertical"
     tools:context=".ReaderActivity">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewpager"
+    <com.android.biblio.app.DisabledViewPager
+        android:id="@+id/tab_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight=".15" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navbar"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight=".85"
-        app:menu="@menu/navigation"/>
+        android:layout_weight=".85">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="B" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C" />
+    </com.google.android.material.tabs.TabLayout>
 
 
 </LinearLayout>
