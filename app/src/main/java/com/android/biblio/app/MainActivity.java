@@ -7,11 +7,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     Button chapterButton;
 
     JSONArray verseList;
+    JSONObject bibleMap;
     JSONBible kjv;
 
     @Override
@@ -41,7 +49,23 @@ public class MainActivity extends AppCompatActivity {
 
         chapterButton = findViewById(R.id.chapterButton);
         chapterButton.setText(String.valueOf(GlobalVariable.getInstance().getChapter()));
+
+        LinearLayout layout = (LinearLayout) findViewById(R.id.bookpopup_layout);
+        Context context = this;
+        for(int i = 0; i < 10; i++){
+            ImageButton button = new ImageButton(context);
+            layout.addView(button);
+        }
     }
+//
+//    public void generateButtons(){
+//        LinearLayout layout = (LinearLayout) findViewById(R.id.bookpopup_layout);
+//        Context context = this;
+//        for(int i = 0; i < 10; i++){
+//            ImageButton button = new ImageButton(context);
+//            layout.addView(button);
+//        }
+//    }
 
     // Generates a pop up of all books
     public void bookPopUp(View view){
@@ -78,13 +102,53 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ReaderActivity.class);
 
         verseList = readJSONArray("kjv.json");
-        kjv = new JSONBible(verseList);
+        bibleMap = readJSONObject("reformattedKjv2.json");
+        kjv = new JSONBible(bibleMap, verseList);
 
-        String resultVerse = kjv.get(GlobalVariable.getInstance().getBook(), GlobalVariable.getInstance().getChapter(), 1);
+        String resultVerse = kjv.get(GlobalVariable.getInstance().getBook(), GlobalVariable.getInstance().getChapter());
         textView.setText(resultVerse);
+
+//        Context context = getApplicationContext();
+//        CharSequence text = resultVerse;
+//        int duration = Toast.LENGTH_LONG;
+//        Toast toast = Toast.makeText(context, text, duration);
+//        toast.show();
         intent.putExtra("json", resultVerse);
-//        startActivity(intent);
-//        finish();
+        startActivity(intent);
+        finish();
+    }
+
+    // Reads a json object from a file
+    public JSONObject readJSONObject(String filename) {
+        byte[] buffer = null;
+        Context context = this;
+
+        // grabs the file locally
+        try{
+            InputStream is = context.getAssets().open(filename);
+            int size = is.available();
+            buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        String json = null;
+        JSONObject obj = null;
+        try {
+            // grabs json object from the buffer
+            json = new String(buffer, "UTF-8");
+
+            // saves the json string as a JSONObject
+            obj = new JSONObject(json);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return obj;
     }
 
     // Reads a json array from a file

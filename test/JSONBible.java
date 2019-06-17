@@ -15,7 +15,7 @@ public class JSONBible{
 
   // This takes in two parameters: book and chapter, optional third parameter: verse.
   // returns a jsonobj containing results that pertain. 
-  public String get(String book, int chapter, int verse){
+  public String get(String book, int chapter){
 
       // converts the book's json into a json object
       JSONObject obj = new JSONObject(this.jsonobj.get(book).toString());

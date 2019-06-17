@@ -1,22 +1,26 @@
 package com.android.biblio.app;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class JSONBible{
 
+    private JSONObject jsonobj = null;
     private JSONArray jsonarray = null;
 
-    public JSONBible(JSONArray jsonarray){
+    public JSONBible(JSONObject jsonobj, JSONArray jsonarray){
+        this.jsonobj = jsonobj;
         this.jsonarray = jsonarray;
     }
 
     private int verse = 0;
-
     // This takes in two parameters: book and chapter, optional third parameter: verse.
-    // returns a jsonarray containing results that pertain.
-    public String get(String book, int chapter, int verse) {
+    // returns a jsonobj containing results that pertain.
+    public String get(String book, int chapter) {
         JSONArray jsonResults = new JSONArray();
 
         for (int i = 0; i < this.jsonarray.length(); i++){
@@ -51,7 +55,7 @@ public class JSONBible{
         return jsonResults.toString();
     }
 
-    public String search(String text) {
+    public String search(String text){
         JSONArray jsonResults = new JSONArray();
 
         for (int i = 0; i < this.jsonarray.length(); i++){
@@ -71,11 +75,23 @@ public class JSONBible{
                 e.printStackTrace();
             }
         }
+
         return jsonResults.toString();
     }
 
+    public int getChapterNumber(JSONObject chapterNum, String book){
+        int result = 0;
+
+        try{
+            result = chapterNum.getInt(book);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     public String toString(){
-        return this.jsonarray.toString();
+        return this.jsonobj.toString();
     }
 
 }
