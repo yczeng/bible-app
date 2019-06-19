@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +20,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -50,26 +54,26 @@ public class MainActivity extends AppCompatActivity {
         chapterButton = findViewById(R.id.chapterButton);
         chapterButton.setText(String.valueOf(GlobalVariable.getInstance().getChapter()));
 
-        LinearLayout layout = (LinearLayout) findViewById(R.id.bookpopup_layout);
-        Context context = this;
-        for(int i = 0; i < 10; i++){
-            ImageButton button = new ImageButton(context);
-            layout.addView(button);
-        }
+//        generateButtons();
     }
-//
-//    public void generateButtons(){
-//        LinearLayout layout = (LinearLayout) findViewById(R.id.bookpopup_layout);
-//        Context context = this;
-//        for(int i = 0; i < 10; i++){
-//            ImageButton button = new ImageButton(context);
-//            layout.addView(button);
-//        }
-//    }
+
+    public void generateButtons(){
+        Button myButton = new Button(this);
+        myButton.setText("Add Me");
+
+        LinearLayout ll = (LinearLayout)findViewById(R.id.mainActivity);
+        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        ll.addView(myButton, lp);
+    }
 
     // Generates a pop up of all books
     public void bookPopUp(View view){
+        Context context = this;
         bookDialog.setContentView(R.layout.book_pop_up);
+
+        LinearLayout ll = new LinearLayout(context);
+        ll.addView(bookButton);
+
         bookDialog.show();
     }
 
