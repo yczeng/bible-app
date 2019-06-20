@@ -15,9 +15,9 @@ public class JSONBible{
     private JSONObject jsonobj = null;
     private JSONArray jsonarray = null;
 
-    public JSONBible(JSONObject jsonobj, JSONArray jsonarray){
-        this.jsonobj = jsonobj;
-        this.jsonarray = jsonarray;
+    public JSONBible(Context context, String kjv, String kjvDict){
+        this.jsonarray = JSONBible.readJSONArray(context,kjv);
+        this.jsonobj = JSONBible.readJSONObject(context,kjvDict);
     }
 
     private int verse = 0;
