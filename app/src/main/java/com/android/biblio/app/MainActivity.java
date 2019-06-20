@@ -93,9 +93,7 @@ public class MainActivity extends AppCompatActivity {
     public void moveActivity(View view) {
         Intent intent = new Intent(this, ReaderActivity.class);
 
-        verseList = JSONBible.readJSONArray(this, "kjv.json");
-        bibleMap = JSONBible.readJSONObject(this, "reformattedKjv2.json");
-        kjv = new JSONBible(bibleMap, verseList);
+        kjv = new JSONBible(this, "kjv.json", "reformattedKjv2.json");
 
         String resultVerse = kjv.get(GlobalVariable.getInstance().getBook(), GlobalVariable.getInstance().getChapter());
         textView.setText(resultVerse);
