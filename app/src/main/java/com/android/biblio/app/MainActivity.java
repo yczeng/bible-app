@@ -1,16 +1,20 @@
 package com.android.biblio.app;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -45,24 +49,45 @@ public class MainActivity extends AppCompatActivity {
         chapterButton = findViewById(R.id.chapterButton);
         chapterButton.setText(String.valueOf(GlobalVariable.getInstance().getChapter()));
 
-//        generateButtons();
+        ConstraintLayout ll = findViewById(R.id.mainActivity);
+        generateButtons(this, ll);
     }
 
-    public void generateButtons(){
-        Button myButton = new Button(this);
+    public void generateButtons(Context context, ConstraintLayout ll){
+        Button myButton = new Button(context);
         myButton.setText("Add Me");
 
-        LinearLayout ll = (LinearLayout)findViewById(R.id.mainActivity);
         LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         ll.addView(myButton, lp);
     }
 
     // Generates a pop up of all books
     public void bookPopUp(View view){
-        Context context = this;
-        bookDialog.setContentView(R.layout.book_pop_up);
-        
-        bookDialog.show();
+        // make a popup builder
+        AlertDialog.Builder bookpopupDialog = new AlertDialog.Builder(this);
+        bookpopupDialog.setTitle("bookpopupdialog");
+        bookpopupDialog.setMessage("book choose it");
+
+        // inflate the view, but keep a reference to it
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.book_pop_up, null);
+        bookpopupDialog.setView(dialogView);
+
+        // get the linear layout and add the button(s)
+        LinearLayout ll = dialogView.findViewById(R.id.bookpopup_layout);
+        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+
+        ll.removeAllViews();
+        for (int i = 0; i < 3; i++) {
+            Button myButton1 = new Button(this);
+            myButton1.setText("1");
+            myButton1.setMaxWidth(100);
+            ll.addView(myButton1); // could use ll.addView(myButton1, lp);
+        }
+
+        // display the dialog
+        AlertDialog myAlert = bookpopupDialog.create();
+        myAlert.show();
     }
 
     // Updates global variable when click on new book
