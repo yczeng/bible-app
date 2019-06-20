@@ -7,6 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 public class JSONBible{
 
     private JSONObject jsonobj = null;
@@ -94,4 +97,69 @@ public class JSONBible{
         return this.jsonobj.toString();
     }
 
+
+
+    // Reads a json object from a file
+    public static JSONObject readJSONObject(Context context, String filename) {
+        byte[] buffer = null;
+
+        // grabs the file locally
+        try{
+            InputStream is = context.getAssets().open(filename);
+            int size = is.available();
+            buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        String json = null;
+        JSONObject obj = null;
+        try {
+            // grabs json object from the buffer
+            json = new String(buffer, "UTF-8");
+
+            // saves the json string as a JSONObject
+            obj = new JSONObject(json);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return obj;
+    }
+
+    // Reads a json array from a file
+    public static JSONArray readJSONArray(Context context, String filename) {
+        byte[] buffer = null;
+
+        // grabs the file locally
+        try{
+            InputStream is = context.getAssets().open(filename);
+            int size = is.available();
+            buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        String json = null;
+        JSONArray array = null;
+        try {
+            // grabs json object from the buffer
+            json = new String(buffer, "UTF-8");
+
+            // saves the json string as a JSONObject
+            array = new JSONArray(json);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return array;
+    }
 }
