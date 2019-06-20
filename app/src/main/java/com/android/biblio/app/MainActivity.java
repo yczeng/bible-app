@@ -70,10 +70,7 @@ public class MainActivity extends AppCompatActivity {
     public void bookPopUp(View view){
         Context context = this;
         bookDialog.setContentView(R.layout.book_pop_up);
-
-        LinearLayout ll = new LinearLayout(context);
-        ll.addView(bookButton);
-
+        
         bookDialog.show();
     }
 
