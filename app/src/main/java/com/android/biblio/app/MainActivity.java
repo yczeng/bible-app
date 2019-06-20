@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
         chapterButton = findViewById(R.id.chapterButton);
         chapterButton.setText(String.valueOf(GlobalVariable.getInstance().getChapter()));
 
-//        generateButtons();
+        kjv = new JSONBible(this, "kjv.json", "reformattedKjv2.json");
+        GlobalVariable.getInstance().setKjv(kjv);
     }
 
     public void generateButtons(){
@@ -92,8 +93,6 @@ public class MainActivity extends AppCompatActivity {
     // Moves on to the next page with json result of verse
     public void moveActivity(View view) {
         Intent intent = new Intent(this, ReaderActivity.class);
-
-        kjv = new JSONBible(this, "kjv.json", "reformattedKjv2.json");
 
         String resultVerse = kjv.get(GlobalVariable.getInstance().getBook(), GlobalVariable.getInstance().getChapter());
         textView.setText(resultVerse);
