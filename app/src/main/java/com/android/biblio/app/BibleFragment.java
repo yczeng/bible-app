@@ -10,6 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BibleFragment extends Fragment {
 
     @Override
@@ -17,15 +20,21 @@ public class BibleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         JSONBible kjv = GlobalVariable.getInstance().getKjv();
+        String book = GlobalVariable.getInstance().getBook();
+        int chapter = GlobalVariable.getInstance().getChapter();
 
-        String resultVerse = kjv.get(GlobalVariable.getInstance().getBook(), GlobalVariable.getInstance().getChapter());
+        int chapterNum = kjv.getChapterNumber(book);
 
-        String lorem = resultVerse;
-        String[] arr = {"bible chapter 1: " + lorem + lorem + lorem + lorem + lorem,
-                "bible chapter 2: " + lorem + lorem + lorem + lorem + lorem + lorem,
-                "bible chapter 3: " + lorem + lorem + lorem,
-                "bible chapter 4: " + lorem + lorem + lorem + lorem};
-        ReaderPagerAdapter viewAdapter = new ReaderPagerAdapter(getChildFragmentManager(), arr);
+        List<String> arr = new ArrayList<String>();
+
+        for (int i = 1; i <= chapterNum; i++){
+            arr.add(kjv.get(book, i));
+        }
+
+        String[] arrList = new String[arr.size()];
+        arrList = arr.toArray(arrList);
+
+        ReaderPagerAdapter viewAdapter = new ReaderPagerAdapter(getChildFragmentManager(), arrList);
 
         ViewPager viewPager = view.findViewById(R.id.viewpager);
         viewPager.setAdapter(viewAdapter);

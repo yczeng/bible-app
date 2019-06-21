@@ -19,8 +19,8 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:onClick="changeBook"
-        android:tag="Gen"
-        android:text="Gen" />
+        android:tag="Ps"
+        android:text="Ps" />
 
     <Button
         android:id="@+id/book_Exod"

@@ -14,10 +14,12 @@ public class JSONBible{
 
     private JSONObject jsonobj = null;
     private JSONArray jsonarray = null;
+    private JSONObject chapterNum = null;
 
-    public JSONBible(Context context, String kjv, String kjvDict){
-        this.jsonarray = JSONBible.readJSONArray(context,kjv);
-        this.jsonobj = JSONBible.readJSONObject(context,kjvDict);
+    public JSONBible(Context context, String kjvFile, String kjvDictFile, String chapterNumFile){
+        this.jsonarray = JSONBible.readJSONArray(context, kjvFile);
+        this.jsonobj = JSONBible.readJSONObject(context, kjvDictFile);
+        this.chapterNum = readJSONObject(context, chapterNumFile);
     }
 
     private int verse = 0;
@@ -82,11 +84,11 @@ public class JSONBible{
         return jsonResults.toString();
     }
 
-    public int getChapterNumber(JSONObject chapterNum, String book){
+    public int getChapterNumber(String book){
         int result = 0;
 
         try{
-            result = chapterNum.getInt(book);
+            result = this.chapterNum.getInt(book);
         } catch (JSONException e) {
             e.printStackTrace();
         }
