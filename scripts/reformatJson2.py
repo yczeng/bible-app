@@ -17,14 +17,14 @@ for i in kjv_data:
 	# i.e. chapter 1. len(book) = 0, so need to append
 	# print(len(book), i["chapter"], book)
 	if len(book) < i["chapter"]:
-		book[i["chapter"]] = [i["text"]]
+		book[str(i["chapter"])] = [i["text"]]
 
 	# chapter already exists
 	else:
 		# this grabs the array of string verses
-		book[i["chapter"]].append(i["text"])
+		book[str(i["chapter"])].append(i["text"])
 
-f = open("app/src/main/assets/reformattedKjv2.json", "w")
+f = open("app/src/main/assets/reformattedKjv3.json", "w")
 f.write(str(result))
 
 # print(result)
@@ -32,4 +32,4 @@ print(len(result))
 
 
 # {"chapter":20,"verse":10,"text":"Then the disciples went away again unto their own home.","book_id":"John","book_name":"John"}
-print(result["John"][20][9])
+print(result["John"]["20"][9])

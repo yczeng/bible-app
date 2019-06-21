@@ -20,7 +20,7 @@ public class JSONBible{
       // converts the book's json into a json object
       JSONObject obj = new JSONObject(this.jsonobj.get(book).toString());
 
-      return obj.getJSONArray(Integer.toString(chapter)).toString();
+      return obj.getJSONArray("" + chapter).toString();
   }
 
   public String search(String text){

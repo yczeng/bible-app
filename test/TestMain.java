@@ -18,7 +18,7 @@ public class TestMain{
 	// within the book strings, the chapters are the key
 	public static final String kjvfile2 = "/home/yczeng/Documents/bibleapp2/app/src/main/assets/reformattedKjv2.json";
 
-	public static final String chapterNumFile = "/home/yczeng/Documents/bibleapp2/app/src/main/assets/chapterNum.json";
+	public static final String chapterNumFile = "/home/yczeng/Documents/bibleapp2/app/src/main/assets/chapterCount.json";
 
 	public static JSONArray verseJson;
 	public static JSONObject bibleMap;

@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         chapterButton = findViewById(R.id.chapterButton);
         chapterButton.setText(String.valueOf(GlobalVariable.getInstance().getChapter()));
 
-        kjv = new JSONBible(this, "kjv.json", "reformattedKjv2.json", "chapterCount.json");
+        kjv = new JSONBible(this, "kjv.json", "reformattedKjv3.json", "chapterCount.json");
         GlobalVariable.getInstance().setKjv(kjv);
     }
 

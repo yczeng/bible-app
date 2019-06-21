@@ -16,8 +16,10 @@ public class JSONBible{
     private JSONArray jsonarray;
     private JSONObject jsonobj;
     private JSONObject chapcounts;
+    private Context context;
 
     public JSONBible(Context context, String kjv, String kjvDict, String kjvChapterCounts){
+        this.context = context;
         this.jsonarray = JSONBible.readJSONArray(context,kjv);
         this.jsonobj = JSONBible.readJSONObject(context,kjvDict);
         this.chapcounts = JSONBible.readJSONObject(context, kjvChapterCounts);
@@ -27,38 +29,20 @@ public class JSONBible{
     // This takes in two parameters: book and chapter, optional third parameter: verse.
     // returns a jsonobj containing results that pertain.
     public String get(String book, int chapter) {
-        JSONArray jsonResults = new JSONArray();
-
-        for (int i = 0; i < this.jsonarray.length(); i++){
-            JSONObject obj = null;
-
-            try {
-                obj = this.jsonarray.getJSONObject(i);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                if (obj.getString("book_id").equals(book)){
-                    if (obj.getInt("chapter") == chapter){
-
-                        // if the verse is 0, then no verse parse was given
-                        // else only return the verse
-                        if (verse == 0){
-                            jsonResults.put(obj);
-                        } else {
-                            if (obj.getInt("verse") == verse){
-                                jsonResults.put(obj);
-                            }
-                        }
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
+        // converts the book's json into a json object
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(this.jsonobj.get(book).toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        return jsonResults.toString();
+
+        try {
+            return obj.getJSONArray("" + chapter).toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "blah";
     }
 
     public String search(String text){
