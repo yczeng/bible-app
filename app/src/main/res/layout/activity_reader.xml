@@ -29,4 +29,25 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="-2dp" />
+
+    <Button
+        android:id="@+id/reader_bookButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/toolbar"
+        android:layout_alignEnd="@+id/toolbar"
+        android:layout_marginStart="68dp"
+        android:layout_marginEnd="230dp"
+        android:onClick="bookPopUp"
+        android:text="Book" />
+
+    <Button
+        android:id="@+id/reader_chapterButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/toolbar"
+        android:layout_marginEnd="97dp"
+        android:onClick="chapterPopUp"
+        android:text="Chapter" />
+
 </RelativeLayout>
