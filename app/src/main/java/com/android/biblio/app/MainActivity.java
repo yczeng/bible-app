@@ -5,11 +5,15 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // creates the popup windows for book and chapter
-        bookDialog = new Dialog(this);
-        chapterDialog = new Dialog(this);
+        //bookDialog = new Dialog(this);
+        //chapterDialog = new Dialog(this);
 
         textView = findViewById(R.id.text);
 
@@ -51,14 +55,6 @@ public class MainActivity extends AppCompatActivity {
 
         kjv = new JSONBible(this, "kjv.json", "reformattedKjv2.json");
         GlobalVariable.getInstance().setKjv(kjv);
-    }
-
-    public void generateButtons(Context context, ConstraintLayout ll){
-        Button myButton = new Button(context);
-        myButton.setText("Add Me");
-
-        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        ll.addView(myButton, lp);
     }
 
     // Generates a pop up of all books
@@ -74,16 +70,11 @@ public class MainActivity extends AppCompatActivity {
         bookpopupDialog.setView(dialogView);
 
         // get the linear layout and add the button(s)
-        LinearLayout ll = dialogView.findViewById(R.id.bookpopup_layout);
-        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-
-        ll.removeAllViews();
-        for (int i = 0; i < 3; i++) {
-            Button myButton1 = new Button(this);
-            myButton1.setText("1");
-            myButton1.setMaxWidth(100);
-            ll.addView(myButton1); // could use ll.addView(myButton1, lp);
-        }
+        String[] test_str = {"Gen", "Lev", "Ps",
+                            "Num", "Bad", "Matt",
+                            "Amos", "Dan", "Rom"};
+        GridView gridview = dialogView.findViewById(R.id.bookpopup_layout);
+        gridview.setAdapter(new ButtonGridAdapter(this, bookButton, test_str, true));
 
         // display the dialog
         AlertDialog myAlert = bookpopupDialog.create();
