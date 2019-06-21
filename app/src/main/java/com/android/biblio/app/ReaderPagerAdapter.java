@@ -20,6 +20,7 @@ public class ReaderPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        GlobalVariable.getInstance().setChapter(position);
         return new ChapterFragment(stringList[position]);
     }
 }

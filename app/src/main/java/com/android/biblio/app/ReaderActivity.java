@@ -1,8 +1,14 @@
 package com.android.biblio.app;
 
 import android.os.Bundle;
+import android.view.View;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.android.material.tabs.TabLayout;
+import androidx.viewpager.widget.ViewPager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ReaderActivity extends AppCompatActivity {
@@ -12,23 +18,24 @@ public class ReaderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reader);
 
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
-        final DisabledViewPager tabPager = findViewById(R.id.tab_pager);
-        final TabPagerAdapter tabAdapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
-        tabPager.setAdapter(tabAdapter);
-        tabPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        // grab references to global variables
+        JSONBible kjv = GlobalVariable.getInstance().getKjv();
+        String book = GlobalVariable.getInstance().getBook();
+        int chapter = GlobalVariable.getInstance().getChapter();
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                tabPager.setCurrentItem(tab.getPosition());
-            }
+        // create the array of strings containing the chapters' texts
+        // for this book
+        int chapterNum = kjv.getChapterCount(book);
+        List<String> arr = new ArrayList<String>();
+        for (int i = 1; i <= chapterNum; i++){
+            arr.add(kjv.get(book, i));
+        }
+        String[] arrList = new String[arr.size()];
+        arrList = arr.toArray(arrList);
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) { }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) { }
-        });
+        // create the viewpager and corresponding adapter
+        // that will scroll through the chapterfragments
+        ViewPager biblePager = findViewById(R.id.biblepager);
+        biblePager.setAdapter(new ReaderPagerAdapter(getSupportFragmentManager(), arrList));
     }
 }

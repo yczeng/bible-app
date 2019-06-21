@@ -38,6 +38,7 @@ public class BibleFragment extends Fragment {
 
         ViewPager viewPager = view.findViewById(R.id.viewpager);
         viewPager.setAdapter(viewAdapter);
+        viewPager.setCurrentItem(chapter-1);
     }
 
     @Override
