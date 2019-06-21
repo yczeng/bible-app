@@ -23,7 +23,7 @@ public class BibleFragment extends Fragment {
         String book = GlobalVariable.getInstance().getBook();
         int chapter = GlobalVariable.getInstance().getChapter();
 
-        int chapterNum = kjv.getChapterNumber(book);
+        int chapterNum = kjv.getChapterCount(book);
 
         List<String> arr = new ArrayList<String>();
 

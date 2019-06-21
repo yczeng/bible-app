@@ -1,3 +1,4 @@
+
 package com.android.biblio.app;
 
 import android.content.Context;
@@ -12,14 +13,14 @@ import java.io.InputStream;
 
 public class JSONBible{
 
-    private JSONObject jsonobj = null;
-    private JSONArray jsonarray = null;
-    private JSONObject chapterNum = null;
+    private JSONArray jsonarray;
+    private JSONObject jsonobj;
+    private JSONObject chapcounts;
 
-    public JSONBible(Context context, String kjvFile, String kjvDictFile, String chapterNumFile){
-        this.jsonarray = JSONBible.readJSONArray(context, kjvFile);
-        this.jsonobj = JSONBible.readJSONObject(context, kjvDictFile);
-        this.chapterNum = readJSONObject(context, chapterNumFile);
+    public JSONBible(Context context, String kjv, String kjvDict, String kjvChapterCounts){
+        this.jsonarray = JSONBible.readJSONArray(context,kjv);
+        this.jsonobj = JSONBible.readJSONObject(context,kjvDict);
+        this.chapcounts = JSONBible.readJSONObject(context, kjvChapterCounts);
     }
 
     private int verse = 0;
@@ -84,11 +85,11 @@ public class JSONBible{
         return jsonResults.toString();
     }
 
-    public int getChapterNumber(String book){
+    public int getChapterCount(String book){
         int result = 0;
 
         try{
-            result = this.chapterNum.getInt(book);
+            result = chapcounts.getInt(book);
         } catch (JSONException e) {
             e.printStackTrace();
         }

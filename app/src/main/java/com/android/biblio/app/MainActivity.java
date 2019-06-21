@@ -1,13 +1,13 @@
 package com.android.biblio.app;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // creates the popup windows for book and chapter
-        bookDialog = new Dialog(this);
-        chapterDialog = new Dialog(this);
+        //bookDialog = new Dialog(this);
+        //chapterDialog = new Dialog(this);
 
         textView = findViewById(R.id.text);
 
@@ -45,49 +45,68 @@ public class MainActivity extends AppCompatActivity {
         chapterButton = findViewById(R.id.chapterButton);
         chapterButton.setText(String.valueOf(GlobalVariable.getInstance().getChapter()));
 
-        kjv = new JSONBible(this, "kjv.json", "reformattedKjv2.json", "chapterNum.json");
+        kjv = new JSONBible(this, "kjv.json", "reformattedKjv2.json", "chapterCount.json");
         GlobalVariable.getInstance().setKjv(kjv);
-    }
-
-    public void generateButtons(){
-        Button myButton = new Button(this);
-        myButton.setText("Add Me");
-
-        LinearLayout ll = (LinearLayout)findViewById(R.id.mainActivity);
-        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        ll.addView(myButton, lp);
     }
 
     // Generates a pop up of all books
     public void bookPopUp(View view){
-        Context context = this;
-        bookDialog.setContentView(R.layout.book_pop_up);
-        
-        bookDialog.show();
-    }
+        // make a popup builder
+        AlertDialog.Builder bookpopupDialog = new AlertDialog.Builder(this);
 
-    // Updates global variable when click on new book
-    public void changeBook(View v){
-        String newBook = v.getTag().toString();
-        GlobalVariable.getInstance().setBook(newBook);
+        // inflate the view, but keep a reference to it
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.book_pop_up, null);
+        bookpopupDialog.setView(dialogView);
+        AlertDialog bookgridPane = bookpopupDialog.create();
 
-        bookButton.setText(newBook);
-        bookDialog.dismiss();
+        // get the linear layout and add the button(s)
+        String[] old_test = {"Gen", "Exod", "Lev", "Num", "Deut", "Josh",
+                            "Judg", "Ruth", "1Sam", "2Sam", "1Kgs", "1Chr",
+                            "2Chr", "Ezra", "Neh", "Esth", "Job", "Ps",
+                            "Prov", "Eccl", "Song", "Isa", "Jer", "Lam",
+                            "Ezek", "Dan", "Hos", "Joel", "Amos", "Obad",
+                            "Jona", "Mic", "Nah", "Hab", "Zeph", "Hag",
+                            "Zech", "Mal"};
+        String[] new_test = {"Matt", "Mark", "Luke", "John",
+                            "Acts", "Rom", "1Cor", "2Cor", "Gal", "Eph",
+                            "Phil", "Col", "1Thess", "2Thess", "1Tim", "2Tim",
+                            "Titus", "Phlm", "Heb", "Jas", "1Pet", "2Pet",
+                            "1John", "2John", "3John", "Jude", "Rev"};
+        GridView grid_oldtest = dialogView.findViewById(R.id.buttongrid_oldtest);
+        grid_oldtest.setAdapter(new ButtonGridAdapter(this, bookgridPane, bookButton, old_test, true));
+        GridView grid_newtest = dialogView.findViewById(R.id.buttongrid_newtest);
+        grid_newtest.setAdapter(new ButtonGridAdapter(this, bookgridPane, bookButton, new_test, true));
+
+        // display the dialog
+        bookgridPane.show();
     }
 
     // Generates a pop up of all the chapters for given book
     public void chapterPopUp(View view){
-        chapterDialog.setContentView(R.layout.chapter_pop_up);
-        chapterDialog.show();
-    }
+        // make a popup builder
+        AlertDialog.Builder chapterpopupDialog = new AlertDialog.Builder(this);
 
-    // Updates global variable when click on new chapter
-    public void changeChapter(View v){
-        int newChapter = Integer.parseInt(v.getTag().toString());
-        GlobalVariable.getInstance().setChapter(newChapter);
+        // inflate the view, but keep a reference to it
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.chapter_pop_up, null);
+        chapterpopupDialog.setView(dialogView);
+        AlertDialog chaptergridPane = chapterpopupDialog.create();
 
-        chapterButton.setText(v.getTag().toString());
-        chapterDialog.dismiss();
+        // create the button text dynamically depending on number of chapters in the selected book
+        String book = GlobalVariable.getInstance().getBook();
+        int numChapters = kjv.getChapterCount(book);
+        String[] chapnums = new String[numChapters];
+        for (int i = 0; i < numChapters; i++) {
+            chapnums[i] = "" + (i+1);
+        }
+
+        // get the layout and add the button(s)
+        GridView grid_chapters = dialogView.findViewById(R.id.buttongrid_chapters);
+        grid_chapters.setAdapter(new ButtonGridAdapter(this, chaptergridPane, chapterButton, chapnums, false));
+
+        // display the dialog
+        chaptergridPane.show();
     }
 
     // Moves on to the next page with json result of verse
@@ -97,11 +116,6 @@ public class MainActivity extends AppCompatActivity {
         String resultVerse = kjv.get(GlobalVariable.getInstance().getBook(), GlobalVariable.getInstance().getChapter());
         textView.setText(resultVerse);
 
-//        Context context = getApplicationContext();
-//        CharSequence text = resultVerse;
-//        int duration = Toast.LENGTH_LONG;
-//        Toast toast = Toast.makeText(context, text, duration);
-//        toast.show();
         intent.putExtra("json", resultVerse);
         startActivity(intent);
         finish();
