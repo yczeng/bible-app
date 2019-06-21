@@ -61,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
     public void bookPopUp(View view){
         // make a popup builder
         AlertDialog.Builder bookpopupDialog = new AlertDialog.Builder(this);
-        bookpopupDialog.setTitle("bookpopupdialog");
-        bookpopupDialog.setMessage("book choose it");
 
         // inflate the view, but keep a reference to it
         LayoutInflater inflater = this.getLayoutInflater();
@@ -70,11 +68,22 @@ public class MainActivity extends AppCompatActivity {
         bookpopupDialog.setView(dialogView);
 
         // get the linear layout and add the button(s)
-        String[] test_str = {"Gen", "Lev", "Ps",
-                            "Num", "Bad", "Matt",
-                            "Amos", "Dan", "Rom"};
-        GridView gridview = dialogView.findViewById(R.id.bookpopup_layout);
-        gridview.setAdapter(new ButtonGridAdapter(this, bookButton, test_str, true));
+        String[] old_test = {"Gen", "Exod", "Lev", "Num", "Deut", "Josh",
+                            "Judg", "Ruth", "1Sam", "2Sam", "1Kgs", "1Chr",
+                            "2Chr", "Ezra", "Neh", "Esth", "Job", "Ps",
+                            "Prov", "Eccl", "Song", "Isa", "Jer", "Lam",
+                            "Ezek", "Dan", "Hos", "Joel", "Amos", "Obad",
+                            "Jona", "Mic", "Nah", "Hab", "Zeph", "Hag",
+                            "Zech", "Mal"};
+        String[] new_test = {"Matt", "Mark", "Luke", "John",
+                            "Acts", "Rom", "1Cor", "2Cor", "Gal", "Eph",
+                            "Phil", "Col", "1Thess", "2Thess", "1Tim", "2Tim",
+                            "Titus", "Phlm", "Heb", "Jas", "1Pet", "2Pet",
+                            "1John", "2John", "3John", "Jude", "Rev"};
+        GridView grid_oldtest = dialogView.findViewById(R.id.buttongrid_oldtest);
+        grid_oldtest.setAdapter(new ButtonGridAdapter(this, bookButton, old_test, true));
+        GridView grid_newtest = dialogView.findViewById(R.id.buttongrid_newtest);
+        grid_newtest.setAdapter(new ButtonGridAdapter(this, bookButton, new_test, true));
 
         // display the dialog
         AlertDialog myAlert = bookpopupDialog.create();

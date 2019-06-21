@@ -44,8 +44,9 @@ public class ButtonGridAdapter extends BaseAdapter {
 
         if (view == null) {
             button = new Button(context);
-            button.setLayoutParams(new GridView.LayoutParams(120, 80));
+            button.setLayoutParams(new GridView.LayoutParams(110, 60));
             button.setPadding(0, 0, 0, 0);
+            button.setTextSize((float)11);
 
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
