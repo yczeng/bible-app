@@ -20,7 +20,7 @@ public class JSONBible{
 
     public JSONBible(Context context, String kjv, String kjvDict, String kjvChapterCounts){
         this.context = context;
-        this.jsonarray = JSONBible.readJSONArray(context,kjv);
+        this.jsonarray = JSONBible.readJSONArray(context, kjv);
         this.jsonobj = JSONBible.readJSONObject(context,kjvDict);
         this.chapcounts = JSONBible.readJSONObject(context, kjvChapterCounts);
     }
@@ -37,12 +37,28 @@ public class JSONBible{
             e.printStackTrace();
         }
 
+        JSONArray chapterArray;
         try {
-            return obj.getJSONArray("" + chapter).toString();
+            chapterArray = obj.getJSONArray("" + chapter);
+
         } catch (JSONException e) {
             e.printStackTrace();
+            chapterArray = null;
         }
-        return "blah";
+
+        String result = "";
+
+        for (int i = 0; i < chapterArray.length(); i++) {
+            String verse = null;
+            try {
+                verse = chapterArray.get(i).toString();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            result = result + Integer.toString(i+1) + "  " + verse + "\n";
+        }
+
+        return result;
     }
 
     public String search(String text){
