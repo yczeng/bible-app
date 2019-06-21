@@ -14,21 +14,8 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/biblepager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
-        android:layout_above="@+id/botnavview"/>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/botnavview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="-2dp" />
+        android:theme="?attr/actionBarTheme"
+        android:layout_alignParentTop="true"/>
 
     <Button
         android:id="@+id/reader_bookButton"
@@ -49,5 +36,20 @@
         android:layout_marginEnd="97dp"
         android:onClick="chapterPopUp"
         android:text="Chapter" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/biblepager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/botnavview"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/botnavview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        app:menu="@menu/menu_botnavbar" />
 
 </RelativeLayout>
