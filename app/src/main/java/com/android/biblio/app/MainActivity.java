@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.book_pop_up, null);
         bookpopupDialog.setView(dialogView);
+        AlertDialog buttongridPane = bookpopupDialog.create();
 
         // get the linear layout and add the button(s)
         String[] old_test = {"Gen", "Exod", "Lev", "Num", "Deut", "Josh",
@@ -81,22 +82,12 @@ public class MainActivity extends AppCompatActivity {
                             "Titus", "Phlm", "Heb", "Jas", "1Pet", "2Pet",
                             "1John", "2John", "3John", "Jude", "Rev"};
         GridView grid_oldtest = dialogView.findViewById(R.id.buttongrid_oldtest);
-        grid_oldtest.setAdapter(new ButtonGridAdapter(this, bookButton, old_test, true));
+        grid_oldtest.setAdapter(new ButtonGridAdapter(this, buttongridPane, bookButton, old_test, true));
         GridView grid_newtest = dialogView.findViewById(R.id.buttongrid_newtest);
-        grid_newtest.setAdapter(new ButtonGridAdapter(this, bookButton, new_test, true));
+        grid_newtest.setAdapter(new ButtonGridAdapter(this, buttongridPane, bookButton, new_test, true));
 
         // display the dialog
-        AlertDialog myAlert = bookpopupDialog.create();
-        myAlert.show();
-    }
-
-    // Updates global variable when click on new book
-    public void changeBook(View v){
-        String newBook = v.getTag().toString();
-        GlobalVariable.getInstance().setBook(newBook);
-
-        bookButton.setText(newBook);
-        bookDialog.dismiss();
+        buttongridPane.show();
     }
 
     // Generates a pop up of all the chapters for given book

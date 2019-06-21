@@ -1,5 +1,6 @@
 package com.android.biblio.app;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,14 @@ import androidx.arch.core.util.Function;
 public class ButtonGridAdapter extends BaseAdapter {
 
     private Context context;
+    private Dialog parent;
     private Button mainButton;
     private String[] buttons;
     private boolean isBookGrid;
 
-    public ButtonGridAdapter(Context context, Button mainButton, String[] buttons, boolean isBookGrid) {
+    public ButtonGridAdapter(Context context, Dialog parent, Button mainButton, String[] buttons, boolean isBookGrid) {
         this.context = context;
+        this.parent = parent;
         this.mainButton = mainButton;
         this.buttons = buttons;
         this.isBookGrid = isBookGrid;
@@ -60,6 +63,7 @@ public class ButtonGridAdapter extends BaseAdapter {
                         GlobalVariable.getInstance().setChapter(newChapter);
                         mainButton.setText(newChapter_str);
                     }
+                    parent.dismiss();
                 }
             });
         } else {
