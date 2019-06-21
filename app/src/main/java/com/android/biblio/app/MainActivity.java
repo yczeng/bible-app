@@ -1,7 +1,6 @@
 package com.android.biblio.app;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,32 +11,16 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 
 public class MainActivity extends AppCompatActivity {
-    private TextView textView;
-
-    Dialog bookDialog;
     Button bookButton;
-    Dialog chapterDialog;
     Button chapterButton;
-
-    JSONArray verseList;
-    JSONObject bibleMap;
     JSONBible kjv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // creates the popup windows for book and chapter
-        //bookDialog = new Dialog(this);
-        //chapterDialog = new Dialog(this);
-
-        textView = findViewById(R.id.text);
 
         bookButton = findViewById(R.id.bookButton);
         bookButton.setText(GlobalVariable.getInstance().getBook());
@@ -112,9 +95,7 @@ public class MainActivity extends AppCompatActivity {
     // Moves on to the next page with json result of verse
     public void moveActivity(View view) {
         Intent intent = new Intent(this, ReaderActivity.class);
-
         String resultVerse = kjv.get(GlobalVariable.getInstance().getBook(), GlobalVariable.getInstance().getChapter());
-        textView.setText(resultVerse);
 
         intent.putExtra("json", resultVerse);
         startActivity(intent);
