@@ -31,7 +31,7 @@ public class ReaderActivity extends AppCompatActivity {
 
         // set chapter button to be current chapter
         chapterButton = findViewById(R.id.reader_chapterButton);
-        chapterButton.setText(String.valueOf(GlobalVariable.getInstance().getChapter()));
+//        chapterButton.setText(String.valueOf(GlobalVariable.getInstance().getChapter()));
 
         // grab references to global variables
         kjv = GlobalVariable.getInstance().getKjv();
@@ -51,7 +51,8 @@ public class ReaderActivity extends AppCompatActivity {
         // create the viewpager and corresponding adapter
         // that will scroll through the chapterfragments
         ViewPager biblePager = findViewById(R.id.biblepager);
-        biblePager.setAdapter(new ReaderPagerAdapter(getSupportFragmentManager(), arrList));
+        biblePager.setAdapter(new ReaderPagerAdapter(getSupportFragmentManager(), arrList, chapterButton));
+        biblePager.setCurrentItem(chapter-1);
     }
 
     // Generates a pop up of all books
