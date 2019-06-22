@@ -2,12 +2,14 @@ package com.android.biblio.app;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +26,7 @@ public class ReaderActivity extends AppCompatActivity {
     Button chapterButton;
     JSONBible kjv;
     ViewPager biblePager;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +106,35 @@ public class ReaderActivity extends AppCompatActivity {
                 }
             }
         });
+
+    }
+
+    public void searchPopUp(View view){
+        // make a popup builder
+        AlertDialog.Builder searchpopupDialog = new AlertDialog.Builder(this);
+
+        // inflate the view, but keep a reference to it
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.search_pop_up, null);
+
+        searchpopupDialog.setView(dialogView);
+
+//        searchView = findViewById(R.id.searchView);
+//
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                Log.i("search_view", "search worked");
+//                return true;
+//            }
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                return true;
+//            }
+//        });
+
+        AlertDialog searchgridPanel = searchpopupDialog.create();
+        searchgridPanel.show();
     }
 
     // Generates a pop up of all books
