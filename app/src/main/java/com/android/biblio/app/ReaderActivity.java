@@ -1,6 +1,7 @@
 package com.android.biblio.app;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ public class ReaderActivity extends AppCompatActivity {
     Button bookButton;
     Button chapterButton;
     JSONBible kjv;
+    ViewPager biblePager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,7 @@ public class ReaderActivity extends AppCompatActivity {
 
         // create the viewpager and corresponding adapter
         // that will scroll through the chapter fragments
-        final ViewPager biblePager = findViewById(R.id.biblepager);
+        biblePager = findViewById(R.id.biblepager);
         biblePager.setAdapter(new ReaderPagerAdapter(getSupportFragmentManager(), arrList, chapterButton));
         biblePager.setCurrentItem(chapter-1);
         biblePager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
@@ -130,9 +132,10 @@ public class ReaderActivity extends AppCompatActivity {
                 "Titus", "Phlm", "Heb", "Jas", "1Pet", "2Pet",
                 "1John", "2John", "3John", "Jude", "Rev"};
         GridView grid_oldtest = dialogView.findViewById(R.id.buttongrid_oldtest);
-        grid_oldtest.setAdapter(new ButtonGridAdapter(this, bookgridPane, bookButton, old_test, true));
+        grid_oldtest.setAdapter(new ButtonGridAdapter(this, bookgridPane, bookButton, old_test, true, true, biblePager));
+
         GridView grid_newtest = dialogView.findViewById(R.id.buttongrid_newtest);
-        grid_newtest.setAdapter(new ButtonGridAdapter(this, bookgridPane, bookButton, new_test, true));
+        grid_newtest.setAdapter(new ButtonGridAdapter(this, bookgridPane, bookButton, new_test, true, true, biblePager));
 
         // display the dialog
         bookgridPane.show();
@@ -159,7 +162,7 @@ public class ReaderActivity extends AppCompatActivity {
 
         // get the layout and add the button(s)
         GridView grid_chapters = dialogView.findViewById(R.id.buttongrid_chapters);
-        grid_chapters.setAdapter(new ButtonGridAdapter(this, chaptergridPane, chapterButton, chapnums, false));
+        grid_chapters.setAdapter(new ButtonGridAdapter(this, chaptergridPane, chapterButton, chapnums, false, true, biblePager));
 
         // display the dialog
         chaptergridPane.show();

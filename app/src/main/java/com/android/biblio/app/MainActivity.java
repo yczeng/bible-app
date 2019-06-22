@@ -10,6 +10,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -56,10 +57,13 @@ public class MainActivity extends AppCompatActivity {
                             "Phil", "Col", "1Thess", "2Thess", "1Tim", "2Tim",
                             "Titus", "Phlm", "Heb", "Jas", "1Pet", "2Pet",
                             "1John", "2John", "3John", "Jude", "Rev"};
+        ViewPager biblePager = null;
+
+        // biblePager is not needed here - optional parameter that is null in this case.
         GridView grid_oldtest = dialogView.findViewById(R.id.buttongrid_oldtest);
-        grid_oldtest.setAdapter(new ButtonGridAdapter(this, bookgridPane, bookButton, old_test, true));
+        grid_oldtest.setAdapter(new ButtonGridAdapter(this, bookgridPane, bookButton, old_test, true, false, biblePager));
         GridView grid_newtest = dialogView.findViewById(R.id.buttongrid_newtest);
-        grid_newtest.setAdapter(new ButtonGridAdapter(this, bookgridPane, bookButton, new_test, true));
+        grid_newtest.setAdapter(new ButtonGridAdapter(this, bookgridPane, bookButton, new_test, true, false, biblePager));
 
         // display the dialog
         bookgridPane.show();
@@ -86,7 +90,10 @@ public class MainActivity extends AppCompatActivity {
 
         // get the layout and add the button(s)
         GridView grid_chapters = dialogView.findViewById(R.id.buttongrid_chapters);
-        grid_chapters.setAdapter(new ButtonGridAdapter(this, chaptergridPane, chapterButton, chapnums, false));
+
+        // biblePager is not needed here - optional parameter that is null in this case.
+        ViewPager biblePager = null;
+        grid_chapters.setAdapter(new ButtonGridAdapter(this, chaptergridPane, chapterButton, chapnums, false, false, biblePager));
 
         // display the dialog
         chaptergridPane.show();
