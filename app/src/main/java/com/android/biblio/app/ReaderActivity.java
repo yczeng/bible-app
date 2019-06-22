@@ -130,10 +130,12 @@ public class ReaderActivity extends AppCompatActivity {
                 "Titus", "Phlm", "Heb", "Jas", "1Pet", "2Pet",
                 "1John", "2John", "3John", "Jude", "Rev"};
         GridView grid_oldtest = dialogView.findViewById(R.id.buttongrid_oldtest);
-        grid_oldtest.setAdapter(new ButtonGridAdapter(this, bookgridPane, bookButton, old_test, true, true, biblePager));
+        grid_oldtest.setAdapter(new ButtonGridAdapter(this, getSupportFragmentManager(),
+                bookgridPane, bookButton, chapterButton, old_test, true, true, biblePager));
 
         GridView grid_newtest = dialogView.findViewById(R.id.buttongrid_newtest);
-        grid_newtest.setAdapter(new ButtonGridAdapter(this, bookgridPane, bookButton, new_test, true, true, biblePager));
+        grid_newtest.setAdapter(new ButtonGridAdapter(this, getSupportFragmentManager(),
+                bookgridPane, bookButton, chapterButton, new_test, true, true, biblePager));
 
         // display the dialog
         bookgridPane.show();
@@ -160,7 +162,8 @@ public class ReaderActivity extends AppCompatActivity {
 
         // get the layout and add the button(s)
         GridView grid_chapters = dialogView.findViewById(R.id.buttongrid_chapters);
-        grid_chapters.setAdapter(new ButtonGridAdapter(this, chaptergridPane, chapterButton, chapnums, false, true, biblePager));
+        grid_chapters.setAdapter(new ButtonGridAdapter(this, null, chaptergridPane,
+                chapterButton, null, chapnums, false, true, biblePager));
 
         // display the dialog
         chaptergridPane.show();
