@@ -62,10 +62,10 @@ public class MainActivity extends AppCompatActivity {
         // biblePager is not needed here - optional parameter that is null in this case.
         GridView grid_oldtest = dialogView.findViewById(R.id.buttongrid_oldtest);
         grid_oldtest.setAdapter(new ButtonGridAdapter(this, null, bookgridPane,
-                bookButton, null, old_test, true, false, biblePager));
+                bookButton, chapterButton, old_test, true, false, biblePager));
         GridView grid_newtest = dialogView.findViewById(R.id.buttongrid_newtest);
         grid_newtest.setAdapter(new ButtonGridAdapter(this, null, bookgridPane,
-                bookButton, null, new_test, true, false, biblePager));
+                bookButton, chapterButton, new_test, true, false, biblePager));
 
         // display the dialog
         bookgridPane.show();

@@ -87,8 +87,9 @@ public class ButtonGridAdapter extends BaseAdapter {
                             arrList = arr.toArray(arrList);
                             biblePager.setAdapter(new ReaderPagerAdapter(fm, arrList, mainButton));
                             biblePager.setCurrentItem(0);
-                            chapterButton.setText("1");
                         }
+                        GlobalVariable.getInstance().setChapter(1);
+                        chapterButton.setText("1");
 
                     } else {
                         String newChapter_str = v.getTag().toString();
