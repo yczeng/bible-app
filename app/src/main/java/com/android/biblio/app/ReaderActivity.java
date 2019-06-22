@@ -10,9 +10,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.SearchView;
+import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.SeekBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ButtonBarLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -85,25 +89,96 @@ public class ReaderActivity extends AppCompatActivity {
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                AlertDialog popupDialog = null;
                 switch(menuItem.getItemId()) {
                     case R.id.botnavbar_bookmark:
-                        generic_popup(R.layout.bookmark_popup);
-                        return true;
+                        popupDialog = generic_popup(R.layout.bookmark_popup);
+                        break;
                     case R.id.botnavbar_compare:
-                        generic_popup(R.layout.compare_popup);
-                        return true;
+                        popupDialog = generic_popup(R.layout.compare_popup);
+                        break;
                     case R.id.botnavbar_notes:
-                        generic_popup(R.layout.notes_popup);
-                        return true;
+                        popupDialog = generic_popup(R.layout.notes_popup);
+                        break;
                     case R.id.botnavbar_autoread:
-                        generic_popup(R.layout.autoread_popup);
-                        return true;
+                        popupDialog = generic_popup(R.layout.autoread_popup);
+                        break;
                     case R.id.botnavbar_textoptions:
-                        generic_popup(R.layout.textopts_popup);
-                        return true;
+                        popupDialog = generic_popup(R.layout.textopts_popup);
+                        int textTheme = GlobalVariable.getInstance().getTextThemeRadioButton();
+                        int textScale = GlobalVariable.getInstance().getTextScaleSliderProgress();
+                        int textFont = GlobalVariable.getInstance().getTextFontFamButton();
+
+                        SeekBar slider = popupDialog.findViewById(R.id.fontslider);
+                        slider.setProgress(textScale);
+                        slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                            @Override
+                            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                                GlobalVariable.getInstance().setTextScaleSliderProgress(i);
+                                Log.i("progress", "" + i);
+                            }
+
+                            @Override
+                            public void onStartTrackingTouch(SeekBar seekBar) {
+
+                            }
+
+                            @Override
+                            public void onStopTrackingTouch(SeekBar seekBar) {
+
+                            }
+                        });
+
+                        RadioButton theme0 = popupDialog.findViewById(R.id.themebutton_light);
+                        RadioButton theme1 = popupDialog.findViewById(R.id.themebutton_cream);
+                        RadioButton theme2 = popupDialog.findViewById(R.id.themebutton_dark);
+                        switch(textTheme) {
+                            case 0:
+                                theme0.setChecked(true);
+                                theme1.setChecked(false);
+                                theme2.setChecked(false);
+                                break;
+                            case 1:
+                                theme0.setChecked(false);
+                                theme1.setChecked(true);
+                                theme2.setChecked(false);
+                                break;
+                            case 2:
+                                theme0.setChecked(false);
+                                theme1.setChecked(false);
+                                theme2.setChecked(true);
+                                break;
+                            default:
+                                break;
+                        }
+                        theme0.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                GlobalVariable.getInstance().setTextThemeRadioButton(0);
+                            }
+                        });
+                        theme1.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                GlobalVariable.getInstance().setTextThemeRadioButton(1);
+                            }
+                        });
+                        theme2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                GlobalVariable.getInstance().setTextThemeRadioButton(2);
+                            }
+                        });
+
+
+
+
+
+                        break;
                     default:
                         return false;
                 }
+                return true;
             }
         });
 
@@ -201,12 +276,12 @@ public class ReaderActivity extends AppCompatActivity {
         chaptergridPane.show();
     }
 
-    private void generic_popup(int layout) {
+    private AlertDialog generic_popup(int layout) {
         // make a popup builder
         AlertDialog.Builder popupDialogBuilder = new AlertDialog.Builder(this);
 
         // inflate the view, but keep a reference to it
-        LayoutInflater inflater = this.getLayoutInflater();
+        LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(layout, null);
         popupDialogBuilder.setView(dialogView);
         AlertDialog popupDialog = popupDialogBuilder.create();
@@ -221,5 +296,6 @@ public class ReaderActivity extends AppCompatActivity {
             npe.printStackTrace();
         }
         popupDialog.show();
+        return popupDialog;
     }
 }
