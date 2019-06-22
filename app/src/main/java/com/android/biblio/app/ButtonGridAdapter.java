@@ -9,22 +9,32 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import androidx.arch.core.util.Function;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ButtonGridAdapter extends BaseAdapter {
 
     private Context context;
+    private FragmentManager fm;
     private Dialog parent;
     private Button mainButton;
+    private Button chapterButton;
     private String[] buttons;
     private boolean isBookGrid;
     private boolean isReaderActivity;
     private ViewPager biblePager;
+    private JSONBible kjv;
 
-    public ButtonGridAdapter(Context context, Dialog parent, Button mainButton, String[] buttons, boolean isBookGrid, boolean isReaderActivity, ViewPager biblePager) {
+    public ButtonGridAdapter(Context context, FragmentManager fm, Dialog parent, Button mainButton, Button chapterButton,
+                             String[] buttons, boolean isBookGrid, boolean isReaderActivity, ViewPager biblePager) {
         this.context = context;
+        this.fm = fm;
         this.parent = parent;
         this.mainButton = mainButton;
+        this.chapterButton = chapterButton;
         this.buttons = buttons;
         this.isBookGrid = isBookGrid;
         this.isReaderActivity = isReaderActivity;
@@ -62,6 +72,24 @@ public class ButtonGridAdapter extends BaseAdapter {
                         String newBook = v.getTag().toString();
                         GlobalVariable.getInstance().setBook(newBook);
                         mainButton.setText(newBook);
+                        if (isReaderActivity){
+
+                            kjv = GlobalVariable.getInstance().getKjv();
+
+                            // create the array of strings containing the chapters' texts
+                            // for this book
+                            int chapterNum = kjv.getChapterCount(newBook);
+                            List<String> arr = new ArrayList<String>();
+                            for (int i = 1; i <= chapterNum; i++){
+                                arr.add(kjv.get(newBook, i));
+                            }
+                            String[] arrList = new String[arr.size()];
+                            arrList = arr.toArray(arrList);
+                            biblePager.setAdapter(new ReaderPagerAdapter(fm, arrList, mainButton));
+                            biblePager.setCurrentItem(0);
+                            chapterButton.setText("1");
+                        }
+
                     } else {
                         String newChapter_str = v.getTag().toString();
                         int newChapter = Integer.parseInt(newChapter_str);
