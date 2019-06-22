@@ -42,10 +42,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
-        android:layout_above="@+id/botnavview"/>
+        android:layout_above="@+id/botnavbar"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/botnavview"
+        android:id="@+id/botnavbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

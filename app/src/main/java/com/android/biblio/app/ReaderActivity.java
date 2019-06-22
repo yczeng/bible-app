@@ -2,13 +2,19 @@ package com.android.biblio.app;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,19 +61,46 @@ public class ReaderActivity extends AppCompatActivity {
         biblePager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
 
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
             public void onPageSelected(int position) {
                 GlobalVariable.getInstance().setChapter(position);
                 chapterButton.setText("" + (position + 1));
             }
 
             @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
             public void onPageScrollStateChanged(int state) {
 
+            }
+        });
+
+        final BottomNavigationView botnavbar = findViewById(R.id.botnavbar);
+        botnavbar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch(menuItem.getItemId()) {
+                    case R.id.botnavbar_bookmark:
+                        generic_popup(R.layout.bookmark_popup);
+                        return true;
+                    case R.id.botnavbar_compare:
+                        generic_popup(R.layout.compare_popup);
+                        return true;
+                    case R.id.botnavbar_notes:
+                        generic_popup(R.layout.notes_popup);
+                        return true;
+                    case R.id.botnavbar_readaloud:
+                        generic_popup(R.layout.readaloud_popup);
+                        return true;
+                    case R.id.botnavbar_textoptions:
+                        generic_popup(R.layout.textopts_popup);
+                        return true;
+                    default:
+                        return false;
+                }
             }
         });
     }
@@ -130,5 +163,27 @@ public class ReaderActivity extends AppCompatActivity {
 
         // display the dialog
         chaptergridPane.show();
+    }
+
+    private void generic_popup(int layout) {
+        // make a popup builder
+        AlertDialog.Builder popupDialogBuilder = new AlertDialog.Builder(this);
+
+        // inflate the view, but keep a reference to it
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(layout, null);
+        popupDialogBuilder.setView(dialogView);
+        AlertDialog popupDialog = popupDialogBuilder.create();
+
+        // display the dialog
+        try{
+            popupDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+            WindowManager.LayoutParams wmlp = popupDialog.getWindow().getAttributes();
+            BottomNavigationView botnavbar = findViewById(R.id.botnavbar);
+            wmlp.y = botnavbar.getTop() - botnavbar.getBottom()/2 - botnavbar.getHeight();
+        } catch (NullPointerException npe) {
+            npe.printStackTrace();
+        }
+        popupDialog.show();
     }
 }
