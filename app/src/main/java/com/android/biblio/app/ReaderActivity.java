@@ -92,8 +92,8 @@ public class ReaderActivity extends AppCompatActivity {
                     case R.id.botnavbar_notes:
                         generic_popup(R.layout.notes_popup);
                         return true;
-                    case R.id.botnavbar_readaloud:
-                        generic_popup(R.layout.readaloud_popup);
+                    case R.id.botnavbar_autoread:
+                        generic_popup(R.layout.autoread_popup);
                         return true;
                     case R.id.botnavbar_textoptions:
                         generic_popup(R.layout.textopts_popup);

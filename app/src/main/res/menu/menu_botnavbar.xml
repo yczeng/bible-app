@@ -6,7 +6,7 @@
         android:title="textopts" />
 
     <item
-        android:id="@+id/botnavbar_readaloud"
+        android:id="@+id/botnavbar_autoread"
         android:icon="@drawable/ic_launcher_foreground"
         android:title="readaloud" />
 
