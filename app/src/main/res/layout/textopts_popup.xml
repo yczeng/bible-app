@@ -7,78 +7,169 @@
     android:layout_height="match_parent">
 
     <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="210dp"
-        android:layout_height="70dp"
+        android:id="@+id/themebuttons"
+        android:layout_width="146dp"
+        android:layout_height="49dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView12"
+        android:orientation="horizontal"
+        android:paddingStart="14dp"
+        android:paddingEnd="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/fontslider"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/themebutton_light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:checked="true"
+            android:scaleX="1.25"
+            android:scaleY="1.25"
+            app:buttonTint="#C7C7C7" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/themebutton_cream"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:scaleX="1.25"
+            android:scaleY="1.25"
+            app:buttonTint="#A79765" />
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/themebutton_dark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:scaleX="1.25"
+            android:scaleY="1.25"
+            app:buttonTint="#555555" />
     </RadioGroup>
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/smallfontA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="textops popup"
-        app:layout_constraintBottom_toTopOf="@+id/textView11"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="A"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/fontslider"
+        app:layout_constraintEnd_toStartOf="@+id/fontslider"
+        app:layout_constraintHorizontal_bias="0.942"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fontslider"
+        app:layout_constraintVertical_bias="0.333" />
 
     <SeekBar
-        android:id="@+id/seekBar"
+        android:id="@+id/fontslider"
         android:layout_width="155dp"
         android:layout_height="22dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/fontfamilyselector"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/bigfontA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="A"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/fontslider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.02"
+        app:layout_constraintStart_toEndOf="@+id/fontslider"
+        app:layout_constraintTop_toTopOf="@+id/fontslider"
+        app:layout_constraintVertical_bias="0.6" />
+
+    <LinearLayout style="?android:attr/buttonBarStyle"
+        android:id="@+id/fontfamilyselector"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="bg color"
-        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/fontfam_mono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="0dp"
+            android:gravity="center"
+            android:text="Aa"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:fontFamily="monospace" />
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="font size"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/fontfam_serifmono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="0dp"
+            android:gravity="center"
+            android:text="Aa"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:fontFamily="serif-monospace" />
+
+        <Button style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/fontfam_serif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="0dp"
+            android:gravity="center"
+            android:text="Aa"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:fontFamily="serif" />
+
+        <Button style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/fontfam_sansserif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="0dp"
+            android:gravity="center"
+            android:text="Aa"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:fontFamily="sans-serif" />
+
+        <Button style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/fontfam_sansserifcondlight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="0dp"
+            android:gravity="center"
+            android:text="Aa"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:fontFamily="sans-serif-condensed-light" />
+
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
