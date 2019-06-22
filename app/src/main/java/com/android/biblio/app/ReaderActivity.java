@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -31,12 +30,12 @@ public class ReaderActivity extends AppCompatActivity {
 
         // set chapter button to be current chapter
         chapterButton = findViewById(R.id.reader_chapterButton);
-//        chapterButton.setText(String.valueOf(GlobalVariable.getInstance().getChapter()));
+        chapterButton.setText(String.valueOf(GlobalVariable.getInstance().getChapter()));
 
         // grab references to global variables
         kjv = GlobalVariable.getInstance().getKjv();
         String book = GlobalVariable.getInstance().getBook();
-        int chapter = GlobalVariable.getInstance().getChapter();
+        final int chapter = GlobalVariable.getInstance().getChapter();
 
         // create the array of strings containing the chapters' texts
         // for this book
@@ -49,10 +48,28 @@ public class ReaderActivity extends AppCompatActivity {
         arrList = arr.toArray(arrList);
 
         // create the viewpager and corresponding adapter
-        // that will scroll through the chapterfragments
-        ViewPager biblePager = findViewById(R.id.biblepager);
+        // that will scroll through the chapter fragments
+        final ViewPager biblePager = findViewById(R.id.biblepager);
         biblePager.setAdapter(new ReaderPagerAdapter(getSupportFragmentManager(), arrList, chapterButton));
         biblePager.setCurrentItem(chapter-1);
+        biblePager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                GlobalVariable.getInstance().setChapter(position);
+                chapterButton.setText("" + (position + 1));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     // Generates a pop up of all books

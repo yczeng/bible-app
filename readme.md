@@ -11,6 +11,16 @@ Toast toast = Toast.makeText(context, text, duration);
 toast.show();
 ```
 
+
+### Printing to Log
+
+'''
+Log.i("tag", "msg");
+'''
+
+open LogCat at the bottom of AndroidStudio and search for "tag" to filter for only the relevant log messages
+
+
 ### Running Tests
 test/ includes TestMain.java and JSONBible.java
 TestMain.java is a testing suite for the classfile JSONBible.java, which should take in a JSONArray in the constructor and have some helper methods to access important data from the bible and simplify those actions.
