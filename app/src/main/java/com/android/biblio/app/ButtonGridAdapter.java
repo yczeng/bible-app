@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import androidx.arch.core.util.Function;
+import androidx.viewpager.widget.ViewPager;
 
 public class ButtonGridAdapter extends BaseAdapter {
 
@@ -17,13 +18,17 @@ public class ButtonGridAdapter extends BaseAdapter {
     private Button mainButton;
     private String[] buttons;
     private boolean isBookGrid;
+    private boolean isReaderActivity;
+    private ViewPager biblePager;
 
-    public ButtonGridAdapter(Context context, Dialog parent, Button mainButton, String[] buttons, boolean isBookGrid) {
+    public ButtonGridAdapter(Context context, Dialog parent, Button mainButton, String[] buttons, boolean isBookGrid, boolean isReaderActivity, ViewPager biblePager) {
         this.context = context;
         this.parent = parent;
         this.mainButton = mainButton;
         this.buttons = buttons;
         this.isBookGrid = isBookGrid;
+        this.isReaderActivity = isReaderActivity;
+        this.biblePager = biblePager;
     }
 
     @Override
@@ -62,6 +67,9 @@ public class ButtonGridAdapter extends BaseAdapter {
                         int newChapter = Integer.parseInt(newChapter_str);
                         GlobalVariable.getInstance().setChapter(newChapter);
                         mainButton.setText(newChapter_str);
+                        if (isReaderActivity) {
+                            biblePager.setCurrentItem(newChapter-1);
+                        }
                     }
                     parent.dismiss();
                 }
