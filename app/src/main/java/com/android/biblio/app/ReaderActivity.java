@@ -13,6 +13,7 @@ import android.widget.SearchView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +32,7 @@ public class ReaderActivity extends AppCompatActivity {
     JSONBible kjv;
     ViewPager biblePager;
     SearchView searchView;
+    TextView searchResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,19 +196,22 @@ public class ReaderActivity extends AppCompatActivity {
 
         searchpopupDialog.setView(dialogView);
 
-//        searchView = findViewById(R.id.searchView);
-//
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                Log.i("search_view", "search worked");
-//                return true;
-//            }
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                return true;
-//            }
-//        });
+        // searches within dialogView for the search box
+        searchView = dialogView.findViewById(R.id.searchViewDialog);
+        searchResults = dialogView.findViewById(R.id.searchResults);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.i("search_view", "search worked");
+                searchResults.setText("howDY THE SEARCH WORKED");
+                return true;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
+            }
+        });
 
         AlertDialog searchgridPanel = searchpopupDialog.create();
         searchgridPanel.show();
