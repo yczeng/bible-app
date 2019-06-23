@@ -37,6 +37,8 @@ public class SearchAdapter extends BaseAdapter {
         this.bookButton = bookButton;
         this.chapterButton = chapterButton;
         this.parent = parent;
+        this.biblePager = biblePager;
+        this.fm = fm;
     }
 
     @Override
@@ -67,7 +69,6 @@ public class SearchAdapter extends BaseAdapter {
 
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Log.i("searchClick", "a click was made");
                     String book = "";
                     int chapter = -1;
 
@@ -86,7 +87,6 @@ public class SearchAdapter extends BaseAdapter {
                     }
 
                     GlobalVariable.getInstance().setBook(book);
-
                     // WARNING FUTURE BUG ALERT. CHAPTER INITIALIZED AS -1!!!
                     // SO IF THIS BUGS, COULD BE CUZ OF THAT
                     GlobalVariable.getInstance().setChapter(chapter);
@@ -104,14 +104,8 @@ public class SearchAdapter extends BaseAdapter {
                     String[] arrList = new String[arr.size()];
                     arrList = arr.toArray(arrList);
 
-                    Log.i("searchBook", "book chosen:" + book);
-                    Log.i("searchChapter", "chapter chosen:" + chapter);
-//
-//                    biblePager.setAdapter(new ReaderPagerAdapter(fm, arrList, bookButton));
+                    biblePager.setAdapter(new ReaderPagerAdapter(fm, arrList, bookButton));
                     biblePager.setCurrentItem(chapter-1);
-
-//                    bookButton.setText(book);
-//                    chapterButton.setText(chapter);
                     parent.dismiss();
                 }
             });

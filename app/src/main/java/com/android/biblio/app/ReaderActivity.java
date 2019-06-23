@@ -204,7 +204,6 @@ public class ReaderActivity extends AppCompatActivity {
 
         // searches within dialogView for the search box
         searchView = dialogView.findViewById(R.id.searchViewDialog);
-        searchResults = dialogView.findViewById(R.id.searchResults);
 
         final GridView results_grid = dialogView.findViewById(R.id.buttongrid_searchresults);
         final AlertDialog searchgridPanel = searchpopupDialog.create();
@@ -214,11 +213,7 @@ public class ReaderActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 Log.i("search_view", "search worked");
                 JSONArray resultsJson = kjv.search(query);
-                String results = resultsJson.toString();
-
-                // BUG: bookButton, chapterButton, and biblePager aren't working
                 results_grid.setAdapter(new SearchAdapter(context, getSupportFragmentManager(), searchgridPanel, resultsJson, bookButton, chapterButton, biblePager));
-//                searchResults.setText(results);
                 return true;
             }
             @Override

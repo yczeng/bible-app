@@ -9,12 +9,6 @@
         android:layout_height="63dp"
         android:onClick="searchPopUp"/>
 
-    <TextView
-        android:id="@+id/searchResults"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hi I'm a search" />
-
     <GridView
         android:id="@+id/buttongrid_searchresults"
         android:layout_width="match_parent"
