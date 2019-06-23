@@ -34,8 +34,8 @@ public class TestMain{
 		kjv = new JSONBible(bibleMap, verseJson);
 
 		// String book, int chapter, int verse
-		System.out.println(kjv.get("Gen", 3));
-		// System.out.println(kjv.search("serpent"));
+		// System.out.println(kjv.get("Gen", 3));
+		System.out.println(kjv.search("serpent"));
 		// System.out.println(kjv.getChapterNumber(chapterNum, "Gen"));
 	}
 

@@ -1,6 +1,7 @@
 package com.android.biblio.app;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +22,8 @@ import androidx.appcompat.widget.ButtonBarLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -189,10 +192,11 @@ public class ReaderActivity extends AppCompatActivity {
     public void searchPopUp(View view){
         // make a popup builder
         AlertDialog.Builder searchpopupDialog = new AlertDialog.Builder(this);
+        final Context context = this;
 
         // inflate the view, but keep a reference to it
         LayoutInflater inflater = this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.search_pop_up, null);
+        final View dialogView = inflater.inflate(R.layout.search_pop_up, null);
 
         searchpopupDialog.setView(dialogView);
 
@@ -200,11 +204,17 @@ public class ReaderActivity extends AppCompatActivity {
         searchView = dialogView.findViewById(R.id.searchViewDialog);
         searchResults = dialogView.findViewById(R.id.searchResults);
 
+        final GridView results_grid = dialogView.findViewById(R.id.buttongrid_searchresults);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Log.i("search_view", "search worked");
-                searchResults.setText("howDY THE SEARCH WORKED");
+                JSONArray resultsJson = kjv.search(query);
+                String results = resultsJson.toString();
+
+                results_grid.setAdapter(new SearchAdapter(context, getSupportFragmentManager(), resultsJson, bookButton, chapterButton, biblePager));
+//                searchResults.setText(results);
                 return true;
             }
             @Override

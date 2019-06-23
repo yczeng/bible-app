@@ -61,7 +61,7 @@ public class JSONBible{
         return result;
     }
 
-    public String search(String text){
+    public JSONArray search(String text){
         JSONArray jsonResults = new JSONArray();
 
         for (int i = 0; i < this.jsonarray.length(); i++){
@@ -82,7 +82,7 @@ public class JSONBible{
             }
         }
 
-        return jsonResults.toString();
+        return jsonResults;
     }
 
     public int getChapterCount(String book){
