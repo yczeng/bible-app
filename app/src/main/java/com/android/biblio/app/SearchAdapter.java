@@ -2,6 +2,7 @@ package com.android.biblio.app;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
@@ -58,16 +60,17 @@ public class SearchAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int i, View view, ViewGroup viewGroup) {
-        Button button;
+        TextView searchResultText;
 
         if (view == null) {
-            button = new Button(context);
-            button.setLayoutParams(new GridView.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+            searchResultText = new TextView(context);
+            searchResultText.setLayoutParams(new GridView.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
-            button.setPadding(0, 0, 0, 0);
-            button.setTextSize((float)11);
+            searchResultText.setPadding(3, 3, 3, 3);
+            searchResultText.setBackgroundColor(Color.WHITE);
+            searchResultText.setTextSize((float)11);
 
-            button.setOnClickListener(new View.OnClickListener() {
+            searchResultText.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     String book = "";
                     int chapter = -1;
@@ -106,11 +109,15 @@ public class SearchAdapter extends BaseAdapter {
 
                     biblePager.setAdapter(new ReaderPagerAdapter(fm, arrList, bookButton));
                     biblePager.setCurrentItem(chapter-1);
+
+                    Log.i("bookgrabbed", "book: " + book);
+                    Log.i("chaptergrabbed", "chapter: " + chapter);
+
                     parent.dismiss();
                 }
             });
         } else {
-            button = (Button) view;
+            searchResultText = (TextView) view;
         }
 
         JSONObject eachResult = null;
@@ -121,14 +128,15 @@ public class SearchAdapter extends BaseAdapter {
         }
 
         try {
-            String buttonText = "Book: " + eachResult.get("book_id") + ", " + "Chapter: " + Integer.toString(eachResult.getInt("chapter"));
-            buttonText += eachResult.get("text");
-            button.setText(buttonText);
-            button.setTag(buttonText);
+            String searchResultTextInfo = "Book: " + eachResult.get("book_id") + ", " + "Chapter: " + eachResult.getInt("chapter") + ", " + "Verse: " + eachResult.getInt("verse");
+            searchResultTextInfo += "\n" + eachResult.get("text") + "\n";
+
+            searchResultText.setText(searchResultTextInfo);
+            searchResultText.setTag(searchResultTextInfo);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return button;
+        return searchResultText;
     }
 
 }

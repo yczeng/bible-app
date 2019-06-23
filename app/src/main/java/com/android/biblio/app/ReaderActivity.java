@@ -214,6 +214,7 @@ public class ReaderActivity extends AppCompatActivity {
                 Log.i("search_view", "search worked");
                 JSONArray resultsJson = kjv.search(query);
                 results_grid.setAdapter(new SearchAdapter(context, getSupportFragmentManager(), searchgridPanel, resultsJson, bookButton, chapterButton, biblePager));
+                searchView.clearFocus();
                 return true;
             }
             @Override
