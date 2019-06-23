@@ -4,13 +4,13 @@
     android:layout_height="match_parent">
 
     <SearchView
-        android:id="@+id/searchView"
+        android:id="@+id/searchViewDialog"
         android:layout_width="match_parent"
         android:layout_height="63dp"
         android:onClick="searchPopUp"/>
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/searchResults"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Hi I'm a search" />
