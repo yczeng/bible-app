@@ -29,12 +29,14 @@ public class SearchAdapter extends BaseAdapter {
     private JSONBible kjv;
     private ViewPager biblePager;
     private FragmentManager fm;
+    private Dialog parent;
 
-    public SearchAdapter(Context context, FragmentManager fm, JSONArray results, Button bookButton, Button chapterButton, ViewPager biblePager) {
+    public SearchAdapter(Context context, FragmentManager fm, Dialog parent, JSONArray results, Button bookButton, Button chapterButton, ViewPager biblePager) {
         this.context = context;
         this.results = results;
         this.bookButton = bookButton;
         this.chapterButton = chapterButton;
+        this.parent = parent;
     }
 
     @Override
@@ -53,12 +55,8 @@ public class SearchAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         Button button;
-        final String book;
-        String chapter;
-        JSONObject eachResult = null;
-
 
         if (view == null) {
             button = new Button(context);
@@ -67,54 +65,61 @@ public class SearchAdapter extends BaseAdapter {
             button.setPadding(0, 0, 0, 0);
             button.setTextSize((float)11);
 
-            try {
-                eachResult = this.results.getJSONObject(i);
-                book = eachResult.get("book_id").toString();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            try {
-                chapter = Integer.toString(eachResult.getInt("chapter"));
-            } catch (JSONException e1) {
-                e1.printStackTrace();
-            }
-
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    String book = "";
+                    int chapter = -1;
 
-//                    GlobalVariable.getInstance().setBook(book);
-//                    GlobalVariable.getInstance().setChapter(chapter);
-//
-//                    kjv = GlobalVariable.getInstance().getKjv();
-//
-//                    // create the array of strings containing the chapters' texts
-//                    // for this book
-//                    int chapterNum = kjv.getChapterCount(book);
-//                    List<String> arr = new ArrayList<String>();
-//                    for (int i = 1; i <= chapterNum; i++){
-//                        arr.add(kjv.get(book, i));
-//                    }
-//                    String[] arrList = new String[arr.size()];
-//                    arrList = arr.toArray(arrList);
-//                    biblePager.setAdapter(new ReaderPagerAdapter(fm, arrList, bookButton));
-//
-//                    int newChapter = Integer.parseInt(chapter);
-//                    biblePager.setCurrentItem(chapter-1);
-//
-//                    bookButton.setText(book);
-//                    chapterButton.setText(chapter);
-//                    parent.dismiss();
+                    JSONObject eachResult = null;
+                    try {
+                        eachResult = results.getJSONObject(i);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        book = eachResult.get("book_id").toString();
+                        chapter = eachResult.getInt("chapter");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    GlobalVariable.getInstance().setBook(book);
+
+                    // WARNING FUTURE BUG ALERT. CHAPTER INITIALIZED AS -1!!!
+                    // SO IF THIS BUGS, COULD BE CUZ OF THAT
+                    GlobalVariable.getInstance().setChapter(chapter);
+
+                    kjv = GlobalVariable.getInstance().getKjv();
+
+                    // create the array of strings containing the chapters' texts
+                    // for this book
+                    int chapterNum = kjv.getChapterCount(book);
+                    List<String> arr = new ArrayList<String>();
+                    for (int i = 1; i <= chapterNum; i++){
+                        arr.add(kjv.get(book, i));
+                    }
+                    String[] arrList = new String[arr.size()];
+                    arrList = arr.toArray(arrList);
+                    biblePager.setAdapter(new ReaderPagerAdapter(fm, arrList, bookButton));
+                    biblePager.setCurrentItem(chapter-1);
+
+                    bookButton.setText(book);
+                    chapterButton.setText(chapter);
+                    parent.dismiss();
                 }
             });
         } else {
             button = (Button) view;
         }
 
+        JSONObject eachResult = null;
         try {
-            eachResult = this.results.getJSONObject(i);
+            eachResult = results.getJSONObject(i);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         try {
             String buttonText = "Book: " + eachResult.get("book_id") + ", " + "Chapter: " + Integer.toString(eachResult.getInt("chapter"));
             buttonText += eachResult.get("text");

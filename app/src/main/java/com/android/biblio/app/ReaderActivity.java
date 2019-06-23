@@ -207,6 +207,7 @@ public class ReaderActivity extends AppCompatActivity {
         searchResults = dialogView.findViewById(R.id.searchResults);
 
         final GridView results_grid = dialogView.findViewById(R.id.buttongrid_searchresults);
+        final AlertDialog searchgridPanel = searchpopupDialog.create();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -215,7 +216,7 @@ public class ReaderActivity extends AppCompatActivity {
                 JSONArray resultsJson = kjv.search(query);
                 String results = resultsJson.toString();
 
-                results_grid.setAdapter(new SearchAdapter(context, getSupportFragmentManager(), resultsJson, bookButton, chapterButton, biblePager));
+                results_grid.setAdapter(new SearchAdapter(context, getSupportFragmentManager(), searchgridPanel, resultsJson, bookButton, chapterButton, biblePager));
 //                searchResults.setText(results);
                 return true;
             }
@@ -225,7 +226,6 @@ public class ReaderActivity extends AppCompatActivity {
             }
         });
 
-        AlertDialog searchgridPanel = searchpopupDialog.create();
         searchgridPanel.show();
     }
 
