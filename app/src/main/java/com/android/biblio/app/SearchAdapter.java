@@ -67,6 +67,7 @@ public class SearchAdapter extends BaseAdapter {
 
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    Log.i("searchClick", "a click was made");
                     String book = "";
                     int chapter = -1;
 
@@ -95,17 +96,22 @@ public class SearchAdapter extends BaseAdapter {
                     // create the array of strings containing the chapters' texts
                     // for this book
                     int chapterNum = kjv.getChapterCount(book);
+
                     List<String> arr = new ArrayList<String>();
                     for (int i = 1; i <= chapterNum; i++){
                         arr.add(kjv.get(book, i));
                     }
                     String[] arrList = new String[arr.size()];
                     arrList = arr.toArray(arrList);
-                    biblePager.setAdapter(new ReaderPagerAdapter(fm, arrList, bookButton));
+
+                    Log.i("searchBook", "book chosen:" + book);
+                    Log.i("searchChapter", "chapter chosen:" + chapter);
+//
+//                    biblePager.setAdapter(new ReaderPagerAdapter(fm, arrList, bookButton));
                     biblePager.setCurrentItem(chapter-1);
 
-                    bookButton.setText(book);
-                    chapterButton.setText(chapter);
+//                    bookButton.setText(book);
+//                    chapterButton.setText(chapter);
                     parent.dismiss();
                 }
             });

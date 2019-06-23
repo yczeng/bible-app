@@ -216,6 +216,7 @@ public class ReaderActivity extends AppCompatActivity {
                 JSONArray resultsJson = kjv.search(query);
                 String results = resultsJson.toString();
 
+                // BUG: bookButton, chapterButton, and biblePager aren't working
                 results_grid.setAdapter(new SearchAdapter(context, getSupportFragmentManager(), searchgridPanel, resultsJson, bookButton, chapterButton, biblePager));
 //                searchResults.setText(results);
                 return true;
