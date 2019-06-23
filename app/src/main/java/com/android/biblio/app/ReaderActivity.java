@@ -13,6 +13,7 @@ import android.widget.SearchView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -115,7 +116,9 @@ public class ReaderActivity extends AppCompatActivity {
                             @Override
                             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                                 GlobalVariable.getInstance().setTextScaleSliderProgress(i);
-                                Log.i("progress", "" + i);
+                                TextView pagertext = findViewById(R.id.pager_text);
+                                pagertext.setTextSize((float)(12 + 12.0 * i / 100));
+                                biblePager.getAdapter().notifyDataSetChanged();
                             }
 
                             @Override
