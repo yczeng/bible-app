@@ -120,7 +120,9 @@ public class ReaderActivity extends AppCompatActivity {
                             @Override
                             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                                 GlobalVariable.getInstance().setTextScaleSliderProgress(i);
-                                Log.i("progress", "" + i);
+                                TextView pagertext = findViewById(R.id.pager_text);
+                                pagertext.setTextSize((float)(12 + 12.0 * i / 100));
+                                biblePager.getAdapter().notifyDataSetChanged();
                             }
 
                             @Override

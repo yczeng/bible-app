@@ -2,6 +2,7 @@ package com.android.biblio.app;
 
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -15,6 +16,11 @@ public class ReaderPagerAdapter extends FragmentStatePagerAdapter {
         super(fm);
         this.stringList = stringList;
         this.chapterButton = chapterButton;
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE;
     }
 
     @Override

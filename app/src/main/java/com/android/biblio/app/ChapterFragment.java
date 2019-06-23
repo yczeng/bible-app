@@ -30,5 +30,7 @@ public class ChapterFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         TextView text = view.findViewById(R.id.pager_text);
         text.setText(this.str);
+        int textScale = GlobalVariable.getInstance().getTextScaleSliderProgress();
+        text.setTextSize((float)(12 + 12.0 * textScale / 100));
     }
 }
