@@ -341,7 +341,7 @@ public class ReaderActivity extends AppCompatActivity {
     // Generates a pop up of all books
     public void bookPopUp(View view){
         // make a popup builder
-        AlertDialog.Builder bookpopupDialog = new AlertDialog.Builder(this);
+        AlertDialog.Builder bookpopupDialog = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Settings);
 
         // inflate the view, but keep a reference to it
         LayoutInflater inflater = this.getLayoutInflater();
