@@ -163,18 +163,21 @@ public class ReaderActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 GlobalVariable.getInstance().setTextThemeRadioButton(0);
+                                biblePager.getAdapter().notifyDataSetChanged();
                             }
                         });
                         theme1.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 GlobalVariable.getInstance().setTextThemeRadioButton(1);
+                                biblePager.getAdapter().notifyDataSetChanged();
                             }
                         });
                         theme2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 GlobalVariable.getInstance().setTextThemeRadioButton(2);
+                                biblePager.getAdapter().notifyDataSetChanged();
                             }
                         });
 

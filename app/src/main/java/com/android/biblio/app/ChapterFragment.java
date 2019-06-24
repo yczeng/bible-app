@@ -1,5 +1,6 @@
 package com.android.biblio.app;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -8,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +37,25 @@ public class ChapterFragment extends Fragment {
         int textScale = GlobalVariable.getInstance().getTextScaleSliderProgress();
         text.setTextSize((float)(12 + 12.0 * textScale / 100));
 
-        String fontFamily = GlobalVariable.getInstance().getTextFontFamily();
-        Typeface face = FontCache.get(fontFamily, getContext());
+        String textFontFamily = GlobalVariable.getInstance().getTextFontFamily();
+        Typeface face = FontCache.get(textFontFamily, getContext());
         text.setTypeface(face);
+
+        int textTheme = GlobalVariable.getInstance().getTextThemeRadioButton();
+        Log.i("theme", "textTheme: " + textTheme);
+        switch(textTheme) {
+            case 0:
+                view.setBackgroundColor(getResources().getColor(R.color.colorTextLightBackground));
+                text.setTextColor(getResources().getColor(R.color.colorTextLightForeground));
+                break;
+            case 1:
+                view.setBackgroundColor(getResources().getColor(R.color.colorTextCreamBackground));
+                text.setTextColor(getResources().getColor(R.color.colorTextCreamForeground));
+                break;
+            case 2:
+                view.setBackgroundColor(getResources().getColor(R.color.colorTextDarkBackground));
+                text.setTextColor(getResources().getColor(R.color.colorTextDarkForeground));
+                break;
+        }
     }
 }
