@@ -55,7 +55,7 @@ public class JSONBible{
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            result = result + Integer.toString(i+1) + "  " + verse + "\n";
+            result += "<sup><font color=\"#808080\"><small>" + (i+1) + "</sup></font></small>" + "  " + verse + "<br>";
         }
 
         return result;
