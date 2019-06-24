@@ -14,30 +14,42 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="#ccf">
+        android:layout_gravity="center"
+        android:background="#800000">
 
         <Button
             android:id="@+id/reader_bookButton"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_alignTop="@+id/toolbar"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:background="@android:color/transparent"
             android:onClick="bookPopUp"
-            android:text="Book"
-            android:layout_marginEnd="50dp" />
+            android:text="2 Thessalonians"
+            android:textColor="#ffffff" />
 
         <Button
             android:id="@+id/reader_chapterButton"
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="50dp"
             android:onClick="chapterPopUp"
-            android:text="Chapter" />
+            android:text="23"
+            android:background="@android:color/transparent"
+            android:textColor="#ffffff" />
 
-        <Button
+        <ImageButton
             android:id="@+id/searchbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/search"
-            android:onClick="searchPopUp" />
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/transparent"
+            android:onClick="searchPopUp"
+            app:srcCompat="@drawable/ic_search_black_24dp" />
 
     </LinearLayout>
 
