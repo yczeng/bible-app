@@ -2,6 +2,7 @@
 package com.android.biblio.app;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -27,10 +28,9 @@ public class JSONBible{
         this.bookFullName = JSONBible.readJSONObject(context, bookFullName);
     }
 
-    private int verse = 0;
     // This takes in two parameters: book and chapter, optional third parameter: verse.
     // returns a jsonobj containing results that pertain.
-    public String get(String book, int chapter) {
+    public String get(String book, int chapter, String hexcolor) {
         // converts the book's json into a json object
         JSONObject obj = null;
         try {
@@ -57,8 +57,9 @@ public class JSONBible{
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            result += "<sup><font color=\"#808080\"><small>" + (i+1) + "</sup></font></small>" + "  " + verse + "<br>";
+            result += "<sup><font color=\"" + hexcolor + "\"><small>" + (i+1) + "</sup></font></small>" + "  " + verse + "<br>";
         }
+        Log.i("test", "testst");
 
         return result;
     }
