@@ -40,7 +40,7 @@ public class GlobalVariable {
     /////////////////////////
 
     private int textScaleSliderProgress = 50;
-    private int textThemeRadioButton = 0;
+    private int textThemeRadioButton = 1;
     private int textFontFamButton = 0;
     private String textFontFamily = "fonts/CarroisGothicSC-Regular.ttf";
 
