@@ -108,9 +108,6 @@ public class MainActivity extends AppCompatActivity {
     // Moves on to the next page with json result of verse
     public void moveActivity(View view) {
         Intent intent = new Intent(this, ReaderActivity.class);
-        String resultVerse = kjv.get(GlobalVariable.getInstance().getBook(), GlobalVariable.getInstance().getChapter());
-
-        intent.putExtra("json", resultVerse);
         startActivity(intent);
         finish();
     }
