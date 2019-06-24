@@ -24,14 +24,15 @@ import java.util.List;
 
 public class SearchAdapter extends BaseAdapter {
 
-    JSONArray results;
-    Context context;
-    Button bookButton;
-    Button chapterButton;
+    private JSONArray results;
+    private Context context;
+    private Button bookButton;
+    private Button chapterButton;
     private JSONBible kjv;
     private ViewPager biblePager;
     private FragmentManager fm;
     private Dialog parent;
+    private JSONObject eachResult;
 
     public SearchAdapter(Context context, FragmentManager fm, Dialog parent, JSONArray results, Button bookButton, Button chapterButton, ViewPager biblePager) {
         this.context = context;
@@ -75,7 +76,6 @@ public class SearchAdapter extends BaseAdapter {
                     String book = "";
                     int chapter = -1;
 
-                    JSONObject eachResult = null;
                     try {
                         eachResult = results.getJSONObject(i);
                     } catch (JSONException e) {
@@ -113,6 +113,7 @@ public class SearchAdapter extends BaseAdapter {
                     Log.i("bookgrabbed", "book: " + book);
                     Log.i("chaptergrabbed", "chapter: " + chapter);
 
+                    bookButton.setText(book);
                     parent.dismiss();
                 }
             });
@@ -120,7 +121,6 @@ public class SearchAdapter extends BaseAdapter {
             searchResultText = (TextView) view;
         }
 
-        JSONObject eachResult = null;
         try {
             eachResult = results.getJSONObject(i);
         } catch (JSONException e) {
