@@ -1,5 +1,6 @@
 package com.android.biblio.app;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,5 +34,9 @@ public class ChapterFragment extends Fragment {
         text.setText(Html.fromHtml(this.str));
         int textScale = GlobalVariable.getInstance().getTextScaleSliderProgress();
         text.setTextSize((float)(12 + 12.0 * textScale / 100));
+
+        String fontFamily = GlobalVariable.getInstance().getTextFontFamily();
+        Typeface face = FontCache.get(fontFamily, getContext());
+        text.setTypeface(face);
     }
 }

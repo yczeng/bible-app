@@ -123,8 +123,6 @@ public class ReaderActivity extends AppCompatActivity {
                             @Override
                             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                                 GlobalVariable.getInstance().setTextScaleSliderProgress(i);
-                                TextView pagertext = findViewById(R.id.pager_text);
-                                pagertext.setTextSize((float)(12 + 12.0 * i / 100));
                                 biblePager.getAdapter().notifyDataSetChanged();
                             }
 
@@ -190,9 +188,8 @@ public class ReaderActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 GlobalVariable.getInstance().setTextFontFamButton(0);
-                                TextView pagertext = findViewById(R.id.pager_text);
-                                Typeface face = FontCache.get("fonts/CarroisGothicSC-Regular.ttf", getApplicationContext());
-                                pagertext.setTypeface(face);
+                                GlobalVariable.getInstance().setTextFontFamily("fonts/CarroisGothicSC-Regular.ttf");
+                                biblePager.getAdapter().notifyDataSetChanged();
                                 fontfam0.setBackgroundColor(Color.argb(30, 150, 50, 50));
                                 fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
                                 fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
@@ -204,9 +201,8 @@ public class ReaderActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 GlobalVariable.getInstance().setTextFontFamButton(1);
-                                TextView pagertext = findViewById(R.id.pager_text);
-                                Typeface face = FontCache.get("fonts/CutiveMono.ttf", getApplicationContext());
-                                pagertext.setTypeface(face);
+                                GlobalVariable.getInstance().setTextFontFamily("fonts/CutiveMono.ttf");
+                                biblePager.getAdapter().notifyDataSetChanged();
                                 fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
                                 fontfam1.setBackgroundColor(Color.argb(30, 150, 50, 50));
                                 fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
@@ -218,13 +214,8 @@ public class ReaderActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 GlobalVariable.getInstance().setTextFontFamButton(2);
-                                TextView pagertext = findViewById(R.id.pager_text);
-                                if (getApplicationContext().getAssets() == null) Log.i("font", "context null");
-                                Log.i("font", "fonts/Roboto/NotoSerif-Regular.ttf");
-                                Typeface face = FontCache.get("fonts/NotoSerif-Regular.ttf", getApplicationContext());
-                                if (face == null) Log.i("font", "face null");
-                                else Log.i("font", face.toString());
-                                pagertext.setTypeface(face);
+                                GlobalVariable.getInstance().setTextFontFamily("fonts/NotoSerif-Regular.ttf");
+                                biblePager.getAdapter().notifyDataSetChanged();
                                 fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
                                 fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
                                 fontfam2.setBackgroundColor(Color.argb(30, 150, 50, 50));
@@ -236,9 +227,8 @@ public class ReaderActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 GlobalVariable.getInstance().setTextFontFamButton(3);
-                                TextView pagertext = findViewById(R.id.pager_text);
-                                Typeface face = FontCache.get("fonts/Roboto-Regular.ttf", getApplicationContext());
-                                pagertext.setTypeface(face);
+                                GlobalVariable.getInstance().setTextFontFamily("fonts/Roboto-Regular.ttf");
+                                biblePager.getAdapter().notifyDataSetChanged();
                                 fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
                                 fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
                                 fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
@@ -250,9 +240,8 @@ public class ReaderActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 GlobalVariable.getInstance().setTextFontFamButton(4);
-                                TextView pagertext = findViewById(R.id.pager_text);
-                                Typeface face = FontCache.get("fonts/Roboto-Thin.ttf", getApplicationContext());
-                                pagertext.setTypeface(face);
+                                GlobalVariable.getInstance().setTextFontFamily("fonts/Roboto-Thin.ttf");
+                                biblePager.getAdapter().notifyDataSetChanged();
                                 fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
                                 fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
                                 fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));

@@ -42,6 +42,15 @@ public class GlobalVariable {
     private int textScaleSliderProgress = 50;
     private int textThemeRadioButton = 0;
     private int textFontFamButton = 0;
+    private String textFontFamily = "fonts/CarroisGothicSC-Regular.ttf";
+
+    public String getTextFontFamily() {
+        return textFontFamily;
+    }
+
+    public void setTextFontFamily(String textFontFamily) {
+        this.textFontFamily = textFontFamily;
+    }
 
     public int getTextScaleSliderProgress() {
         return textScaleSliderProgress;
