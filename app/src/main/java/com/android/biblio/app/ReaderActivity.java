@@ -3,6 +3,7 @@ package com.android.biblio.app;
 import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +25,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,18 +44,19 @@ public class ReaderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reader);
 
-        // set the bookbutton name to be book title
-        bookButton = findViewById(R.id.reader_bookButton);
-        bookButton.setText(GlobalVariable.getInstance().getBook());
-
-        // set chapter button to be current chapter
-        chapterButton = findViewById(R.id.reader_chapterButton);
-        chapterButton.setText(String.valueOf(GlobalVariable.getInstance().getChapter()));
-
         // grab references to global variables
         kjv = GlobalVariable.getInstance().getKjv();
         String book = GlobalVariable.getInstance().getBook();
         final int chapter = GlobalVariable.getInstance().getChapter();
+
+        // set the bookbutton name to be book title
+        bookButton = findViewById(R.id.reader_bookButton);
+        bookButton.setText(kjv.getBookFullName(book));
+
+        // set chapter button to be current chapter
+        chapterButton = findViewById(R.id.reader_chapterButton);
+        chapterButton.setText(String.valueOf(chapter));
+
 
         // create the array of strings containing the chapters' texts
         // for this book
@@ -310,22 +314,27 @@ public class ReaderActivity extends AppCompatActivity {
     public void searchPopUp(View view){
         // make a popup builder
         AlertDialog.Builder searchpopupDialog = new AlertDialog.Builder(this);
+        final Context context = this;
 
         // inflate the view, but keep a reference to it
         LayoutInflater inflater = this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.search_pop_up, null);
+        final View dialogView = inflater.inflate(R.layout.search_pop_up, null);
 
         searchpopupDialog.setView(dialogView);
 
         // searches within dialogView for the search box
         searchView = dialogView.findViewById(R.id.searchViewDialog);
-        searchResults = dialogView.findViewById(R.id.searchResults);
+
+        final GridView results_grid = dialogView.findViewById(R.id.buttongrid_searchresults);
+        final AlertDialog searchgridPanel = searchpopupDialog.create();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Log.i("search_view", "search worked");
-                searchResults.setText("howDY THE SEARCH WORKED");
+                JSONArray resultsJson = kjv.search(query);
+                results_grid.setAdapter(new SearchAdapter(context, getSupportFragmentManager(), searchgridPanel, resultsJson, bookButton, chapterButton, biblePager));
+                searchView.clearFocus();
                 return true;
             }
             @Override
@@ -334,7 +343,6 @@ public class ReaderActivity extends AppCompatActivity {
             }
         });
 
-        AlertDialog searchgridPanel = searchpopupDialog.create();
         searchgridPanel.show();
     }
 

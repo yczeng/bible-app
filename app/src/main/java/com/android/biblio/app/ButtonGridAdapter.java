@@ -20,7 +20,7 @@ public class ButtonGridAdapter extends BaseAdapter {
     private Context context;
     private FragmentManager fm;
     private Dialog parent;
-    private Button mainButton;
+    private Button bookButton;
     private Button chapterButton;
     private String[] buttons;
     private boolean isBookGrid;
@@ -28,12 +28,12 @@ public class ButtonGridAdapter extends BaseAdapter {
     private ViewPager biblePager;
     private JSONBible kjv;
 
-    public ButtonGridAdapter(Context context, FragmentManager fm, Dialog parent, Button mainButton, Button chapterButton,
+    public ButtonGridAdapter(Context context, FragmentManager fm, Dialog parent, Button bookButton, Button chapterButton,
                              String[] buttons, boolean isBookGrid, boolean isReaderActivity, ViewPager biblePager) {
         this.context = context;
         this.fm = fm;
         this.parent = parent;
-        this.mainButton = mainButton;
+        this.bookButton = bookButton;
         this.chapterButton = chapterButton;
         this.buttons = buttons;
         this.isBookGrid = isBookGrid;
@@ -71,11 +71,10 @@ public class ButtonGridAdapter extends BaseAdapter {
                     if (isBookGrid) {
                         String newBook = v.getTag().toString();
                         GlobalVariable.getInstance().setBook(newBook);
-                        mainButton.setText(newBook);
+
+                        kjv = GlobalVariable.getInstance().getKjv();
+                        bookButton.setText(kjv.getBookFullName(newBook));
                         if (isReaderActivity){
-
-                            kjv = GlobalVariable.getInstance().getKjv();
-
                             // create the array of strings containing the chapters' texts
                             // for this book
                             int chapterNum = kjv.getChapterCount(newBook);
@@ -85,7 +84,7 @@ public class ButtonGridAdapter extends BaseAdapter {
                             }
                             String[] arrList = new String[arr.size()];
                             arrList = arr.toArray(arrList);
-                            biblePager.setAdapter(new ReaderPagerAdapter(fm, arrList, mainButton));
+                            biblePager.setAdapter(new ReaderPagerAdapter(fm, arrList, bookButton));
                             biblePager.setCurrentItem(0);
                         }
                         GlobalVariable.getInstance().setChapter(1);
@@ -95,7 +94,6 @@ public class ButtonGridAdapter extends BaseAdapter {
                         String newChapter_str = v.getTag().toString();
                         int newChapter = Integer.parseInt(newChapter_str);
                         GlobalVariable.getInstance().setChapter(newChapter);
-                        mainButton.setText(newChapter_str);
                         if (isReaderActivity) {
                             biblePager.setCurrentItem(newChapter-1);
                         }
