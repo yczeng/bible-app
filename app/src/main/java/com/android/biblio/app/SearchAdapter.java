@@ -3,6 +3,7 @@ package com.android.biblio.app;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,9 +68,10 @@ public class SearchAdapter extends BaseAdapter {
             searchResultText = new TextView(context);
             searchResultText.setLayoutParams(new GridView.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
-            searchResultText.setPadding(3, 3, 3, 3);
+            searchResultText.setPadding(10, 10, 10, 10);
             searchResultText.setBackgroundColor(Color.WHITE);
             searchResultText.setTextSize((float)11);
+            kjv = GlobalVariable.getInstance().getKjv();
 
             searchResultText.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -93,8 +95,6 @@ public class SearchAdapter extends BaseAdapter {
                     // WARNING FUTURE BUG ALERT. CHAPTER INITIALIZED AS -1!!!
                     // SO IF THIS BUGS, COULD BE CUZ OF THAT
                     GlobalVariable.getInstance().setChapter(chapter);
-
-                    kjv = GlobalVariable.getInstance().getKjv();
 
                     // create the array of strings containing the chapters' texts
                     // for this book
@@ -128,10 +128,26 @@ public class SearchAdapter extends BaseAdapter {
         }
 
         try {
-            String searchResultTextInfo = "Book: " + eachResult.get("book_id") + ", " + "Chapter: " + eachResult.getInt("chapter") + ", " + "Verse: " + eachResult.getInt("verse");
-            searchResultTextInfo += "\n" + eachResult.get("text") + "\n";
+            String searchResultTextInfo = "<small><font color=\"#000000\">Book: " + kjv.getBookFullName(eachResult.get("book_id").toString()) + ", " + "Chapter: " + eachResult.getInt("chapter") + ", " + "Verse: " + eachResult.getInt("verse") + "</font></small>";
 
-            searchResultText.setText(searchResultTextInfo);
+            String verseResult = "";
+
+            // Create a new StringBuffer
+            StringBuffer newString = new StringBuffer(eachResult.get("text").toString());
+
+            // Insert the strings to be inserted
+            // using insert() method
+            int result_position = Integer.valueOf(eachResult.get("search_index").toString());
+            int query_length = Integer.valueOf(eachResult.get("query_length").toString());
+            newString.insert(result_position, "<b><i></font><font color=\"#808080\">");
+            newString.insert(result_position + query_length + 35, "</font></i></b><font color=\"#C0C0C0\">");
+
+            // return the modified String
+            verseResult =  newString.toString();
+
+            searchResultTextInfo += "<br><font color=\"#C0C0C0\">" + verseResult + "</font>";
+
+            searchResultText.setText(Html.fromHtml(searchResultTextInfo));
             searchResultText.setTag(searchResultTextInfo);
         } catch (JSONException e) {
             e.printStackTrace();

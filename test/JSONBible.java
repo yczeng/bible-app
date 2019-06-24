@@ -29,8 +29,12 @@ public class JSONBible{
     for (int i = 0; i < this.jsonarray.length(); i++){
       JSONObject obj = this.jsonarray.getJSONObject(i);
 
-      if (obj.getString("text").contains(text)){
+      int search_position = obj.getString("text").indexOf(text);
+      if (search_position != -1){
+        obj.put("search_index", search_position);
+        obj.put("query_length", text.length());
         jsonResults.put(obj);
+
       }
     }
     

@@ -76,7 +76,10 @@ public class JSONBible{
             }
 
             try {
-                if (obj.getString("text").contains(text)){
+                int search_position = obj.getString("text").indexOf(text);
+                if (search_position != -1){
+                    obj.put("search_index", search_position);
+                    obj.put("query_length", text.length());
                     jsonResults.put(obj);
                 }
             } catch (JSONException e) {
