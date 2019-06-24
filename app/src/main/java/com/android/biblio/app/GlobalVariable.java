@@ -39,7 +39,7 @@ public class GlobalVariable {
     //// Pop-up Settings ////
     /////////////////////////
 
-    private int textScaleSliderProgress = 0;
+    private int textScaleSliderProgress = 50;
     private int textThemeRadioButton = 0;
     private int textFontFamButton = 0;
 

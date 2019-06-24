@@ -1,6 +1,8 @@
 package com.android.biblio.app;
 
 import android.app.AlertDialog;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -174,9 +176,126 @@ public class ReaderActivity extends AppCompatActivity {
                             }
                         });
 
+                        final Button fontfam0 = popupDialog.findViewById(R.id.fontfam_mono);
+                        final Button fontfam1 = popupDialog.findViewById(R.id.fontfam_serifmono);
+                        final Button fontfam2 = popupDialog.findViewById(R.id.fontfam_serif);
+                        final Button fontfam3 = popupDialog.findViewById(R.id.fontfam_sansserif);
+                        final Button fontfam4 = popupDialog.findViewById(R.id.fontfam_sansserifcondlight);
 
+                        fontfam0.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                GlobalVariable.getInstance().setTextFontFamButton(0);
+                                TextView pagertext = findViewById(R.id.pager_text);
+                                Typeface face = FontCache.get("fonts/CarroisGothicSC-Regular.ttf", getApplicationContext());
+                                pagertext.setTypeface(face);
+                                fontfam0.setBackgroundColor(Color.argb(30, 150, 50, 50));
+                                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                            }
+                        });
+                        fontfam1.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                GlobalVariable.getInstance().setTextFontFamButton(1);
+                                TextView pagertext = findViewById(R.id.pager_text);
+                                Typeface face = FontCache.get("fonts/CutiveMono.ttf", getApplicationContext());
+                                pagertext.setTypeface(face);
+                                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam1.setBackgroundColor(Color.argb(30, 150, 50, 50));
+                                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                            }
+                        });
+                        fontfam2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                GlobalVariable.getInstance().setTextFontFamButton(2);
+                                TextView pagertext = findViewById(R.id.pager_text);
+                                if (getApplicationContext().getAssets() == null) Log.i("font", "context null");
+                                Log.i("font", "fonts/Roboto/NotoSerif-Regular.ttf");
+                                Typeface face = FontCache.get("fonts/NotoSerif-Regular.ttf", getApplicationContext());
+                                if (face == null) Log.i("font", "face null");
+                                else Log.i("font", face.toString());
+                                pagertext.setTypeface(face);
+                                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam2.setBackgroundColor(Color.argb(30, 150, 50, 50));
+                                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                            }
+                        });
+                        fontfam3.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                GlobalVariable.getInstance().setTextFontFamButton(3);
+                                TextView pagertext = findViewById(R.id.pager_text);
+                                Typeface face = FontCache.get("fonts/Roboto-Regular.ttf", getApplicationContext());
+                                pagertext.setTypeface(face);
+                                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam3.setBackgroundColor(Color.argb(30, 150, 50, 50));
+                                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                            }
+                        });
+                        fontfam4.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                GlobalVariable.getInstance().setTextFontFamButton(4);
+                                TextView pagertext = findViewById(R.id.pager_text);
+                                Typeface face = FontCache.get("fonts/Roboto-Thin.ttf", getApplicationContext());
+                                pagertext.setTypeface(face);
+                                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam4.setBackgroundColor(Color.argb(30, 150, 50, 50));
+                            }
+                        });
 
-
+                        switch(textFont) {
+                            case 0:
+                                fontfam0.setBackgroundColor(Color.argb(30, 150, 50, 50));
+                                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                break;
+                            case 1:
+                                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam1.setBackgroundColor(Color.argb(30, 150, 50, 50));
+                                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                break;
+                            case 2:
+                                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam2.setBackgroundColor(Color.argb(30, 150, 50, 50));
+                                fontfam3.setBackgroundColor(Color.argb(0, 0,0, 0));
+                                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                break;
+                            case 3:
+                                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam3.setBackgroundColor(Color.argb(30, 150, 50, 50));
+                                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                break;
+                            case 4:
+                                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                                fontfam4.setBackgroundColor(Color.argb(30, 150, 50, 50));
+                                break;
+                            default:
+                                break;
+                        }
 
                         break;
                     default:
