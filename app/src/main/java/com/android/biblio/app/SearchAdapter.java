@@ -113,7 +113,7 @@ public class SearchAdapter extends BaseAdapter {
                     Log.i("bookgrabbed", "book: " + book);
                     Log.i("chaptergrabbed", "chapter: " + chapter);
 
-                    bookButton.setText(book);
+                    bookButton.setText(kjv.getBookFullName(book));
                     parent.dismiss();
                 }
             });

@@ -23,14 +23,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        kjv = new JSONBible(this, "kjv.json", "reformattedKjv3.json", "chapterCount.json", "bookName.json");
+        GlobalVariable.getInstance().setKjv(kjv);
+
         bookButton = findViewById(R.id.bookButton);
-        bookButton.setText(GlobalVariable.getInstance().getBook());
+        bookButton.setText(kjv.getBookFullName(GlobalVariable.getInstance().getBook()));
 
         chapterButton = findViewById(R.id.chapterButton);
         chapterButton.setText(String.valueOf(GlobalVariable.getInstance().getChapter()));
-
-        kjv = new JSONBible(this, "kjv.json", "reformattedKjv3.json", "chapterCount.json");
-        GlobalVariable.getInstance().setKjv(kjv);
     }
 
     // Generates a pop up of all books

@@ -42,18 +42,19 @@ public class ReaderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reader);
 
-        // set the bookbutton name to be book title
-        bookButton = findViewById(R.id.reader_bookButton);
-        bookButton.setText(GlobalVariable.getInstance().getBook());
-
-        // set chapter button to be current chapter
-        chapterButton = findViewById(R.id.reader_chapterButton);
-        chapterButton.setText(String.valueOf(GlobalVariable.getInstance().getChapter()));
-
         // grab references to global variables
         kjv = GlobalVariable.getInstance().getKjv();
         String book = GlobalVariable.getInstance().getBook();
         final int chapter = GlobalVariable.getInstance().getChapter();
+
+        // set the bookbutton name to be book title
+        bookButton = findViewById(R.id.reader_bookButton);
+        bookButton.setText(kjv.getBookFullName(book));
+
+        // set chapter button to be current chapter
+        chapterButton = findViewById(R.id.reader_chapterButton);
+        chapterButton.setText(String.valueOf(chapter));
+
 
         // create the array of strings containing the chapters' texts
         // for this book

@@ -16,13 +16,15 @@ public class JSONBible{
     private JSONArray jsonarray;
     private JSONObject jsonobj;
     private JSONObject chapcounts;
+    private JSONObject bookFullName;
     private Context context;
 
-    public JSONBible(Context context, String kjv, String kjvDict, String kjvChapterCounts){
+    public JSONBible(Context context, String kjv, String kjvDict, String kjvChapterCounts, String bookFullName){
         this.context = context;
         this.jsonarray = JSONBible.readJSONArray(context, kjv);
         this.jsonobj = JSONBible.readJSONObject(context,kjvDict);
         this.chapcounts = JSONBible.readJSONObject(context, kjvChapterCounts);
+        this.bookFullName = JSONBible.readJSONObject(context, bookFullName);
     }
 
     private int verse = 0;
@@ -96,10 +98,22 @@ public class JSONBible{
         return result;
     }
 
+
+    public String getBookFullName(String book){
+        String result = "";
+
+        try{
+            result = bookFullName.getString(book);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
     public String toString(){
         return this.jsonobj.toString();
     }
-
 
 
     // Reads a json object from a file
