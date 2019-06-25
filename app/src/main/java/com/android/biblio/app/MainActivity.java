@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -99,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         // biblePager is not needed here - optional parameter that is null in this case.
         ViewPager biblePager = null;
         grid_chapters.setAdapter(new ButtonGridAdapter(this, null, chaptergridPane,
-                chapterButton, null, chapnums, false, false, biblePager));
+                bookButton, chapterButton, chapnums, false, false, biblePager));
 
         // display the dialog
         chaptergridPane.show();

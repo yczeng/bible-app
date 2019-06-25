@@ -1,6 +1,5 @@
 package com.android.biblio.app;
 
-import android.util.Log;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;

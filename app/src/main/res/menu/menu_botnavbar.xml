@@ -2,8 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/botnavbar_textoptions"
+        android:title="Tt"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="textopts" />
+        android:fontFamily="monospace"
+        android:textColor="#ffffff"/>
 
     <item
         android:id="@+id/botnavbar_autoread"

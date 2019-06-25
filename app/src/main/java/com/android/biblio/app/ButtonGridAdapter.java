@@ -8,14 +8,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.TextView;
 
-import androidx.arch.core.util.Function;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ButtonGridAdapter extends BaseAdapter {
 
@@ -82,14 +77,6 @@ public class ButtonGridAdapter extends BaseAdapter {
                             // create the array of strings containing the chapters' texts
                             // for this book
                             int chapterNum = kjv.getChapterCount(newBook);
-                            /*
-                            List<String> arr = new ArrayList<String>();
-                            for (int i = 1; i <= chapterNum; i++){
-                                arr.add(kjv.get(newBook, i, GlobalVariable.getInstance().getTextThemeHighlight()));
-                            }
-                            String[] arrList = new String[arr.size()];
-                            arrList = arr.toArray(arrList);
-                            */
                             biblePager.setAdapter(new ReaderPagerAdapter(fm, kjv, newBook, chapterNum, bookButton));
                             biblePager.setCurrentItem(0);
                         }
@@ -100,6 +87,7 @@ public class ButtonGridAdapter extends BaseAdapter {
                         String newChapter_str = v.getTag().toString();
                         int newChapter = Integer.parseInt(newChapter_str);
                         GlobalVariable.getInstance().setChapter(newChapter);
+                        chapterButton.setText(newChapter_str);
                         if (isReaderActivity) {
                             biblePager.setCurrentItem(newChapter-1);
                         }

@@ -3,7 +3,8 @@
     android:id="@+id/bookpopup_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#800000">
 
     <TextView
         android:id="@+id/textView2"
@@ -12,7 +13,8 @@
         android:layout_marginTop="15dp"
         android:layout_marginLeft="28dp"
         android:text="OLD TESTAMENT"
-        android:textSize="12dp"/>
+        android:textSize="12dp"
+        android:textColor="#ffffff"/>
         
     <GridView
         android:id="@+id/buttongrid_oldtest"
@@ -38,7 +40,8 @@
         android:layout_marginLeft="28dp"
         android:layout_height="wrap_content"
         android:text="NEW TESTAMENT"
-        android:textSize="12dp"/>
+        android:textSize="12dp"
+        android:textColor="#ffffff"/>
 
     <GridView
         android:id="@+id/buttongrid_newtest"

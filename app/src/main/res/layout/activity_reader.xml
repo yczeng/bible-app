@@ -67,6 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
+        android:background="#800000"
         app:menu="@menu/menu_botnavbar" />
 
 </RelativeLayout>
