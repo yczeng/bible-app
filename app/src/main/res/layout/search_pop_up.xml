@@ -6,9 +6,7 @@
     <SearchView
         android:id="@+id/searchViewDialog"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </SearchView>
+        android:layout_height="match_parent" />
 
     <GridView
         android:id="@+id/buttongrid_searchresults"

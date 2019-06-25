@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -18,6 +19,7 @@ import androidx.viewpager.widget.ViewPager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 public class SearchAdapter extends BaseAdapter {
 
@@ -76,11 +78,6 @@ public class SearchAdapter extends BaseAdapter {
 
                     try {
                         eachResult = results.getJSONObject(i);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    try {
                         book = eachResult.get("book_id").toString();
                         chapter = eachResult.getInt("chapter");
                     } catch (JSONException e) {
@@ -99,44 +96,50 @@ public class SearchAdapter extends BaseAdapter {
                     biblePager.setCurrentItem(chapter-1);
 
                     bookButton.setText(kjv.getBookFullName(book));
+
+                    Log.i("book_clicked", book);
+                    Log.i("chapter_clicked", chapter + "");
                     parent.dismiss();
                 }
             });
+            try {
+
+                try {
+                    eachResult = results.getJSONObject(i);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+                String searchResultTextInfo = "<small><font color=\"#000000\">" + kjv.getBookFullName(eachResult.get("book_id").toString()) + ", " + "Chapter " + eachResult.getInt("chapter") + ", " + "Verse " + eachResult.getInt("verse") + "</font></small>";
+
+                String verseResult = "";
+
+                // Create a new StringBuffer
+                StringBuffer newString = new StringBuffer(eachResult.get("text").toString());
+
+                // Insert the strings to be inserted
+                // using insert() method
+                int result_position = Integer.valueOf(eachResult.get("search_index").toString());
+                int query_length = Integer.valueOf(eachResult.get("query_length").toString());
+                newString.insert(result_position, "<b><i></font><font color=\"#808080\">");
+                newString.insert(result_position + query_length + 35, "</font></i></b><font color=\"#C0C0C0\">");
+
+                // return the modified String
+                verseResult =  newString.toString();
+
+                searchResultTextInfo += "<br><font color=\"#C0C0C0\">" + verseResult + "</font>";
+
+                searchResultText.setText(Html.fromHtml(searchResultTextInfo));
+                searchResultText.setTag(searchResultTextInfo);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         } else {
             searchResultText = (TextView) view;
         }
 
-        try {
-            eachResult = results.getJSONObject(i);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            String searchResultTextInfo = "<small><font color=\"#000000\">" + kjv.getBookFullName(eachResult.get("book_id").toString()) + ", " + "Chapter " + eachResult.getInt("chapter") + ", " + "Verse " + eachResult.getInt("verse") + "</font></small>";
-
-            String verseResult = "";
-
-            // Create a new StringBuffer
-            StringBuffer newString = new StringBuffer(eachResult.get("text").toString());
-
-            // Insert the strings to be inserted
-            // using insert() method
-            int result_position = Integer.valueOf(eachResult.get("search_index").toString());
-            int query_length = Integer.valueOf(eachResult.get("query_length").toString());
-            newString.insert(result_position, "<b><i></font><font color=\"#808080\">");
-            newString.insert(result_position + query_length + 35, "</font></i></b><font color=\"#C0C0C0\">");
-
-            // return the modified String
-            verseResult =  newString.toString();
-
-            searchResultTextInfo += "<br><font color=\"#C0C0C0\">" + verseResult + "</font>";
-
-            searchResultText.setText(Html.fromHtml(searchResultTextInfo));
-            searchResultText.setTag(searchResultTextInfo);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         return searchResultText;
     }
 
