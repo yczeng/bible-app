@@ -62,82 +62,77 @@ public class SearchAdapter extends BaseAdapter {
     public View getView(final int i, View view, ViewGroup viewGroup) {
         TextView searchResultText;
 
-        if (view == null) {
-            searchResultText = new TextView(context);
-            searchResultText.setLayoutParams(new GridView.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT));
-            searchResultText.setPadding(10, 10, 10, 10);
-            searchResultText.setBackgroundColor(Color.WHITE);
-            searchResultText.setTextSize((float)11);
-            kjv = GlobalVariable.getInstance().getKjv();
+        searchResultText = new TextView(context);
+        searchResultText.setLayoutParams(new GridView.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        searchResultText.setPadding(10, 10, 10, 10);
+        searchResultText.setBackgroundColor(Color.WHITE);
+        searchResultText.setTextSize((float)11);
+        kjv = GlobalVariable.getInstance().getKjv();
 
-            searchResultText.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    String book = "";
-                    int chapter = -1;
+        searchResultText.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            String book = "";
+            int chapter = -1;
 
-                    try {
-                        eachResult = results.getJSONObject(i);
-                        book = eachResult.get("book_id").toString();
-                        chapter = eachResult.getInt("chapter");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    GlobalVariable.getInstance().setBook(book);
-                    // WARNING FUTURE BUG ALERT. CHAPTER INITIALIZED AS -1!!!
-                    // SO IF THIS BUGS, COULD BE CUZ OF THAT
-                    GlobalVariable.getInstance().setChapter(chapter);
-
-                    // create the array of strings containing the chapters' texts
-                    // for this book
-                    int chapterNum = kjv.getChapterCount(book);
-                    biblePager.setAdapter(new ReaderPagerAdapter(fm, kjv, book, chapterNum, bookButton));
-                    biblePager.setCurrentItem(chapter-1);
-
-                    bookButton.setText(kjv.getBookFullName(book));
-
-                    Log.i("book_clicked", book);
-                    Log.i("chapter_clicked", chapter + "");
-                    parent.dismiss();
-                }
-            });
             try {
-
-                try {
-                    eachResult = results.getJSONObject(i);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-                String searchResultTextInfo = "<small><font color=\"#000000\">" + kjv.getBookFullName(eachResult.get("book_id").toString()) + ", " + "Chapter " + eachResult.getInt("chapter") + ", " + "Verse " + eachResult.getInt("verse") + "</font></small>";
-
-                String verseResult = "";
-
-                // Create a new StringBuffer
-                StringBuffer newString = new StringBuffer(eachResult.get("text").toString());
-
-                // Insert the strings to be inserted
-                // using insert() method
-                int result_position = Integer.valueOf(eachResult.get("search_index").toString());
-                int query_length = Integer.valueOf(eachResult.get("query_length").toString());
-                newString.insert(result_position, "<b><i></font><font color=\"#808080\">");
-                newString.insert(result_position + query_length + 35, "</font></i></b><font color=\"#C0C0C0\">");
-
-                // return the modified String
-                verseResult =  newString.toString();
-
-                searchResultTextInfo += "<br><font color=\"#C0C0C0\">" + verseResult + "</font>";
-
-                searchResultText.setText(Html.fromHtml(searchResultTextInfo));
-                searchResultText.setTag(searchResultTextInfo);
+                eachResult = results.getJSONObject(i);
+                book = eachResult.get("book_id").toString();
+                chapter = eachResult.getInt("chapter");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-        } else {
-            searchResultText = (TextView) view;
+            GlobalVariable.getInstance().setBook(book);
+            // WARNING FUTURE BUG ALERT. CHAPTER INITIALIZED AS -1!!!
+            // SO IF THIS BUGS, COULD BE CUZ OF THAT
+            GlobalVariable.getInstance().setChapter(chapter);
+
+            // create the array of strings containing the chapters' texts
+            // for this book
+            int chapterNum = kjv.getChapterCount(book);
+            biblePager.setAdapter(new ReaderPagerAdapter(fm, kjv, book, chapterNum, bookButton));
+            biblePager.setCurrentItem(chapter-1);
+
+            bookButton.setText(kjv.getBookFullName(book));
+
+            Log.i("book_clicked", book);
+            Log.i("chapter_clicked", chapter + "");
+            parent.dismiss();
+            }
+        });
+        try {
+
+            try {
+                eachResult = results.getJSONObject(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            String searchResultTextInfo = "<small><font color=\"#000000\">" + kjv.getBookFullName(eachResult.get("book_id").toString()) + ", " + "Chapter " + eachResult.getInt("chapter") + ", " + "Verse " + eachResult.getInt("verse") + "</font></small>";
+
+            String verseResult = "";
+
+            // Create a new StringBuffer
+            StringBuffer newString = new StringBuffer(eachResult.get("text").toString());
+
+            // Insert the strings to be inserted
+            // using insert() method
+            int result_position = Integer.valueOf(eachResult.get("search_index").toString());
+            int query_length = Integer.valueOf(eachResult.get("query_length").toString());
+            newString.insert(result_position, "<b><i></font><font color=\"#808080\">");
+            newString.insert(result_position + query_length + 35, "</font></i></b><font color=\"#C0C0C0\">");
+
+            // return the modified String
+            verseResult =  newString.toString();
+
+            searchResultTextInfo += "<br><font color=\"#C0C0C0\">" + verseResult + "</font>";
+
+            searchResultText.setText(Html.fromHtml(searchResultTextInfo));
+            searchResultText.setTag(searchResultTextInfo);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
         return searchResultText;
