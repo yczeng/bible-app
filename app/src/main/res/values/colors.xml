@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="goldleaf">#BBBB00</color>
+
     <color name="colorTextLightBackground">#EEEEEE</color>
     <color name="colorTextLightForeground">#111111</color>
     <color name="colorTextLightHighlight">#555555</color>
