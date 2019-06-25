@@ -400,7 +400,7 @@ public class ReaderActivity extends AppCompatActivity {
         // get the layout and add the button(s)
         GridView grid_chapters = dialogView.findViewById(R.id.buttongrid_chapters);
         grid_chapters.setAdapter(new ButtonGridAdapter(this, null, chaptergridPane,
-                chapterButton, null, chapnums, false, true, biblePager));
+                bookButton, chapterButton, chapnums, false, true, biblePager));
 
         // display the dialog
         chaptergridPane.show();
