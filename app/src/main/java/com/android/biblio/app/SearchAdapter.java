@@ -100,18 +100,19 @@ public class SearchAdapter extends BaseAdapter {
                     // for this book
                     int chapterNum = kjv.getChapterCount(book);
 
+                    /*
                     List<String> arr = new ArrayList<String>();
                     for (int i = 1; i <= chapterNum; i++){
-                        arr.add(kjv.get(book, i));
+                        arr.add(kjv.get(book, i, GlobalVariable.getInstance().getTextThemeHighlight()));
                     }
                     String[] arrList = new String[arr.size()];
                     arrList = arr.toArray(arrList);
-
-                    biblePager.setAdapter(new ReaderPagerAdapter(fm, arrList, bookButton));
+                    */
+                    biblePager.setAdapter(new ReaderPagerAdapter(fm, kjv, book, chapterNum, bookButton));
                     biblePager.setCurrentItem(chapter-1);
 
-                    Log.i("bookgrabbed", "book: " + book);
-                    Log.i("chaptergrabbed", "chapter: " + chapter);
+                    //Log.i("bookgrabbed", "book: " + book);
+                    //Log.i("chaptergrabbed", "chapter: " + chapter);
 
                     bookButton.setText(kjv.getBookFullName(book));
                     parent.dismiss();
