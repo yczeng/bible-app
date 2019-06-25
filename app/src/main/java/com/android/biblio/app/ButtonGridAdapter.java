@@ -64,10 +64,10 @@ public class ButtonGridAdapter extends BaseAdapter {
 
         if (view == null) {
             button = new Button(context);
-            button.setLayoutParams(new GridView.LayoutParams(110, 60));
+            button.setLayoutParams(new GridView.LayoutParams(100, 55));
             button.setPadding(0, 0, 0, 0);
             button.setTextSize((float)11);
-            button.setBackgroundColor(Color.WHITE);
+            button.setBackgroundColor(Color.parseColor("#f2e5e5"));
             button.setBackgroundResource(R.drawable.rectangle);
 
             button.setOnClickListener(new View.OnClickListener() {
