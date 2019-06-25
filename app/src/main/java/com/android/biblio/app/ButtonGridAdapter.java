@@ -78,14 +78,6 @@ public class ButtonGridAdapter extends BaseAdapter {
                             // create the array of strings containing the chapters' texts
                             // for this book
                             int chapterNum = kjv.getChapterCount(newBook);
-                            /*
-                            List<String> arr = new ArrayList<String>();
-                            for (int i = 1; i <= chapterNum; i++){
-                                arr.add(kjv.get(newBook, i, GlobalVariable.getInstance().getTextThemeHighlight()));
-                            }
-                            String[] arrList = new String[arr.size()];
-                            arrList = arr.toArray(arrList);
-                            */
                             biblePager.setAdapter(new ReaderPagerAdapter(fm, kjv, newBook, chapterNum, bookButton));
                             biblePager.setCurrentItem(0);
                         }

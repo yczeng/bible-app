@@ -62,14 +62,6 @@ public class ReaderActivity extends AppCompatActivity {
         // create the array of strings containing the chapters' texts
         // for this book
         int chapterNum = kjv.getChapterCount(book);
-        /*
-        List<String> arr = new ArrayList<String>();
-        for (int i = 1; i <= chapterNum; i++){
-            arr.add(kjv.get(book, i, GlobalVariable.getInstance().getTextThemeHighlight()));
-        }
-        String[] arrList = new String[arr.size()];
-        arrList = arr.toArray(arrList);
-        */
 
         // create the viewpager and corresponding adapter
         // that will scroll through the chapter fragments
