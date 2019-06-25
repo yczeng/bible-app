@@ -2,11 +2,13 @@ package com.android.biblio.app;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import androidx.arch.core.util.Function;
 import androidx.fragment.app.FragmentManager;
@@ -62,9 +64,11 @@ public class ButtonGridAdapter extends BaseAdapter {
 
         if (view == null) {
             button = new Button(context);
-            button.setLayoutParams(new GridView.LayoutParams(110, 60));
+            button.setLayoutParams(new GridView.LayoutParams(100, 55));
             button.setPadding(0, 0, 0, 0);
             button.setTextSize((float)11);
+            button.setBackgroundColor(Color.parseColor("#f2e5e5"));
+            button.setBackgroundResource(R.drawable.rectangle);
 
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {

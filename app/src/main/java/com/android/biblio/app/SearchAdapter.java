@@ -117,7 +117,7 @@ public class SearchAdapter extends BaseAdapter {
         }
 
         try {
-            String searchResultTextInfo = "<small><font color=\"#000000\">Book: " + kjv.getBookFullName(eachResult.get("book_id").toString()) + ", " + "Chapter: " + eachResult.getInt("chapter") + ", " + "Verse: " + eachResult.getInt("verse") + "</font></small>";
+            String searchResultTextInfo = "<small><font color=\"#000000\">" + kjv.getBookFullName(eachResult.get("book_id").toString()) + ", " + "Chapter " + eachResult.getInt("chapter") + ", " + "Verse " + eachResult.getInt("verse") + "</font></small>";
 
             String verseResult = "";
 

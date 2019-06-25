@@ -41,7 +41,9 @@ public class MainActivity extends AppCompatActivity {
         // inflate the view, but keep a reference to it
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.book_pop_up, null);
+
         bookpopupDialog.setView(dialogView);
+
         AlertDialog bookgridPane = bookpopupDialog.create();
 
         // get the linear layout and add the button(s)
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         GridView grid_newtest = dialogView.findViewById(R.id.buttongrid_newtest);
         grid_newtest.setAdapter(new ButtonGridAdapter(this, null, bookgridPane,
                 bookButton, chapterButton, new_test, true, false, biblePager));
+
 
         // display the dialog
         bookgridPane.show();
