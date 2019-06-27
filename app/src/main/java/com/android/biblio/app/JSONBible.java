@@ -63,7 +63,8 @@ public class JSONBible{
         return result;
     }
 
-    public JSONArray search(String text){
+    private String searchBook = "all";
+    public JSONArray search(String text, String searchBook){
         JSONArray jsonResults = new JSONArray();
 
         for (int i = 0; i < this.jsonarray.length(); i++){
@@ -75,18 +76,26 @@ public class JSONBible{
                 e.printStackTrace();
             }
 
+            String getBook = "";
             try {
-                int search_position = obj.getString("text").indexOf(text);
-                if (search_position != -1){
-                    obj.put("search_index", search_position);
-                    obj.put("query_length", text.length());
-                    jsonResults.put(obj);
-                }
+                getBook = obj.getString("book_name");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
 
+            if (getBook.equals(searchBook) || searchBook.equals("all")) {
+                try {
+                    int search_position = obj.getString("text").indexOf(text);
+                    if (search_position != -1) {
+                        obj.put("search_index", search_position);
+                        obj.put("query_length", text.length());
+                        jsonResults.put(obj);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return jsonResults;
     }
 
