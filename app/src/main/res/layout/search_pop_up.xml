@@ -20,13 +20,13 @@
 
         <RadioButton
             android:id="@+id/radioButton"
-            android:layout_width="154dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/book_prompt" />
+            android:text="Filter by book: " />
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:entries="@array/book_array"
             android:prompt="@string/book_prompt"
