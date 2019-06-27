@@ -11,13 +11,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.SearchView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,6 +44,8 @@ public class ReaderActivity extends AppCompatActivity {
     ViewPager biblePager;
     SearchView searchView;
     TextView searchResults;
+    String searchBook;
+    Boolean searchByBook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +88,6 @@ public class ReaderActivity extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int state) { }
         });
-
     }
 
     public void textBlockPopUp(View view){
@@ -279,6 +283,7 @@ public class ReaderActivity extends AppCompatActivity {
     public void searchPopUp(View view){
         // make a popup builder
         AlertDialog.Builder searchpopupDialog = new AlertDialog.Builder(this);
+
         final Context context = this;
 
         // inflate the view, but keep a reference to it
@@ -289,6 +294,29 @@ public class ReaderActivity extends AppCompatActivity {
 
         // searches within dialogView for the search box
         searchView = dialogView.findViewById(R.id.searchViewDialog);
+        searchBook = "all";
+        searchByBook = false;
+
+        final Spinner spinner = dialogView.findViewById(R.id.spinner);
+
+        RadioButton radioButton = dialogView.findViewById(R.id.radioButton);
+        radioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchByBook = true;
+            }
+        });
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                searchBook = spinner.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) { }
+
+        });
 
         final GridView results_grid = dialogView.findViewById(R.id.buttongrid_searchresults);
         final AlertDialog searchgridPanel = searchpopupDialog.create();
@@ -297,7 +325,12 @@ public class ReaderActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Log.i("search_view", "search worked");
-                JSONArray resultsJson = kjv.search(query);
+                JSONArray resultsJson;
+                if (searchByBook){
+                    resultsJson = kjv.search(query, searchBook);
+                } else {
+                    resultsJson = kjv.search(query, "all");
+                }
                 results_grid.setAdapter(new SearchAdapter(context, getSupportFragmentManager(), searchgridPanel, resultsJson, bookButton, chapterButton, biblePager));
                 searchView.clearFocus();
                 return true;
