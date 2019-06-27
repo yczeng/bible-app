@@ -39,6 +39,7 @@ public class ChapterFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         TextView text = view.findViewById(R.id.pager_text);
         String newcolor = GlobalVariable.getInstance().getTextThemeHighlight();
         if (!this.hexcolor.equals(newcolor)) {
@@ -72,5 +73,30 @@ public class ChapterFragment extends Fragment {
                 text.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorTextDarkForeground));
                 break;
         }
+
+        final UpdaterScrollView updaterscrollview = view.findViewById(R.id.pager_scroll);
+        updaterscrollview.setOnScrollListener(new UpdaterScrollView.OnScrollListener() {
+            @Override
+            public void onScrollChanged(UpdaterScrollView scrollView, int x, int y, int oldX, int oldY) {
+
+            }
+
+            @Override
+            public void onEndScroll(UpdaterScrollView scrollView) {
+                int scrollY = scrollView.getScrollY();
+                int scrollMax = scrollView.getChildAt(0).getHeight();
+                double scrollPercent = ((double) scrollY) / scrollMax;
+                GlobalVariable.getInstance().setScrollPercent(scrollPercent);
+            }
+        });
+
+        updaterscrollview.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                double scrollPercent = GlobalVariable.getInstance().getScrollPercent();
+                int scrollY = (int)(scrollPercent * updaterscrollview.getChildAt(0).getHeight());
+                updaterscrollview.scrollTo(0, scrollY);
+            }
+        }, 50);
     }
 }

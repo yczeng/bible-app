@@ -95,9 +95,6 @@ public class SearchAdapter extends BaseAdapter {
             biblePager.setCurrentItem(chapter-1);
 
             bookButton.setText(kjv.getBookFullName(book));
-
-            Log.i("book_clicked", book);
-            Log.i("chapter_clicked", chapter + "");
             parent.dismiss();
             }
         });

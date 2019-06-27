@@ -32,7 +32,10 @@ public class GlobalVariable {
     void setBook(String newBook){book = newBook;}
 
     int getChapter(){return chapter;}
-    void setChapter(int newChapter){chapter = newChapter;}
+    void setChapter(int newChapter){
+        chapter = newChapter;
+        scrollPercent = 0;
+    }
 
 
     /////////////////////////
@@ -44,6 +47,15 @@ public class GlobalVariable {
     private String textThemeHighlight = "#555555";
     private int textFontFamButton = 0;
     private String textFontFamily = "fonts/CarroisGothicSC-Regular.ttf";
+    private double scrollPercent = 0;
+
+    public double getScrollPercent() {
+        return scrollPercent;
+    }
+
+    public void setScrollPercent(double scrollPercent) {
+        this.scrollPercent = scrollPercent;
+    }
 
     public String getTextThemeHighlight() {
         return textThemeHighlight;
