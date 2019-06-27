@@ -63,7 +63,7 @@ for i in kjv_data:
 		temp_book_result.append(i)
 
 
-f = open("app/src/main/assets/reformattedKjv3.json", "w")
+f = open("app/src/main/assets/versePosition.json", "w")
 f.write(str(result))
 
 # print(result)
