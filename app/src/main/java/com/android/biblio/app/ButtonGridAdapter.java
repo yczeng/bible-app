@@ -67,32 +67,32 @@ public class ButtonGridAdapter extends BaseAdapter {
 
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    if (isBookGrid) {
-                        String newBook = v.getTag().toString();
-                        GlobalVariable.getInstance().setBook(newBook);
+                if (isBookGrid) {
+                    String newBook = v.getTag().toString();
+                    GlobalVariable.getInstance().setBook(newBook);
 
-                        kjv = GlobalVariable.getInstance().getKjv();
-                        bookButton.setText(kjv.getBookFullName(newBook));
-                        if (isReaderActivity){
-                            // create the array of strings containing the chapters' texts
-                            // for this book
-                            int chapterNum = kjv.getChapterCount(newBook);
-                            biblePager.setAdapter(new ReaderPagerAdapter(fm, kjv, newBook, chapterNum, bookButton));
-                            biblePager.setCurrentItem(0);
-                        }
-                        GlobalVariable.getInstance().setChapter(1);
-                        chapterButton.setText("1");
-
-                    } else {
-                        String newChapter_str = v.getTag().toString();
-                        int newChapter = Integer.parseInt(newChapter_str);
-                        GlobalVariable.getInstance().setChapter(newChapter);
-                        chapterButton.setText(newChapter_str);
-                        if (isReaderActivity) {
-                            biblePager.setCurrentItem(newChapter-1);
-                        }
+                    kjv = GlobalVariable.getInstance().getKjv();
+                    bookButton.setText(kjv.getBookFullName(newBook));
+                    if (isReaderActivity){
+                        // create the array of strings containing the chapters' texts
+                        // for this book
+                        int chapterNum = kjv.getChapterCount(newBook);
+                        biblePager.setAdapter(new ReaderPagerAdapter(fm, kjv, newBook, chapterNum, bookButton));
+                        biblePager.setCurrentItem(0);
                     }
-                    parent.dismiss();
+                    GlobalVariable.getInstance().setChapter(1);
+                    chapterButton.setText("1");
+
+                } else {
+                    String newChapter_str = v.getTag().toString();
+                    int newChapter = Integer.parseInt(newChapter_str);
+                    GlobalVariable.getInstance().setChapter(newChapter);
+                    chapterButton.setText(newChapter_str);
+                    if (isReaderActivity) {
+                        biblePager.setCurrentItem(newChapter-1);
+                    }
+                }
+                parent.dismiss();
                 }
             });
         } else {

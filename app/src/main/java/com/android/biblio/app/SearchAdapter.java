@@ -67,7 +67,7 @@ public class SearchAdapter extends BaseAdapter {
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         searchResultText.setPadding(10, 10, 10, 10);
         searchResultText.setBackgroundColor(Color.WHITE);
-        searchResultText.setTextSize((float)11);
+        searchResultText.setTextSize((float)14);
         kjv = GlobalVariable.getInstance().getKjv();
 
         searchResultText.setOnClickListener(new View.OnClickListener() {
@@ -125,9 +125,9 @@ public class SearchAdapter extends BaseAdapter {
             newString.insert(result_position + query_length + 35, "</font></i></b><font color=\"#C0C0C0\">");
 
             // return the modified String
-            verseResult =  newString.toString();
+            verseResult = newString.toString();
 
-            searchResultTextInfo += "<br><font color=\"#C0C0C0\">" + verseResult + "</font>";
+            searchResultTextInfo += "<br><font color=\"#C0C0C0\" size=\"3px\">" + verseResult + "</font>";
 
             searchResultText.setText(Html.fromHtml(searchResultTextInfo));
             searchResultText.setTag(searchResultTextInfo);
