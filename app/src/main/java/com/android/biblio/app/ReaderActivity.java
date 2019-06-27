@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -70,7 +71,6 @@ public class ReaderActivity extends AppCompatActivity {
         biblePager.setAdapter(new ReaderPagerAdapter(getSupportFragmentManager(), kjv, book, chapterNum, chapterButton));
         biblePager.setCurrentItem(chapter-1);
         biblePager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
-
             @Override
             public void onPageSelected(int position) {
                 GlobalVariable.getInstance().setChapter(position);
@@ -78,233 +78,201 @@ public class ReaderActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
 
+            @Override
+            public void onPageScrollStateChanged(int state) { }
+        });
+
+    }
+
+    public void textBlockPopUp(View view){
+        AlertDialog popupDialog = null;
+        popupDialog = generic_popup(R.layout.textopts_popup);
+        int textTheme = GlobalVariable.getInstance().getTextThemeRadioButton();
+        int textScale = GlobalVariable.getInstance().getTextScaleSliderProgress();
+        int textFont = GlobalVariable.getInstance().getTextFontFamButton();
+
+        SeekBar slider = popupDialog.findViewById(R.id.fontslider);
+        slider.setProgress(textScale);
+        slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                GlobalVariable.getInstance().setTextScaleSliderProgress(i);
+                biblePager.getAdapter().notifyDataSetChanged();
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-        final BottomNavigationView botnavbar = findViewById(R.id.botnavbar);
-        botnavbar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
+            public void onStartTrackingTouch(SeekBar seekBar) { }
 
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                AlertDialog popupDialog = null;
-                switch(menuItem.getItemId()) {
-                    case R.id.botnavbar_bookmark:
-                        popupDialog = generic_popup(R.layout.bookmark_popup);
-                        break;
-                    case R.id.botnavbar_compare:
-                        popupDialog = generic_popup(R.layout.compare_popup);
-                        break;
-                    case R.id.botnavbar_notes:
-                        popupDialog = generic_popup(R.layout.notes_popup);
-                        break;
-                    case R.id.botnavbar_autoread:
-                        popupDialog = generic_popup(R.layout.autoread_popup);
-                        break;
-                    case R.id.botnavbar_textoptions:
-                        popupDialog = generic_popup(R.layout.textopts_popup);
-                        int textTheme = GlobalVariable.getInstance().getTextThemeRadioButton();
-                        int textScale = GlobalVariable.getInstance().getTextScaleSliderProgress();
-                        int textFont = GlobalVariable.getInstance().getTextFontFamButton();
+            public void onStopTrackingTouch(SeekBar seekBar) { }
+        });
 
-                        SeekBar slider = popupDialog.findViewById(R.id.fontslider);
-                        slider.setProgress(textScale);
-                        slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                            @Override
-                            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                                GlobalVariable.getInstance().setTextScaleSliderProgress(i);
-                                biblePager.getAdapter().notifyDataSetChanged();
-                            }
-
-                            @Override
-                            public void onStartTrackingTouch(SeekBar seekBar) {
-
-                            }
-
-                            @Override
-                            public void onStopTrackingTouch(SeekBar seekBar) {
-
-                            }
-                        });
-
-                        RadioButton theme0 = popupDialog.findViewById(R.id.themebutton_light);
-                        RadioButton theme1 = popupDialog.findViewById(R.id.themebutton_cream);
-                        RadioButton theme2 = popupDialog.findViewById(R.id.themebutton_dark);
-                        switch(textTheme) {
-                            case 0:
-                                theme0.setChecked(true);
-                                theme1.setChecked(false);
-                                theme2.setChecked(false);
-                                break;
-                            case 1:
-                                theme0.setChecked(false);
-                                theme1.setChecked(true);
-                                theme2.setChecked(false);
-                                break;
-                            case 2:
-                                theme0.setChecked(false);
-                                theme1.setChecked(false);
-                                theme2.setChecked(true);
-                                break;
-                            default:
-                                break;
-                        }
-                        theme0.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                GlobalVariable.getInstance().setTextThemeRadioButton(0);
-                                String newHighlight = "#" + Integer.toHexString(ContextCompat.getColor(getApplicationContext(),
-                                        R.color.colorTextLightHighlight) & 0x00ffffff);
-                                GlobalVariable.getInstance().setTextThemeHighlight(newHighlight);
-                                biblePager.getAdapter().notifyDataSetChanged();
-                            }
-                        });
-                        theme1.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                GlobalVariable.getInstance().setTextThemeRadioButton(1);
-                                String newHighlight = "#" + Integer.toHexString(ContextCompat.getColor(getApplicationContext(),
-                                        R.color.colorTextCreamHighlight) & 0x00ffffff);
-                                GlobalVariable.getInstance().setTextThemeHighlight(newHighlight);
-                                biblePager.getAdapter().notifyDataSetChanged();
-                            }
-                        });
-                        theme2.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                GlobalVariable.getInstance().setTextThemeRadioButton(2);
-                                String newHighlight = "#" + Integer.toHexString(ContextCompat.getColor(getApplicationContext(),
-                                        R.color.colorTextDarkHighlight) & 0x00ffffff);
-                                GlobalVariable.getInstance().setTextThemeHighlight(newHighlight);
-                                biblePager.getAdapter().notifyDataSetChanged();
-                            }
-                        });
-
-                        final Button fontfam0 = popupDialog.findViewById(R.id.fontfam_mono);
-                        final Button fontfam1 = popupDialog.findViewById(R.id.fontfam_serifmono);
-                        final Button fontfam2 = popupDialog.findViewById(R.id.fontfam_serif);
-                        final Button fontfam3 = popupDialog.findViewById(R.id.fontfam_sansserif);
-                        final Button fontfam4 = popupDialog.findViewById(R.id.fontfam_sansserifcondlight);
-
-                        fontfam0.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                GlobalVariable.getInstance().setTextFontFamButton(0);
-                                GlobalVariable.getInstance().setTextFontFamily("fonts/CarroisGothicSC-Regular.ttf");
-                                biblePager.getAdapter().notifyDataSetChanged();
-                                fontfam0.setBackgroundColor(Color.argb(30, 150, 50, 50));
-                                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                            }
-                        });
-                        fontfam1.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                GlobalVariable.getInstance().setTextFontFamButton(1);
-                                GlobalVariable.getInstance().setTextFontFamily("fonts/CutiveMono.ttf");
-                                biblePager.getAdapter().notifyDataSetChanged();
-                                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam1.setBackgroundColor(Color.argb(30, 150, 50, 50));
-                                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                            }
-                        });
-                        fontfam2.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                GlobalVariable.getInstance().setTextFontFamButton(2);
-                                GlobalVariable.getInstance().setTextFontFamily("fonts/NotoSerif-Regular.ttf");
-                                biblePager.getAdapter().notifyDataSetChanged();
-                                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam2.setBackgroundColor(Color.argb(30, 150, 50, 50));
-                                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                            }
-                        });
-                        fontfam3.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                GlobalVariable.getInstance().setTextFontFamButton(3);
-                                GlobalVariable.getInstance().setTextFontFamily("fonts/Roboto-Regular.ttf");
-                                biblePager.getAdapter().notifyDataSetChanged();
-                                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam3.setBackgroundColor(Color.argb(30, 150, 50, 50));
-                                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                            }
-                        });
-                        fontfam4.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                GlobalVariable.getInstance().setTextFontFamButton(4);
-                                GlobalVariable.getInstance().setTextFontFamily("fonts/Roboto-Thin.ttf");
-                                biblePager.getAdapter().notifyDataSetChanged();
-                                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam4.setBackgroundColor(Color.argb(30, 150, 50, 50));
-                            }
-                        });
-
-                        switch(textFont) {
-                            case 0:
-                                fontfam0.setBackgroundColor(Color.argb(30, 150, 50, 50));
-                                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                break;
-                            case 1:
-                                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam1.setBackgroundColor(Color.argb(30, 150, 50, 50));
-                                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                break;
-                            case 2:
-                                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam2.setBackgroundColor(Color.argb(30, 150, 50, 50));
-                                fontfam3.setBackgroundColor(Color.argb(0, 0,0, 0));
-                                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                break;
-                            case 3:
-                                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam3.setBackgroundColor(Color.argb(30, 150, 50, 50));
-                                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                break;
-                            case 4:
-                                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
-                                fontfam4.setBackgroundColor(Color.argb(30, 150, 50, 50));
-                                break;
-                            default:
-                                break;
-                        }
-
-                        break;
-                    default:
-                        return false;
-                }
-                return true;
+        RadioButton theme0 = popupDialog.findViewById(R.id.themebutton_light);
+        RadioButton theme1 = popupDialog.findViewById(R.id.themebutton_cream);
+        RadioButton theme2 = popupDialog.findViewById(R.id.themebutton_dark);
+        switch(textTheme) {
+            case 0:
+                theme0.setChecked(true);
+                theme1.setChecked(false);
+                theme2.setChecked(false);
+                break;
+            case 1:
+                theme0.setChecked(false);
+                theme1.setChecked(true);
+                theme2.setChecked(false);
+                break;
+            case 2:
+                theme0.setChecked(false);
+                theme1.setChecked(false);
+                theme2.setChecked(true);
+                break;
+            default:
+                break;
+        }
+        theme0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GlobalVariable.getInstance().setTextThemeRadioButton(0);
+                String newHighlight = "#" + Integer.toHexString(ContextCompat.getColor(getApplicationContext(),
+                        R.color.colorTextLightHighlight) & 0x00ffffff);
+                GlobalVariable.getInstance().setTextThemeHighlight(newHighlight);
+                biblePager.getAdapter().notifyDataSetChanged();
             }
         });
+        theme1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GlobalVariable.getInstance().setTextThemeRadioButton(1);
+                String newHighlight = "#" + Integer.toHexString(ContextCompat.getColor(getApplicationContext(),
+                        R.color.colorTextCreamHighlight) & 0x00ffffff);
+                GlobalVariable.getInstance().setTextThemeHighlight(newHighlight);
+                biblePager.getAdapter().notifyDataSetChanged();
+            }
+        });
+        theme2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GlobalVariable.getInstance().setTextThemeRadioButton(2);
+                String newHighlight = "#" + Integer.toHexString(ContextCompat.getColor(getApplicationContext(),
+                        R.color.colorTextDarkHighlight) & 0x00ffffff);
+                GlobalVariable.getInstance().setTextThemeHighlight(newHighlight);
+                biblePager.getAdapter().notifyDataSetChanged();
+            }
+        });
+
+        final Button fontfam0 = popupDialog.findViewById(R.id.fontfam_mono);
+        final Button fontfam1 = popupDialog.findViewById(R.id.fontfam_serifmono);
+        final Button fontfam2 = popupDialog.findViewById(R.id.fontfam_serif);
+        final Button fontfam3 = popupDialog.findViewById(R.id.fontfam_sansserif);
+        final Button fontfam4 = popupDialog.findViewById(R.id.fontfam_sansserifcondlight);
+
+        fontfam0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GlobalVariable.getInstance().setTextFontFamButton(0);
+                GlobalVariable.getInstance().setTextFontFamily("fonts/CarroisGothicSC-Regular.ttf");
+                biblePager.getAdapter().notifyDataSetChanged();
+                fontfam0.setBackgroundColor(Color.argb(30, 150, 50, 50));
+                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
+            }
+        });
+        fontfam1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GlobalVariable.getInstance().setTextFontFamButton(1);
+                GlobalVariable.getInstance().setTextFontFamily("fonts/CutiveMono.ttf");
+                biblePager.getAdapter().notifyDataSetChanged();
+                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam1.setBackgroundColor(Color.argb(30, 150, 50, 50));
+                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
+            }
+        });
+        fontfam2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GlobalVariable.getInstance().setTextFontFamButton(2);
+                GlobalVariable.getInstance().setTextFontFamily("fonts/NotoSerif-Regular.ttf");
+                biblePager.getAdapter().notifyDataSetChanged();
+                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam2.setBackgroundColor(Color.argb(30, 150, 50, 50));
+                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
+            }
+        });
+        fontfam3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GlobalVariable.getInstance().setTextFontFamButton(3);
+                GlobalVariable.getInstance().setTextFontFamily("fonts/Roboto-Regular.ttf");
+                biblePager.getAdapter().notifyDataSetChanged();
+                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam3.setBackgroundColor(Color.argb(30, 150, 50, 50));
+                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
+            }
+        });
+        fontfam4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GlobalVariable.getInstance().setTextFontFamButton(4);
+                GlobalVariable.getInstance().setTextFontFamily("fonts/Roboto-Thin.ttf");
+                biblePager.getAdapter().notifyDataSetChanged();
+                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam4.setBackgroundColor(Color.argb(30, 150, 50, 50));
+            }
+        });
+
+        switch(textFont) {
+            case 0:
+                fontfam0.setBackgroundColor(Color.argb(30, 150, 50, 50));
+                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                break;
+            case 1:
+                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam1.setBackgroundColor(Color.argb(30, 150, 50, 50));
+                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                break;
+            case 2:
+                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam2.setBackgroundColor(Color.argb(30, 150, 50, 50));
+                fontfam3.setBackgroundColor(Color.argb(0, 0,0, 0));
+                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                break;
+            case 3:
+                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam3.setBackgroundColor(Color.argb(30, 150, 50, 50));
+                fontfam4.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                break;
+            case 4:
+                fontfam0.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam1.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam2.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam3.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                fontfam4.setBackgroundColor(Color.argb(30, 150, 50, 50));
+                break;
+            default:
+                break;
+        }
 
     }
 
@@ -427,8 +395,8 @@ public class ReaderActivity extends AppCompatActivity {
         try{
             popupDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
             WindowManager.LayoutParams wmlp = popupDialog.getWindow().getAttributes();
-            BottomNavigationView botnavbar = findViewById(R.id.botnavbar);
-            wmlp.y = botnavbar.getTop() - botnavbar.getBottom()/2 - botnavbar.getHeight();
+            LinearLayout botnavbar = findViewById(R.id.toolbar_bot);
+            wmlp.y = botnavbar.getTop() - botnavbar.getBottom()/2 - botnavbar.getHeight()*3/2;
         } catch (NullPointerException npe) {
             npe.printStackTrace();
         }

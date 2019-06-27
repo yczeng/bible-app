@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight=".85"
+    android:windowSoftInputMode="adjustPan"
     android:orientation="vertical"
     tools:context=".ReaderActivity">
 
@@ -35,21 +36,12 @@
             android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
             android:onClick="chapterPopUp"
             android:text="23"
             android:background="@android:color/transparent"
             android:textColor="#ffffff" />
-
-        <ImageButton
-            android:id="@+id/searchbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="10dp"
-            android:background="@android:color/transparent"
-            android:onClick="searchPopUp"
-            app:srcCompat="@drawable/ic_search_black_24dp" />
 
     </LinearLayout>
 
@@ -57,17 +49,46 @@
         android:id="@+id/biblepager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/botnavbar"
+        android:layout_above="@+id/toolbar_bot"
         android:layout_below="@+id/toolbar"
         android:layout_marginBottom="-2dp" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/botnavbar"
+    <LinearLayout
+        android:id="@+id/toolbar_bot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp"
         android:background="#800000"
-        app:menu="@menu/menu_botnavbar" />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/botnavbar_textoptions"
+            android:text="Aa"
+            android:textAllCaps="false"
+            android:fontFamily="monospace"
+            android:textColor="#ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/toolbar"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_weight="1"
+            android:onClick="textBlockPopUp"
+            android:background="@android:color/transparent" />
+
+        <ImageButton
+            android:id="@+id/searchbar2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:onClick="searchPopUp"
+            app:srcCompat="@drawable/ic_search_black_24dp" />
+
+    </LinearLayout>
 
 </RelativeLayout>
