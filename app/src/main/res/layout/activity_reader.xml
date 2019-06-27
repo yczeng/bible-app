@@ -49,8 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/toolbar_bot"
-        android:layout_below="@+id/toolbar"
-        android:layout_marginBottom="-2dp" />
+        android:layout_below="@+id/toolbar" />
 
     <LinearLayout
         android:id="@+id/toolbar_bot"
