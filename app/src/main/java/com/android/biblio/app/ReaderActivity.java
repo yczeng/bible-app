@@ -76,7 +76,7 @@ public class ReaderActivity extends AppCompatActivity {
         // create the viewpager and corresponding adapter
         // that will scroll through the chapter fragments
         biblePager = findViewById(R.id.biblepager);
-        biblePager.setAdapter(new ReaderPagerAdapter(getSupportFragmentManager(), kjv, book, chapterNum, chapterButton));
+        biblePager.setAdapter(new ReaderPagerAdapter(getSupportFragmentManager(), book, chapterNum, chapterButton));
         biblePager.setCurrentItem(chapter-1);
         biblePager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
             @Override

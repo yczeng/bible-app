@@ -9,14 +9,12 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class ReaderPagerAdapter extends FragmentStatePagerAdapter {
 
-    JSONBible jsonbible;
     String book;
     int numChapters;
     Button chapterButton;
 
-    public ReaderPagerAdapter(FragmentManager fm, JSONBible jsonbible, String book, int numChapters, Button chapterButton){
+    public ReaderPagerAdapter(FragmentManager fm, String book, int numChapters, Button chapterButton){
         super(fm);
-        this.jsonbible = jsonbible;
         this.book = book;
         this.numChapters = numChapters;
         this.chapterButton = chapterButton;
@@ -34,7 +32,7 @@ public class ReaderPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return new ChapterFragment(jsonbible, book, position,
+        return new ChapterFragment(book, position,
                 GlobalVariable.getInstance().getTextThemeHighlight());
     }
 }

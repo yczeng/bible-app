@@ -22,13 +22,13 @@ public class ChapterFragment extends Fragment {
     private int chapter;
     private String hexcolor;
 
-    public ChapterFragment(JSONBible jsonbible, String book, int chapter, String hexcolor) {
+    public ChapterFragment(String book, int chapter, String hexcolor) {
         super();
-        this.str = jsonbible.get(book, chapter+1, hexcolor);
-        this.jsonbible = jsonbible;
         this.book = book;
         this.chapter = chapter;
         this.hexcolor = hexcolor;
+        this.jsonbible = GlobalVariable.getInstance().getKjv();
+        this.str = this.jsonbible.get(book, chapter+1, hexcolor);
     }
 
     @Override

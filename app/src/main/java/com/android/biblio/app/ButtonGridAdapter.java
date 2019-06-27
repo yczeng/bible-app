@@ -78,7 +78,7 @@ public class ButtonGridAdapter extends BaseAdapter {
                         // create the array of strings containing the chapters' texts
                         // for this book
                         int chapterNum = kjv.getChapterCount(newBook);
-                        biblePager.setAdapter(new ReaderPagerAdapter(fm, kjv, newBook, chapterNum, bookButton));
+                        biblePager.setAdapter(new ReaderPagerAdapter(fm, newBook, chapterNum, bookButton));
                         biblePager.setCurrentItem(0);
                     }
                     chapterButton.setText("1");

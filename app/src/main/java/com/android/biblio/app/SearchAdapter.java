@@ -91,8 +91,16 @@ public class SearchAdapter extends BaseAdapter {
             // create the array of strings containing the chapters' texts
             // for this book
             int chapterNum = kjv.getChapterCount(book);
-            biblePager.setAdapter(new ReaderPagerAdapter(fm, kjv, book, chapterNum, bookButton));
+            biblePager.setAdapter(new ReaderPagerAdapter(fm, book, chapterNum, bookButton));
             biblePager.setCurrentItem(chapter-1);
+
+            double moopy = 0;
+            try {
+                moopy = kjv.getVerProportion(book, chapterNum, eachResult.getInt("verse"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.i("moopy", "" + moopy);
 
             bookButton.setText(kjv.getBookFullName(book));
             parent.dismiss();
