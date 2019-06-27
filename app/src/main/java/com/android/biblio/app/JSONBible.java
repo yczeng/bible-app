@@ -17,14 +17,16 @@ public class JSONBible{
     private JSONObject jsonobj;
     private JSONObject chapcounts;
     private JSONObject bookFullName;
+    private JSONObject verseProportion;
     private Context context;
 
-    public JSONBible(Context context, String kjv, String kjvDict, String kjvChapterCounts, String bookFullName){
+    public JSONBible(Context context, String kjv, String kjvDict, String kjvChapterCounts, String bookFullName, String verseProportion){
         this.context = context;
         this.jsonarray = JSONBible.readJSONArray(context, kjv);
         this.jsonobj = JSONBible.readJSONObject(context,kjvDict);
         this.chapcounts = JSONBible.readJSONObject(context, kjvChapterCounts);
         this.bookFullName = JSONBible.readJSONObject(context, bookFullName);
+        this.verseProportion = JSONBible.readJSONObject(context, verseProportion);
     }
 
     // This takes in two parameters: book and chapter, optional third parameter: verse.
@@ -61,6 +63,36 @@ public class JSONBible{
         Log.i("test", "testst");
 
         return result;
+    }
+
+    // This takes in two parameters: book and chapter, optional third parameter: verse.
+    // returns a jsonobj containing results that pertain.
+    public Double getVerProportion(String book, int chapter, int verse) {
+        // converts the book's json into a json object
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(this.verseProportion.get(book).toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JSONArray chapterArray;
+        try {
+            chapterArray = obj.getJSONArray("" + chapter);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            chapterArray = null;
+        }
+
+        double versePro = 0;
+        try {
+            versePro = chapterArray.getDouble(verse);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return versePro;
     }
 
     private String searchBook = "all";

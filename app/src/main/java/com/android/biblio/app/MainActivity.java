@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        kjv = new JSONBible(this, "kjv.json", "reformattedKjv3.json", "chapterCount.json", "bookName.json");
+        kjv = new JSONBible(this, "kjv.json", "reformattedKjv3.json", "chapterCount.json", "bookName.json", "versePosition.json");
         GlobalVariable.getInstance().setKjv(kjv);
 
         bookButton = findViewById(R.id.bookButton);
