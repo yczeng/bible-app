@@ -3,7 +3,7 @@
     <string name="bible">bible</string>
     <string name="search">search</string>
 
-    <string name="book_prompt">Search by book: </string>
+    <string name="book_prompt">Select a book</string>
 
     <string-array name="book_array">
         <item>Acts of the Apostles</item>

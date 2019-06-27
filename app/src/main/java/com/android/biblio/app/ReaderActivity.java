@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -36,6 +37,8 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.View.GONE;
+
 
 public class ReaderActivity extends AppCompatActivity {
     Button bookButton;
@@ -43,9 +46,9 @@ public class ReaderActivity extends AppCompatActivity {
     JSONBible kjv;
     ViewPager biblePager;
     SearchView searchView;
-    TextView searchResults;
     String searchBook;
     Boolean searchByBook;
+    TextView noResultsFound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -297,6 +300,15 @@ public class ReaderActivity extends AppCompatActivity {
         searchBook = "all";
         searchByBook = false;
 
+        noResultsFound = new TextView(context);
+        noResultsFound.setBackgroundColor(Color.WHITE);
+        noResultsFound.setPadding(10, 10, 10, 10);
+        noResultsFound.setTextSize((float)20);
+        noResultsFound.setText("");
+        noResultsFound.setVisibility(GONE);
+        LinearLayout linearLayout = dialogView.findViewById(R.id.searchLinearLayout);
+        linearLayout.addView(noResultsFound);
+
         final Spinner spinner = dialogView.findViewById(R.id.spinner);
 
         RadioButton radioButton = dialogView.findViewById(R.id.radioButton);
@@ -332,6 +344,12 @@ public class ReaderActivity extends AppCompatActivity {
                     resultsJson = kjv.search(query, "all");
                 }
                 results_grid.setAdapter(new SearchAdapter(context, getSupportFragmentManager(), searchgridPanel, resultsJson, bookButton, chapterButton, biblePager));
+                // this means that there were no results
+                if(results_grid.getChildCount() == 0) {
+                    noResultsFound.setText(Html.fromHtml("<font color=\"#000000\">" + "No results found for \"" + query + "\"" + "</font>"));
+                    noResultsFound.setVisibility(View.VISIBLE);
+                }
+
                 searchView.clearFocus();
                 return true;
             }
