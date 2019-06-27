@@ -32,7 +32,10 @@ public class GlobalVariable {
     void setBook(String newBook){book = newBook;}
 
     int getChapter(){return chapter;}
-    void setChapter(int newChapter){chapter = newChapter;}
+    void setChapter(int newChapter){
+        chapter = newChapter;
+        scrollPercent = 0;
+    }
 
 
     /////////////////////////

@@ -73,7 +73,7 @@ public class ReaderActivity extends AppCompatActivity {
         biblePager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
             @Override
             public void onPageSelected(int position) {
-                GlobalVariable.getInstance().setChapter(position);
+                GlobalVariable.getInstance().setChapter(position+1);
                 chapterButton.setText("" + (position + 1));
             }
 

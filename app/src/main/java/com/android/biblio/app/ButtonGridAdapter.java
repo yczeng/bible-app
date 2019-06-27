@@ -73,6 +73,7 @@ public class ButtonGridAdapter extends BaseAdapter {
 
                     kjv = GlobalVariable.getInstance().getKjv();
                     bookButton.setText(kjv.getBookFullName(newBook));
+                    GlobalVariable.getInstance().setChapter(1);
                     if (isReaderActivity){
                         // create the array of strings containing the chapters' texts
                         // for this book
@@ -80,7 +81,6 @@ public class ButtonGridAdapter extends BaseAdapter {
                         biblePager.setAdapter(new ReaderPagerAdapter(fm, kjv, newBook, chapterNum, bookButton));
                         biblePager.setCurrentItem(0);
                     }
-                    GlobalVariable.getInstance().setChapter(1);
                     chapterButton.setText("1");
 
                 } else {

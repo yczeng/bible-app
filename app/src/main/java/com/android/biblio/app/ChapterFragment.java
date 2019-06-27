@@ -40,6 +40,7 @@ public class ChapterFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         TextView text = view.findViewById(R.id.pager_text);
         String newcolor = GlobalVariable.getInstance().getTextThemeHighlight();
         if (!this.hexcolor.equals(newcolor)) {
