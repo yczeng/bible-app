@@ -396,7 +396,7 @@ public class ReaderActivity extends AppCompatActivity {
             popupDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
             WindowManager.LayoutParams wmlp = popupDialog.getWindow().getAttributes();
             LinearLayout botnavbar = findViewById(R.id.toolbar_bot);
-            wmlp.y = botnavbar.getTop() - botnavbar.getBottom()/2 - botnavbar.getHeight();
+            wmlp.y = botnavbar.getTop() - botnavbar.getBottom()/2 - botnavbar.getHeight()*3/2;
         } catch (NullPointerException npe) {
             npe.printStackTrace();
         }
