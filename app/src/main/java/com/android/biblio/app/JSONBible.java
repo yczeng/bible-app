@@ -84,8 +84,9 @@ public class JSONBible{
             }
 
             if (getBook.equals(searchBook) || searchBook.equals("all")) {
+
                 try {
-                    int search_position = obj.getString("text").indexOf(text);
+                    int search_position = obj.getString("text").toUpperCase().indexOf(text.toUpperCase());
                     if (search_position != -1) {
                         obj.put("search_index", search_position);
                         obj.put("query_length", text.length());

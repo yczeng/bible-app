@@ -303,7 +303,7 @@ public class ReaderActivity extends AppCompatActivity {
         noResultsFound = new TextView(context);
         noResultsFound.setBackgroundColor(Color.WHITE);
         noResultsFound.setPadding(10, 10, 10, 10);
-        noResultsFound.setTextSize((float)20);
+        noResultsFound.setTextSize((float)17);
         noResultsFound.setText("");
         noResultsFound.setVisibility(GONE);
         LinearLayout linearLayout = dialogView.findViewById(R.id.searchLinearLayout);
@@ -346,7 +346,7 @@ public class ReaderActivity extends AppCompatActivity {
                 results_grid.setAdapter(new SearchAdapter(context, getSupportFragmentManager(), searchgridPanel, resultsJson, bookButton, chapterButton, biblePager));
                 // this means that there were no results
                 if(results_grid.getChildCount() == 0) {
-                    noResultsFound.setText(Html.fromHtml("<font color=\"#000000\">" + "No results found for \"" + query + "\"" + "</font>"));
+                    noResultsFound.setText(Html.fromHtml("<font color=\"#696969\">" + "No results found for \"" + query + "\"" + "</font>"));
                     noResultsFound.setVisibility(View.VISIBLE);
                 }
 
