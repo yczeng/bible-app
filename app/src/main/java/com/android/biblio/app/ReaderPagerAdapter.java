@@ -1,5 +1,6 @@
 package com.android.biblio.app;
 
+import android.content.Context;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -13,9 +14,11 @@ public class ReaderPagerAdapter extends FragmentStatePagerAdapter {
     String book;
     int numChapters;
     Button chapterButton;
+    Context context;
 
-    public ReaderPagerAdapter(FragmentManager fm, JSONBible jsonbible, String book, int numChapters, Button chapterButton){
+    public ReaderPagerAdapter(Context context, FragmentManager fm, JSONBible jsonbible, String book, int numChapters, Button chapterButton){
         super(fm);
+        this.context = context;
         this.jsonbible = jsonbible;
         this.book = book;
         this.numChapters = numChapters;
@@ -34,7 +37,7 @@ public class ReaderPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return new ChapterFragment(jsonbible, book, position,
+        return new ChapterFragment(context, jsonbible, book, position,
                 GlobalVariable.getInstance().getTextThemeHighlight());
     }
 }

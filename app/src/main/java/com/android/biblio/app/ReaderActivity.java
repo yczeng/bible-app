@@ -73,10 +73,12 @@ public class ReaderActivity extends AppCompatActivity {
         // for this book
         int chapterNum = kjv.getChapterCount(book);
 
+        final Context context = this;
+
         // create the viewpager and corresponding adapter
         // that will scroll through the chapter fragments
         biblePager = findViewById(R.id.biblepager);
-        biblePager.setAdapter(new ReaderPagerAdapter(getSupportFragmentManager(), kjv, book, chapterNum, chapterButton));
+        biblePager.setAdapter(new ReaderPagerAdapter(context, getSupportFragmentManager(), kjv, book, chapterNum, chapterButton));
         biblePager.setCurrentItem(chapter-1);
         biblePager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
             @Override
@@ -348,6 +350,8 @@ public class ReaderActivity extends AppCompatActivity {
                 if(results_grid.getChildCount() == 0) {
                     noResultsFound.setText(Html.fromHtml("<font color=\"#696969\">" + "No results found for \"" + query + "\"" + "</font>"));
                     noResultsFound.setVisibility(View.VISIBLE);
+                } else {
+                    noResultsFound.setVisibility(GONE);
                 }
 
                 searchView.clearFocus();

@@ -5,22 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".ChapterFragment">
 
-
-    <com.android.biblio.app.UpdaterScrollView
-        android:id="@+id/pager_scroll"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/pager_text"
+        <GridView
+            android:id="@+id/pagertext_grid"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp"
-            android:paddingTop="25dp"
-            android:paddingBottom="75dp"
-            android:text="TextView"
-            android:textColor="#000000" />
-    </com.android.biblio.app.UpdaterScrollView>
+            android:layout_height="match_parent"
+            android:numColumns="1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

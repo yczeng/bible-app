@@ -31,7 +31,7 @@ public class JSONBible{
 
     // This takes in two parameters: book and chapter, optional third parameter: verse.
     // returns a jsonobj containing results that pertain.
-    public String get(String book, int chapter, String hexcolor) {
+    public JSONArray get(String book, int chapter, String hexcolor) {
         // converts the book's json into a json object
         JSONObject obj = null;
         try {
@@ -49,50 +49,22 @@ public class JSONBible{
             chapterArray = null;
         }
 
-        String result = "";
+        return chapterArray;
 
-        for (int i = 0; i < chapterArray.length(); i++) {
-            String verse = null;
-            try {
-                verse = chapterArray.get(i).toString();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            result += "<sup><font color=\"" + hexcolor + "\"><small>" + (i+1) + "</sup></font></small>" + "  " + verse + "<br>";
-        }
-        Log.i("test", "testst");
-
-        return result;
-    }
-
-    // This takes in two parameters: book and chapter, optional third parameter: verse.
-    // returns a jsonobj containing results that pertain.
-    public Double getVerProportion(String book, int chapter, int verse) {
-        // converts the book's json into a json object
-        JSONObject obj = null;
-        try {
-            obj = new JSONObject(this.verseProportion.get(book).toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        JSONArray chapterArray;
-        try {
-            chapterArray = obj.getJSONArray("" + chapter);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            chapterArray = null;
-        }
-
-        double versePro = 0;
-        try {
-            versePro = chapterArray.getDouble(verse);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return versePro;
+//        String result = "";
+//
+//        for (int i = 0; i < chapterArray.length(); i++) {
+//            String verse = null;
+//            try {
+//                verse = chapterArray.get(i).toString();
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//            result += "<sup><font color=\"" + hexcolor + "\"><small>" + (i+1) + "</sup></font></small>" + "  " + verse + "<br>";
+//        }
+//        Log.i("test", "testst");
+//
+//        return result;
     }
 
     private String searchBook = "all";
