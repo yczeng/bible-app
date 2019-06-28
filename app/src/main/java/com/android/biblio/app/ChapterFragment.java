@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment;
 
 import org.json.JSONArray;
 
+import static android.graphics.Typeface.MONOSPACE;
+
 public class ChapterFragment extends Fragment {
 
     private JSONArray chapterVerses;
@@ -26,15 +28,21 @@ public class ChapterFragment extends Fragment {
     private int chapter;
     private String hexcolor;
     private Context context;
+    private int textScale;
+    private String textFontFamily;
+    private int textTheme;
 
-    public ChapterFragment(Context context, JSONBible jsonbible, String book, int chapter, String hexcolor) {
+    public ChapterFragment(Context context, JSONBible jsonbible, String book, int chapter, String hexcolor, int textScale, String textFontFamily, int textTheme) {
         super();
-        this.chapterVerses = jsonbible.get(book, chapter+1, hexcolor);
+        this.chapterVerses = jsonbible.get(book, chapter+1);
         this.jsonbible = jsonbible;
         this.book = book;
         this.chapter = chapter;
         this.hexcolor = hexcolor;
+        this.textScale = textScale;
         this.context = context;
+        this.textFontFamily = textFontFamily;
+        this.textTheme = textTheme;
     }
 
     @Override
@@ -46,43 +54,16 @@ public class ChapterFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        TextView text = view.findViewById(R.id.pager_text);
-//        String newcolor = GlobalVariable.getInstance().getTextThemeHighlight();
-//        if (!this.hexcolor.equals(newcolor)) {
-//            this.chapterVerses = this.jsonbible.get(book, chapter+1, hexcolor);
-//        }
-
+        String newcolor = GlobalVariable.getInstance().getTextThemeHighlight();
         GridView verse_grid = view.findViewById(R.id.pagertext_grid);
-        verse_grid.setAdapter(new VerseAdapter(context, this.chapterVerses));
+        VerseAdapter mAdapter = new VerseAdapter(context, this.chapterVerses, hexcolor, (float)(12 + 12.0 * textScale / 100),
+                                                 FontCache.get(textFontFamily, getContext()), textTheme);
+        verse_grid.setAdapter(mAdapter);
 
-//        text.setText(Html.fromHtml(""));
-
-        // set text size
-        int textScale = GlobalVariable.getInstance().getTextScaleSliderProgress();
-//        text.setTextSize((float)(12 + 12.0 * textScale / 100));
-
-        // set text typeface
-        String textFontFamily = GlobalVariable.getInstance().getTextFontFamily();
-        Typeface face = FontCache.get(textFontFamily, getContext());
-//        text.setTypeface(face);
-
-        // set text color theme
-        int textTheme = GlobalVariable.getInstance().getTextThemeRadioButton();
-        Log.i("theme", "textTheme: " + textTheme);
-        switch(textTheme) {
-            case 0:
-                view.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorTextLightBackground));
-//                text.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorTextLightForeground));
-                break;
-            case 1:
-                view.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorTextCreamBackground));
-//                text.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorTextCreamForeground));
-                break;
-            case 2:
-                view.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorTextDarkBackground));
-//                text.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorTextDarkForeground));
-                break;
+        if (!this.hexcolor.equals(newcolor)) {
+            mAdapter.notifyDataSetChanged();
         }
+
 //
 //        final UpdaterScrollView updaterscrollview = view.findViewById(R.id.pager_scroll);
 //        updaterscrollview.setOnScrollListener(new UpdaterScrollView.OnScrollListener() {

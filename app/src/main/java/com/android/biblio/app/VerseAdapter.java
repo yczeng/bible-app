@@ -3,6 +3,7 @@ package com.android.biblio.app;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
@@ -26,10 +28,19 @@ public class VerseAdapter extends BaseAdapter {
     private JSONBible kjv;
     private Context context;
     private String eachResult;
+    private String hexColor;
+    private float fontSize;
+    private Typeface typeFace;
+    private int textTheme;
 
-    public VerseAdapter(Context context, JSONArray results) {
+
+    public VerseAdapter(Context context, JSONArray results, String hexColor, float fontSize, Typeface typeFace, int textTheme) {
         this.results = results;
         this.context = context;
+        this.hexColor = hexColor;
+        this.fontSize = fontSize;
+        this.typeFace = typeFace;
+        this.textTheme = textTheme;
     }
 
     @Override
@@ -56,19 +67,32 @@ public class VerseAdapter extends BaseAdapter {
                 LinearLayout.LayoutParams.MATCH_PARENT));
         verseText.setPadding(20, 5, 20, 5);
         verseText.setBackgroundColor(Color.WHITE);
-        verseText.setTextSize((float)14);
+        verseText.setTextSize(fontSize);
+        verseText.setTypeface(typeFace);
+
+        switch(textTheme) {
+            case 0:
+                viewGroup.setBackgroundColor(ContextCompat.getColor(context, R.color.colorTextLightBackground));
+                verseText.setTextColor(ContextCompat.getColor(context, R.color.colorTextLightForeground));
+                break;
+            case 1:
+                viewGroup.setBackgroundColor(ContextCompat.getColor(context, R.color.colorTextCreamBackground));
+                verseText.setTextColor(ContextCompat.getColor(context, R.color.colorTextCreamForeground));
+                break;
+            case 2:
+                viewGroup.setBackgroundColor(ContextCompat.getColor(context, R.color.colorTextDarkBackground));
+                verseText.setTextColor(ContextCompat.getColor(context, R.color.colorTextDarkForeground));
+                break;
+        }
 
         Log.i("each_result", results.toString());
         try {
             eachResult = results.getString(i);
-            Log.i("eachResult", eachResult.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        eachResult = "<sup><font color=\"" + "#696969" + "\"><small>" + (i+1) + "</sup></font></small>" + "  " + eachResult;
-
-//
+        eachResult = "<sup><small>" + (i+1) + "</sup></small>" + "  " + eachResult;
         verseText.setText(Html.fromHtml(eachResult));
 
         return verseText;

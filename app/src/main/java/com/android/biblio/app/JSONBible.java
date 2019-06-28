@@ -31,7 +31,7 @@ public class JSONBible{
 
     // This takes in two parameters: book and chapter, optional third parameter: verse.
     // returns a jsonobj containing results that pertain.
-    public JSONArray get(String book, int chapter, String hexcolor) {
+    public JSONArray get(String book, int chapter) {
         // converts the book's json into a json object
         JSONObject obj = null;
         try {
@@ -50,21 +50,6 @@ public class JSONBible{
         }
 
         return chapterArray;
-
-//        String result = "";
-//
-//        for (int i = 0; i < chapterArray.length(); i++) {
-//            String verse = null;
-//            try {
-//                verse = chapterArray.get(i).toString();
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//            result += "<sup><font color=\"" + hexcolor + "\"><small>" + (i+1) + "</sup></font></small>" + "  " + verse + "<br>";
-//        }
-//        Log.i("test", "testst");
-//
-//        return result;
     }
 
     private String searchBook = "all";

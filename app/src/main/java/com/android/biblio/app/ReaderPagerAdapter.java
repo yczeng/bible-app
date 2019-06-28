@@ -38,6 +38,9 @@ public class ReaderPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         return new ChapterFragment(context, jsonbible, book, position,
-                GlobalVariable.getInstance().getTextThemeHighlight());
+                GlobalVariable.getInstance().getTextThemeHighlight(),
+                GlobalVariable.getInstance().getTextScaleSliderProgress(),
+                GlobalVariable.getInstance().getTextFontFamily(),
+                GlobalVariable.getInstance().getTextThemeRadioButton());
     }
 }
