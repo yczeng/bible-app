@@ -10,11 +10,11 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class ReaderPagerAdapter extends FragmentStatePagerAdapter {
 
-    JSONBible jsonbible;
     String book;
     int numChapters;
     Button chapterButton;
     Context context;
+    JSONBible jsonbible;
 
     public ReaderPagerAdapter(Context context, FragmentManager fm, JSONBible jsonbible, String book, int numChapters, Button chapterButton){
         super(fm);
