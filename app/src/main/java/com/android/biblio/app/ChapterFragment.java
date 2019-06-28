@@ -26,19 +26,17 @@ public class ChapterFragment extends Fragment {
     private JSONBible jsonbible;
     private String book;
     private int chapter;
-    private String hexcolor;
     private Context context;
     private int textScale;
     private String textFontFamily;
     private int textTheme;
 
-    public ChapterFragment(Context context, JSONBible jsonbible, String book, int chapter, String hexcolor, int textScale, String textFontFamily, int textTheme) {
+    public ChapterFragment(Context context, JSONBible jsonbible, String book, int chapter, int textScale, String textFontFamily, int textTheme) {
         super();
         this.chapterVerses = jsonbible.get(book, chapter+1);
         this.jsonbible = jsonbible;
         this.book = book;
         this.chapter = chapter;
-        this.hexcolor = hexcolor;
         this.textScale = textScale;
         this.context = context;
         this.textFontFamily = textFontFamily;
@@ -56,15 +54,11 @@ public class ChapterFragment extends Fragment {
 
         String newcolor = GlobalVariable.getInstance().getTextThemeHighlight();
         GridView verse_grid = view.findViewById(R.id.pagertext_grid);
-        VerseAdapter mAdapter = new VerseAdapter(context, this.chapterVerses, hexcolor, (float)(12 + 12.0 * textScale / 100),
+        VerseAdapter mAdapter = new VerseAdapter(context, this.chapterVerses, (float)(12 + 12.0 * textScale / 100),
                                                  FontCache.get(textFontFamily, getContext()), textTheme);
         verse_grid.setAdapter(mAdapter);
 
-        if (!this.hexcolor.equals(newcolor)) {
-            mAdapter.notifyDataSetChanged();
-        }
 
-//
 //        final UpdaterScrollView updaterscrollview = view.findViewById(R.id.pager_scroll);
 //        updaterscrollview.setOnScrollListener(new UpdaterScrollView.OnScrollListener() {
 //            @Override

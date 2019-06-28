@@ -25,19 +25,16 @@ import org.json.JSONObject;
 public class VerseAdapter extends BaseAdapter {
 
     private JSONArray results;
-    private JSONBible kjv;
     private Context context;
     private String eachResult;
-    private String hexColor;
     private float fontSize;
     private Typeface typeFace;
     private int textTheme;
 
 
-    public VerseAdapter(Context context, JSONArray results, String hexColor, float fontSize, Typeface typeFace, int textTheme) {
+    public VerseAdapter(Context context, JSONArray results, float fontSize, Typeface typeFace, int textTheme) {
         this.results = results;
         this.context = context;
-        this.hexColor = hexColor;
         this.fontSize = fontSize;
         this.typeFace = typeFace;
         this.textTheme = textTheme;
@@ -72,20 +69,19 @@ public class VerseAdapter extends BaseAdapter {
 
         switch(textTheme) {
             case 0:
-                viewGroup.setBackgroundColor(ContextCompat.getColor(context, R.color.colorTextLightBackground));
+                verseText.setBackgroundColor(ContextCompat.getColor(context, R.color.colorTextLightBackground));
                 verseText.setTextColor(ContextCompat.getColor(context, R.color.colorTextLightForeground));
                 break;
             case 1:
-                viewGroup.setBackgroundColor(ContextCompat.getColor(context, R.color.colorTextCreamBackground));
+                verseText.setBackgroundColor(ContextCompat.getColor(context, R.color.colorTextCreamBackground));
                 verseText.setTextColor(ContextCompat.getColor(context, R.color.colorTextCreamForeground));
                 break;
             case 2:
-                viewGroup.setBackgroundColor(ContextCompat.getColor(context, R.color.colorTextDarkBackground));
+                verseText.setBackgroundColor(ContextCompat.getColor(context, R.color.colorTextDarkBackground));
                 verseText.setTextColor(ContextCompat.getColor(context, R.color.colorTextDarkForeground));
                 break;
         }
 
-        Log.i("each_result", results.toString());
         try {
             eachResult = results.getString(i);
         } catch (JSONException e) {
