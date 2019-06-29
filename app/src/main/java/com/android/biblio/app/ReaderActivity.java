@@ -345,9 +345,11 @@ public class ReaderActivity extends AppCompatActivity {
                 } else {
                     resultsJson = kjv.search(query, "all");
                 }
-                results_grid.setAdapter(new SearchAdapter(context, getSupportFragmentManager(), searchgridPanel, resultsJson, bookButton, chapterButton, biblePager));
+
+                SearchAdapter searchResultAdapter = new SearchAdapter(context, getSupportFragmentManager(), searchgridPanel, resultsJson, bookButton, chapterButton, biblePager);
+                results_grid.setAdapter(searchResultAdapter);
                 // this means that there were no results
-                if(results_grid.getChildCount() == 0) {
+                if(results_grid.getCount() == 0) {
                     noResultsFound.setText(Html.fromHtml("<font color=\"#696969\">" + "No results found for \"" + query + "\"" + "</font>"));
                     noResultsFound.setVisibility(View.VISIBLE);
                 } else {

@@ -86,6 +86,8 @@ public class JSONBible{
                 }
             }
         }
+
+        Log.i("jsonResults", jsonResults.toString());
         return jsonResults;
     }
 

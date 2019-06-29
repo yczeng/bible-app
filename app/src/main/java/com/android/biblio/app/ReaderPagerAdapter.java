@@ -40,6 +40,7 @@ public class ReaderPagerAdapter extends FragmentStatePagerAdapter {
         return new ChapterFragment(context, jsonbible, book, position,
                 GlobalVariable.getInstance().getTextScaleSliderProgress(),
                 GlobalVariable.getInstance().getTextFontFamily(),
-                GlobalVariable.getInstance().getTextThemeRadioButton());
+                GlobalVariable.getInstance().getTextThemeRadioButton(),
+                2);
     }
 }

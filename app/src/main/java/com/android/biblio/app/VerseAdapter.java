@@ -63,7 +63,6 @@ public class VerseAdapter extends BaseAdapter {
         verseText.setLayoutParams(new GridView.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
         verseText.setPadding(20, 5, 20, 5);
-        verseText.setBackgroundColor(Color.WHITE);
         verseText.setTextSize(fontSize);
         verseText.setTypeface(typeFace);
 
@@ -90,7 +89,6 @@ public class VerseAdapter extends BaseAdapter {
 
         eachResult = "<sup><small>" + (i+1) + "</sup></small>" + "  " + eachResult;
         verseText.setText(Html.fromHtml(eachResult));
-
         return verseText;
     }
 }
