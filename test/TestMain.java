@@ -12,31 +12,50 @@ import org.json.JSONException;
 
 public class TestMain{
 
-	// this is a json array of every verse in kjv
-	public static final String kjvfile = "/home/yczeng/Documents/bibleapp2/app/src/main/assets/kjv.json";
-	// This file shows the kjv as a map with the book strings as the keys
-	// within the book strings, the chapters are the key
-	public static final String kjvfile2 = "/home/yczeng/Documents/bibleapp2/app/src/main/assets/reformattedKjv2.json";
+	// where the root of the application is stored (so we can switch)
+	public static final String zackpi_app_folder = "/home/zackpi/Documents/Work/bible-app/";
+	public static final String yczeng_app_folder = "/home/yczeng/Documents/bibleapp2/";
+	public static final String app_folder = zackpi_app_folder;	// ** SWITCH THIS **
 
-	public static final String chapterNumFile = "/home/yczeng/Documents/bibleapp2/app/src/main/assets/chapterCount.json";
+	// this is a json array of every verse in kjv
+	public static final String kjvfile = app_folder + "app/src/main/assets/kjv.json";
+
+	// This file shows the kjv as a map with the book strings as the keys
+  // within the book strings, the chapters are the key
+	public static final String kjvfile2 = app_folder + "app/src/main/assets/reformattedKjv2.json";
+
+	// This file maps a book -> number of chapters in the book
+	public static final String chapterNumFile = app_folder + "app/src/main/assets/chapterCount.json";
+
+	// This file contains a trie that can be used to easily search for any word in the Bible
+	public static final String searchTrieFile = app_folder + "app/src/main/assets/searchTrie.json";
 
 	public static JSONArray verseJson;
 	public static JSONObject bibleMap;
 	public static JSONObject chapterNum;
+	public static JSONObject searchTrie;
+
 	public static JSONBible kjv;
 
 	public static void main(String[] args) {
+		long startTime = System.nanoTime();
+
 		verseJson = readJSONArray(kjvfile);
 		bibleMap = readJSONObject(kjvfile2);
-
 		chapterNum = readJSONObject(chapterNumFile);
-		
-		kjv = new JSONBible(bibleMap, verseJson);
+		searchTrie = readJSONObject(searchTrieFile);
+
+		System.out.println("Loaded properly");
+
+
+		kjv = new JSONBible(bibleMap, searchTrie);
 
 		// String book, int chapter, int verse
-		// System.out.println(kjv.get("Gen", 3));
-		System.out.println(kjv.search("serpent"));
-		// System.out.println(kjv.getChapterNumber(chapterNum, "Gen"));
+
+		for (int i = 0; i < 1; i++) {
+			System.out.println(kjv.search("serpent"));
+		}
+		System.out.println((System.nanoTime() - startTime) / 1000000000.0 / 1000);
 	}
 
 
